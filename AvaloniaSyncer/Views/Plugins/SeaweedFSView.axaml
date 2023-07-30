@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Views.Plugins.SeaweedFSView"
+             x:DataType="avaloniaSyncer:SeaweedFSPlugin">
+    <DockPanel>
+        <Image DockPanel.Dock="Left" Height="96" Margin="0 0 8 0" Source="/Assets/seaweedfs.png"></Image>
+        <StackPanel VerticalAlignment="Center" Spacing="4">
+            <TextBox Watermark="Server address" Text="{Binding Address}" />
+            <TextBox Watermark="Path" Text="{Binding Path}" />
+        </StackPanel>
+    </DockPanel>
+</UserControl>

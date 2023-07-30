@@ -1,0 +1,69 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:AvaloniaSyncer.ViewModels"
+             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             xmlns:views="clr-namespace:AvaloniaSyncer.Views"
+             xmlns:plugins="clr-namespace:AvaloniaSyncer.Views.Plugins"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Views.MainView"
+             x:DataType="vm:MainViewModel">
+
+	<UserControl.DataTemplates>
+		<DataTemplate DataType="avaloniaSyncer:SeaweedFSPlugin">
+			<plugins:SeaweedFSView />
+        </DataTemplate>
+		<DataTemplate DataType="avaloniaSyncer:LocalPlugin">
+			<plugins:LocalView />
+        </DataTemplate>
+	</UserControl.DataTemplates>
+
+	<DockPanel>
+		<DockPanel Dock="Top">
+			<Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}" VerticalContentAlignment="Center" Content="Create sync session" />
+			<UniformGrid Rows="1">
+				<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+				<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+			</UniformGrid>
+		</DockPanel>
+		<TabControl ItemsSource="{Binding Syncronizations}">
+
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Title}" />
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+
+			<TabControl.ContentTemplate>
+				<DataTemplate DataType="vm:SynchronizationViewModel">
+					<DockPanel>
+						<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" >
+							<Button Content="Analyze"
+                                    Command="{Binding GenerateSyncActions}" />
+							<Button Content="Sync all" Command="{Binding SyncAll}" />
+						</StackPanel>
+						<DataGrid ItemsSource="{Binding SyncActions}">
+							<DataGrid.Columns>
+								<DataGridTextColumn Width="*" Binding="{Binding Source}" />
+								<DataGridTextColumn Width="*" Binding="{Binding Destination}" />
+								<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" />
+								<DataGridTemplateColumn Width="200">
+									<DataTemplate x:DataType="vm:SyncActionViewModel">
+										<ProgressBar VerticalAlignment="Stretch" Height="20" Margin="4" Maximum="1" Value="{Binding Progress^.Proportion}" />
+									</DataTemplate>
+								</DataGridTemplateColumn>
+								<DataGridTemplateColumn Width="Auto">
+									<DataTemplate x:DataType="vm:SyncActionViewModel">
+										<Button Content="Sync" Margin="4" Command="{Binding Sync}" />
+									</DataTemplate>
+								</DataGridTemplateColumn>
+							</DataGrid.Columns>
+						</DataGrid>
+					</DockPanel>
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
+	</DockPanel>
+
+</UserControl>
