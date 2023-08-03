@@ -6,7 +6,6 @@ using AvaloniaSyncer.ViewModels;
 using AvaloniaSyncer.Views;
 using CSharpFunctionalExtensions;
 using Serilog;
-using Serilog.Events;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.Mixins;
 
@@ -20,7 +19,6 @@ public partial class App : Application
         AppDomain.CurrentDomain.UnhandledException += (sender, args) => Log.Fatal(args.ExceptionObject.ToString());
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
-            .WriteTo.File("Logs/log.txt", LogEventLevel.Debug)
             .CreateLogger();
     }
 

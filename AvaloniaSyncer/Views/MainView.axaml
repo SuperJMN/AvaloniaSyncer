@@ -13,60 +13,64 @@
 	<UserControl.DataTemplates>
 		<DataTemplate DataType="avaloniaSyncer:SeaweedFSPlugin">
 			<plugins:SeaweedFSView />
-        </DataTemplate>
+		</DataTemplate>
 		<DataTemplate DataType="avaloniaSyncer:LocalPlugin">
 			<plugins:LocalView />
-        </DataTemplate>
-        <DataTemplate DataType="avaloniaSyncer:SftpPlugin">
-            <plugins:SftpView />
-        </DataTemplate>
+		</DataTemplate>
+		<DataTemplate DataType="avaloniaSyncer:SftpPlugin">
+			<plugins:SftpView />
+		</DataTemplate>
 	</UserControl.DataTemplates>
 
-	<DockPanel>
-		<DockPanel Dock="Top">
-			<Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}" VerticalContentAlignment="Center" Content="Create sync session" />
-			<UniformGrid Rows="1">
-				<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-				<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-			</UniformGrid>
+	<ScrollViewer>
+		<DockPanel>
+			<DockPanel Dock="Top">
+				<Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
+                        VerticalContentAlignment="Center" Content="Create sync session" />
+				<UniformGrid Rows="1">
+					<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+					<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+				</UniformGrid>
+			</DockPanel>
+			<TabControl ItemsSource="{Binding Syncronizations}">
+
+				<TabControl.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding Title}" />
+					</DataTemplate>
+				</TabControl.ItemTemplate>
+
+				<TabControl.ContentTemplate>
+					<DataTemplate DataType="vm:SynchronizationViewModel">
+						<DockPanel>
+							<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+								<Button Content="Analyze"
+                                        Command="{Binding GenerateSyncActions}" />
+								<Button Content="Sync all" Command="{Binding SyncAll}" />
+							</StackPanel>
+							<DataGrid ItemsSource="{Binding SyncActions}">
+								<DataGrid.Columns>
+									<DataGridTextColumn Width="*" Binding="{Binding Source}" />
+									<DataGridTextColumn Width="*" Binding="{Binding Destination}" />
+									<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" />
+									<DataGridTemplateColumn Width="200">
+										<DataTemplate x:DataType="vm:SyncActionViewModel">
+											<ProgressBar VerticalAlignment="Stretch" Height="20" Margin="4" Maximum="1"
+                                                         Value="{Binding Progress^.Proportion}" />
+										</DataTemplate>
+									</DataGridTemplateColumn>
+									<DataGridTemplateColumn Width="Auto">
+										<DataTemplate x:DataType="vm:SyncActionViewModel">
+											<Button Content="Sync" Margin="4" Command="{Binding Sync}" />
+										</DataTemplate>
+									</DataGridTemplateColumn>
+								</DataGrid.Columns>
+							</DataGrid>
+						</DockPanel>
+					</DataTemplate>
+				</TabControl.ContentTemplate>
+			</TabControl>
 		</DockPanel>
-		<TabControl ItemsSource="{Binding Syncronizations}">
-
-			<TabControl.ItemTemplate>
-				<DataTemplate>
-					<TextBlock Text="{Binding Title}" />
-				</DataTemplate>
-			</TabControl.ItemTemplate>
-
-			<TabControl.ContentTemplate>
-				<DataTemplate DataType="vm:SynchronizationViewModel">
-					<DockPanel>
-						<StackPanel Orientation="Horizontal" DockPanel.Dock="Top" >
-							<Button Content="Analyze"
-                                    Command="{Binding GenerateSyncActions}" />
-							<Button Content="Sync all" Command="{Binding SyncAll}" />
-						</StackPanel>
-						<DataGrid ItemsSource="{Binding SyncActions}">
-							<DataGrid.Columns>
-								<DataGridTextColumn Width="*" Binding="{Binding Source}" />
-								<DataGridTextColumn Width="*" Binding="{Binding Destination}" />
-								<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" />
-								<DataGridTemplateColumn Width="200">
-									<DataTemplate x:DataType="vm:SyncActionViewModel">
-										<ProgressBar VerticalAlignment="Stretch" Height="20" Margin="4" Maximum="1" Value="{Binding Progress^.Proportion}" />
-									</DataTemplate>
-								</DataGridTemplateColumn>
-								<DataGridTemplateColumn Width="Auto">
-									<DataTemplate x:DataType="vm:SyncActionViewModel">
-										<Button Content="Sync" Margin="4" Command="{Binding Sync}" />
-									</DataTemplate>
-								</DataGridTemplateColumn>
-							</DataGrid.Columns>
-						</DataGrid>
-					</DockPanel>
-				</DataTemplate>
-			</TabControl.ContentTemplate>
-		</TabControl>
-	</DockPanel>
+	</ScrollViewer>
 
 </UserControl>
