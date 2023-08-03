@@ -47,8 +47,8 @@ public class MainViewModel : ViewModelBase
 
     private IObservable<Result<SynchronizationViewModel>> CreateSyncronizationSession(INotificationService myNotificationService, IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
     {
-        var getOrigin = () => sourcePlugin.FileSystem().Map(fs => fs.GetDirectory(sourcePlugin.Path));
-        var getDestination = () => destination.FileSystem().Map(fs => fs.GetDirectory(destination.Path));
+        var getOrigin = () => sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
+        var getDestination = () => destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
         var r = FunctionalMixin.Combine(() => getOrigin(), () => getDestination(), (a, b) => new SynchronizationViewModel($"Session {Number++}", myNotificationService, a, b));
         return r;
     }

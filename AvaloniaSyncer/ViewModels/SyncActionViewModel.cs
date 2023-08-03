@@ -13,13 +13,13 @@ namespace AvaloniaSyncer.ViewModels;
 
 public class SyncActionViewModel : ViewModelBase
 {
-    public ISyncAction Action { get; }
+    private readonly ISyncAction syncAction;
 
-    public SyncActionViewModel(INotificationService myNotificationService, ISyncAction action)
+    public SyncActionViewModel(INotificationService myNotificationService, ISyncAction syncAction)
     {
-        Action = action;
-        Progress = action.Progress;
-        Sync = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default).Do(_ => Synced = false).SelectMany(_ => action.Sync()));
+        this.syncAction = syncAction;
+        Progress = this.syncAction.Progress;
+        Sync = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default).Do(_ => Synced = false).SelectMany(_ => this.syncAction.Sync()));
 
         Sync.IsSuccess().BindTo(this, x => x.Synced);
         Sync.HandleErrorsWith(myNotificationService);
@@ -27,20 +27,20 @@ public class SyncActionViewModel : ViewModelBase
 
     public IObservable<RelativeProgress<long>> Progress { get; }
 
-    public string Source => Action switch
+    public string Source => syncAction switch
     {
         CopyAction copyAction => copyAction.Source.Path,
         DeleteAction deleteAction => deleteAction.Source.Path,
         _ => ""
     };
-    public string? Destination => Action switch
+
+    public string Destination => syncAction switch
     {
-        CopyAction copyAction => copyAction.Source.Path,
+        CopyAction copyAction => copyAction.Destination.Path,
         _ => ""
     };
 
-    [Reactive]
-    public bool Synced { get; set; }
+    [Reactive] public bool Synced { get; set; }
 
     public ReactiveCommand<Unit, Result> Sync { get; }
 }

@@ -27,5 +27,6 @@ public class PluginSelectionViewModel : ViewModelBase
     [Reactive] public IFileSystemPluginFactory? SelectedPluginFactory { get; set; }
 
     public string Name { get; }
+
     public IEnumerable<IFileSystemPluginFactory> PluginFactories { get; set; }
 }

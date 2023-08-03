@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
 using Zafiro.FileSystem;
@@ -18,9 +19,9 @@ public class SeaweedFSPlugin : IFileSystemPlugin
         this.logger = logger;
     }
 
-    public Result<IFileSystem> FileSystem()
+    public Task<Result<IFileSystem>> FileSystem()
     {
-        return Result.Try(() =>
+        var fileSystem = Result.Try(() =>
         {
             var handler = logger.Match<HttpMessageHandler, ILogger>(f =>
             {
@@ -36,6 +37,8 @@ public class SeaweedFSPlugin : IFileSystemPlugin
             var seaweedFSClient = new SeaweedFSClient(httpClient);
             return (IFileSystem) new SeaweedFileSystem(seaweedFSClient);
         });
+
+        return Task.FromResult(fileSystem);
     }
 
     public string Path { get; set; }

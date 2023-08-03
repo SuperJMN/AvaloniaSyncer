@@ -17,6 +17,9 @@
 		<DataTemplate DataType="avaloniaSyncer:LocalPlugin">
 			<plugins:LocalView />
         </DataTemplate>
+        <DataTemplate DataType="avaloniaSyncer:SftpPlugin">
+            <plugins:SftpView />
+        </DataTemplate>
 	</UserControl.DataTemplates>
 
 	<DockPanel>
