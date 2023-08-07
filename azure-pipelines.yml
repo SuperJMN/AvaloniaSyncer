@@ -4,6 +4,6 @@ variables:
 steps:
 - checkout: self
 
-- powershell: .\build.ps1 publishgithubrelease --project "src\FIFOCalculator.Desktop\FIFOCalculator.Desktop.csproj"
+- powershell: .\build.ps1 publishgithubrelease
   env:
     GitHubAuthenticationToken: $(GitHubAuthenticationToken)
