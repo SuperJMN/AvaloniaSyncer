@@ -50,10 +50,11 @@
 							</StackPanel>
 							<DataGrid ItemsSource="{Binding SyncActions}">
 								<DataGrid.Columns>
-									<DataGridTextColumn Width="*" Binding="{Binding Source}" />
-									<DataGridTextColumn Width="*" Binding="{Binding Destination}" />
+                                    <DataGridTextColumn Width="Auto" Binding="{Binding Title}" Header="Action" />
+                                    <DataGridTextColumn Width="*" Binding="{Binding Source}" Header="Source" />
+									<DataGridTextColumn Width="*" Binding="{Binding Destination}" Header="Destination" />
 									<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" />
-									<DataGridTemplateColumn Width="200">
+									<DataGridTemplateColumn Width="200" Header="%">
 										<DataTemplate x:DataType="vm:SyncActionViewModel">
 											<ProgressBar VerticalAlignment="Stretch" Height="20" Margin="4" Maximum="1"
                                                          Value="{Binding Progress^.Proportion}" />

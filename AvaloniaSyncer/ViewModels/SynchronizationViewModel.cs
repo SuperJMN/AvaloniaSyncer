@@ -6,8 +6,8 @@ using System.Reactive.Linq;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
-using Zafiro.Functional;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
@@ -42,11 +42,11 @@ public class SynchronizationViewModel : ViewModelBase
         SyncAll = ReactiveCommand.CreateFromObservable(() => SyncActions!.Select(x => x.Sync.Execute()).Merge(3), this.WhenAnyValue(x => x.SyncActions, selector: list => list != null));
     }
 
-    [Reactive]
-    public List<SyncActionViewModel>? SyncActions { get; set; }
+    public ReactiveCommand<Unit, Result> SyncAll { get; set; }
+
+    [Reactive] public List<SyncActionViewModel>? SyncActions { get; set; }
 
     public ReactiveCommand<Unit, Result<List<ISyncAction>>> GenerateSyncActions { get; }
 
     public string Title { get; }
-    public IReactiveCommand SyncAll { get; }
 }
