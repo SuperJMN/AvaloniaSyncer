@@ -11,23 +11,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Android", "A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Temporary", "Temporary", "{92470899-CB80-4B15-97E2-18B89BA02964}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro", "..\..\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj", "{4BEDC256-0147-47FD-87A3-F6958FAEF588}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro", "..\..\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj", "{4BEDC256-0147-47FD-87A3-F6958FAEF588}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.Avalonia", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj", "{D93668C3-10DF-46B0-8F37-105BDD9F46EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Avalonia", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj", "{D93668C3-10DF-46B0-8F37-105BDD9F46EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.Avalonia.Dialogs", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj", "{396C102F-C31E-4629-86A9-27539E8B996E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Avalonia.Dialogs", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj", "{396C102F-C31E-4629-86A9-27539E8B996E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj", "{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj", "{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.Local", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj", "{93CFFF56-94EB-4FFC-A4E2-E9882F750539}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.Local", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj", "{93CFFF56-94EB-4FFC-A4E2-E9882F750539}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.SeaweedFS", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj", "{AD6D641E-8B16-4F48-A0C8-A509056231BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.SeaweedFS", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj", "{AD6D641E-8B16-4F48-A0C8-A509056231BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.SeaweedFS.Filer.Client", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj", "{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.SeaweedFS.Filer.Client", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj", "{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.Sftp", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj", "{28DF1C0F-9000-48E3-A09C-9A5077B36925}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.Sftp", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj", "{28DF1C0F-9000-48E3-A09C-9A5077B36925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.UI", "..\..\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj", "{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.UI", "..\..\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj", "{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{960A934B-A5B7-4873-AB05-F4EAC2B716F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,12 +87,13 @@ Global
 		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {8B12FE61-C4E8-4B44-B9A6-0966F9123A1C}
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4BEDC256-0147-47FD-87A3-F6958FAEF588} = {92470899-CB80-4B15-97E2-18B89BA02964}
@@ -102,5 +105,8 @@ Global
 		{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F} = {92470899-CB80-4B15-97E2-18B89BA02964}
 		{28DF1C0F-9000-48E3-A09C-9A5077B36925} = {92470899-CB80-4B15-97E2-18B89BA02964}
 		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D} = {92470899-CB80-4B15-97E2-18B89BA02964}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8B12FE61-C4E8-4B44-B9A6-0966F9123A1C}
 	EndGlobalSection
 EndGlobal
