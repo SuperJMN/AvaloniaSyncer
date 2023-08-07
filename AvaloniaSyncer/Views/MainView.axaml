@@ -47,13 +47,14 @@
 								<Button Content="Analyze"
                                         Command="{Binding GenerateSyncActions}" />
 								<Button Content="Sync all" Command="{Binding SyncAll}" />
-							</StackPanel>
+								<CheckBox Content="Skip identical files" IsChecked="{Binding SkipIdentical}" />
+                            </StackPanel>
 							<DataGrid ItemsSource="{Binding SyncActions}">
 								<DataGrid.Columns>
                                     <DataGridTextColumn Width="Auto" Binding="{Binding Title}" Header="Action" />
                                     <DataGridTextColumn Width="*" Binding="{Binding Source}" Header="Source" />
 									<DataGridTextColumn Width="*" Binding="{Binding Destination}" Header="Destination" />
-									<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" />
+									<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" Header="Done" />
 									<DataGridTemplateColumn Width="200" Header="%">
 										<DataTemplate x:DataType="vm:SyncActionViewModel">
 											<ProgressBar VerticalAlignment="Stretch" Height="20" Margin="4" Maximum="1"

@@ -17,12 +17,16 @@ public class SynchronizationViewModel : ViewModelBase
     public SynchronizationViewModel(string title, INotificationService notificationService, IZafiroDirectory origin, IZafiroDirectory dest)
     {
         Title = title;
-        var syncer = new Syncer();
+        
         var reactiveCommand = ReactiveCommand.CreateFromObservable(() =>
         {
             var observable = Observable
                 .FromAsync(() => new FileSystemComparer().Diff(origin, dest))
-                .Select(diffResult => diffResult.Map(diffs => syncer.Sync(origin, dest, diffs).ToEnumerable().ToList()));
+                .Select(diffResult =>
+                {
+                    var syncer = new Syncer { SkipIdential = SkipIdentical };
+                    return diffResult.Map(diffs => syncer.Sync(origin, dest, diffs).ToEnumerable().ToList());
+                });
 
             return observable;
         });
@@ -41,6 +45,8 @@ public class SynchronizationViewModel : ViewModelBase
 
         SyncAll = ReactiveCommand.CreateFromObservable(() => SyncActions!.Select(x => x.Sync.Execute()).Merge(3), this.WhenAnyValue(x => x.SyncActions, selector: list => list != null));
     }
+
+    [Reactive] public bool SkipIdentical { get; set; } = true;
 
     public ReactiveCommand<Unit, Result> SyncAll { get; set; }
 
