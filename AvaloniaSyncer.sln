@@ -3,26 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Temporary", "Temporary", "{92470899-CB80-4B15-97E2-18B89BA02964}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro", "..\..\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj", "{4BEDC256-0147-47FD-87A3-F6958FAEF588}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Avalonia", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj", "{D93668C3-10DF-46B0-8F37-105BDD9F46EF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Avalonia.Dialogs", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj", "{396C102F-C31E-4629-86A9-27539E8B996E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj", "{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.Local", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj", "{93CFFF56-94EB-4FFC-A4E2-E9882F750539}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.SeaweedFS", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj", "{AD6D641E-8B16-4F48-A0C8-A509056231BA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.SeaweedFS.Filer.Client", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj", "{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.FileSystem.Sftp", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj", "{28DF1C0F-9000-48E3-A09C-9A5077B36925}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.UI", "..\..\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj", "{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{960A934B-A5B7-4873-AB05-F4EAC2B716F4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\AvaloniaSyncer\AvaloniaSyncer.csproj", "{FDB85B6B-D037-4C43-9525-D7A4F7C98DE3}"
@@ -37,42 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4BEDC256-0147-47FD-87A3-F6958FAEF588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BEDC256-0147-47FD-87A3-F6958FAEF588}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BEDC256-0147-47FD-87A3-F6958FAEF588}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BEDC256-0147-47FD-87A3-F6958FAEF588}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D93668C3-10DF-46B0-8F37-105BDD9F46EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D93668C3-10DF-46B0-8F37-105BDD9F46EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D93668C3-10DF-46B0-8F37-105BDD9F46EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D93668C3-10DF-46B0-8F37-105BDD9F46EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{396C102F-C31E-4629-86A9-27539E8B996E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{396C102F-C31E-4629-86A9-27539E8B996E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{396C102F-C31E-4629-86A9-27539E8B996E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{396C102F-C31E-4629-86A9-27539E8B996E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2EAA4A51-0CB2-4D02-8791-90038DBA1E41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93CFFF56-94EB-4FFC-A4E2-E9882F750539}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93CFFF56-94EB-4FFC-A4E2-E9882F750539}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93CFFF56-94EB-4FFC-A4E2-E9882F750539}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93CFFF56-94EB-4FFC-A4E2-E9882F750539}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AD6D641E-8B16-4F48-A0C8-A509056231BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AD6D641E-8B16-4F48-A0C8-A509056231BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AD6D641E-8B16-4F48-A0C8-A509056231BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AD6D641E-8B16-4F48-A0C8-A509056231BA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28DF1C0F-9000-48E3-A09C-9A5077B36925}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28DF1C0F-9000-48E3-A09C-9A5077B36925}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28DF1C0F-9000-48E3-A09C-9A5077B36925}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28DF1C0F-9000-48E3-A09C-9A5077B36925}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{960A934B-A5B7-4873-AB05-F4EAC2B716F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -94,17 +38,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4BEDC256-0147-47FD-87A3-F6958FAEF588} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{D93668C3-10DF-46B0-8F37-105BDD9F46EF} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{396C102F-C31E-4629-86A9-27539E8B996E} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{2EAA4A51-0CB2-4D02-8791-90038DBA1E41} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{93CFFF56-94EB-4FFC-A4E2-E9882F750539} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{AD6D641E-8B16-4F48-A0C8-A509056231BA} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{127D3BB7-1FA1-46BC-8DBB-32EF0E24A67F} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{28DF1C0F-9000-48E3-A09C-9A5077B36925} = {92470899-CB80-4B15-97E2-18B89BA02964}
-		{7427C8F9-FC3B-444A-8C33-EB23E85EE59D} = {92470899-CB80-4B15-97E2-18B89BA02964}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8B12FE61-C4E8-4B44-B9A6-0966F9123A1C}
