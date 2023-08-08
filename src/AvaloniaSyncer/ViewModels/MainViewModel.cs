@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
-using Zafiro.Functional;
+using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
@@ -20,7 +21,7 @@ public class MainViewModel : ViewModelBase
         DestinationPluginViewModel = new PluginSelectionViewModel("Destination", pluginFactories);
 
         var createSession = ReactiveCommand
-            .CreateFromObservable(() => CreateSyncronizationSession(notificationService, SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!),
+            .CreateFromTask(() => CreateSyncronizationSession(notificationService, SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!),
                 this.WhenAnyValue(x => x.SourcePluginViewModel.SelectedPlugin, x => x.DestinationPluginViewModel.SelectedPlugin, (src, dst) => src != null && dst != null));
 
         createSession
@@ -45,11 +46,10 @@ public class MainViewModel : ViewModelBase
     public IEnumerable<SynchronizationViewModel> Syncronizations { get; }
 
 
-    private IObservable<Result<SynchronizationViewModel>> CreateSyncronizationSession(INotificationService myNotificationService, IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
+    private Task<Result<SynchronizationViewModel>> CreateSyncronizationSession(INotificationService myNotificationService, IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
     {
-        var getOrigin = () => sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
-        var getDestination = () => destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
-        var r = FunctionalMixin.Combine(() => getOrigin(), () => getDestination(), (a, b) => new SynchronizationViewModel($"Session {Number++}", myNotificationService, a, b));
-        return r;
+        var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
+        var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
+        return sourceDirResult.CombineAndMap(destDirResult, (a, b) => new SynchronizationViewModel($"Session {Number++}", myNotificationService, a, b));
     }
 }

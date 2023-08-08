@@ -4,8 +4,8 @@ using System.Reactive.Linq;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
-using Zafiro.Functional;
 using Zafiro.ProgressReporting;
 using Zafiro.UI;
 
@@ -30,6 +30,7 @@ public class SyncActionViewModel : ViewModelBase
     public string Source => syncAction switch
     {
         CopyAction copyAction => copyAction.Source.Path,
+        SkipFileAction copyAction => copyAction.Source.Path,
         DeleteAction deleteAction => deleteAction.Source.Path,
         _ => ""
     };
@@ -37,6 +38,15 @@ public class SyncActionViewModel : ViewModelBase
     public string Destination => syncAction switch
     {
         CopyAction copyAction => copyAction.Destination.Path,
+        SkipFileAction skipFileAction => skipFileAction.Destination.Path,
+        _ => ""
+    };
+
+    public string Title => syncAction switch
+    {
+        CopyAction copyAction => "Copy origin to destination",
+        DeleteAction deleteAction => "Delete destination",
+        SkipFileAction deleteAction => "Skip",
         _ => ""
     };
 
