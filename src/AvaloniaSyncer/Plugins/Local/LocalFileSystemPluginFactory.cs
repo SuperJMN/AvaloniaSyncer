@@ -1,4 +1,4 @@
-﻿namespace AvaloniaSyncer;
+﻿namespace AvaloniaSyncer.Plugins.Local;
 
 class LocalFileSystemPluginFactory : IFileSystemPluginFactory
 {

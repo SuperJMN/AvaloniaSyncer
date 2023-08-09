@@ -38,7 +38,7 @@ public class SyncActionViewModel : ViewModelBase
     public string Destination => syncAction switch
     {
         CopyAction copyAction => copyAction.Destination.Path,
-        SkipFileAction skipFileAction => skipFileAction.Destination.Path,
+        SkipFileAction => "",
         _ => ""
     };
 

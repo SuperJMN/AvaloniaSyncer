@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using Serilog;
 
-namespace AvaloniaSyncer;
+namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
 class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
 {

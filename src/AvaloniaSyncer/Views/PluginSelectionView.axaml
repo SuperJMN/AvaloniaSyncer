@@ -2,17 +2,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
+             xmlns:plugins1="clr-namespace:AvaloniaSyncer.Plugins"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.PluginSelectionView"
              x:DataType="viewModels:PluginSelectionViewModel">
-    <DockPanel>
-        <ComboBox HorizontalAlignment="Stretch" PlaceholderText="{Binding Name}" DockPanel.Dock="Top" ItemsSource="{Binding PluginFactories}" SelectedItem="{Binding SelectedPluginFactory}">
-            <ComboBox.DisplayMemberBinding>
-                <Binding x:DataType="avaloniaSyncer:IFileSystemPluginFactory" Path="Name" />
-            </ComboBox.DisplayMemberBinding>
-        </ComboBox>
-        <ContentControl Margin="0 8 0 0" IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}" Content="{Binding SelectedPlugin}" />
-    </DockPanel>
+	<DockPanel>
+		<ComboBox HorizontalAlignment="Stretch" PlaceholderText="{Binding Name}" DockPanel.Dock="Top" ItemsSource="{Binding PluginFactories}" SelectedItem="{Binding SelectedPluginFactory}">
+			<ComboBox.DisplayMemberBinding>
+				<Binding x:DataType="plugins1:IFileSystemPluginFactory" Path="Name" />
+			</ComboBox.DisplayMemberBinding>
+		</ComboBox>
+		<ContentControl Margin="0 8 0 0"
+						IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}"
+						Content="{Binding SelectedPlugin}" />
+	</DockPanel>
 </UserControl>

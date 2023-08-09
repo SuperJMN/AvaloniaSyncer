@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Plugins;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
@@ -20,9 +21,13 @@ public class MainViewModel : ViewModelBase
         SourcePluginViewModel = new PluginSelectionViewModel("Source", pluginFactories);
         DestinationPluginViewModel = new PluginSelectionViewModel("Destination", pluginFactories);
 
+        var canCreateSession = this
+            .WhenAnyObservable(x => x.SourcePluginViewModel.SelectedPlugin.IsValid)
+            .CombineLatest(this.WhenAnyObservable(x => x.DestinationPluginViewModel.SelectedPlugin.IsValid), (isSrcValid, isDestValid) => isSrcValid && isDestValid);
+
         var createSession = ReactiveCommand
             .CreateFromTask(() => CreateSyncronizationSession(notificationService, SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!),
-                this.WhenAnyValue(x => x.SourcePluginViewModel.SelectedPlugin, x => x.DestinationPluginViewModel.SelectedPlugin, (src, dst) => src != null && dst != null));
+                canCreateSession);
 
         createSession
             .Successes()

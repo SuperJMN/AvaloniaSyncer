@@ -3,36 +3,36 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaSyncer.ViewModels"
-             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              xmlns:views="clr-namespace:AvaloniaSyncer.Views"
-             xmlns:plugins="clr-namespace:AvaloniaSyncer.Views.Plugins"
+             xmlns:controls="clr-namespace:AvaloniaSyncer.Controls"
+             xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
+             xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
+             xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.MainView"
              x:DataType="vm:MainViewModel">
 
 	<UserControl.DataTemplates>
-		<DataTemplate DataType="avaloniaSyncer:SeaweedFSPlugin">
-			<plugins:SeaweedFSView />
+		<DataTemplate DataType="seaweedFs:SeaweedFSPlugin">
+			<seaweedFs:SeaweedFSView />
 		</DataTemplate>
-		<DataTemplate DataType="avaloniaSyncer:LocalPlugin">
-			<plugins:LocalView />
+		<DataTemplate DataType="local:LocalPlugin">
+			<local:LocalView />
 		</DataTemplate>
-		<DataTemplate DataType="avaloniaSyncer:SftpPlugin">
-			<plugins:SftpView />
+		<DataTemplate DataType="sftp:SftpPlugin">
+			<sftp:SftpView />
 		</DataTemplate>
 	</UserControl.DataTemplates>
 
 	<ScrollViewer>
-		<DockPanel>
-			<DockPanel Dock="Top">
-				<Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
+		<Grid RowDefinitions="Auto *">
+            <WrapPanel ItemWidth="300" DockPanel.Dock="Top">
+                <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+                <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+                <Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
                         VerticalContentAlignment="Center" Content="Create sync session" />
-				<UniformGrid Rows="1">
-					<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-					<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-				</UniformGrid>
-			</DockPanel>
-			<TabControl ItemsSource="{Binding Syncronizations}">
+            </WrapPanel>
+            <TabControl Grid.Row="1" ItemsSource="{Binding Syncronizations}">
 
 				<TabControl.ItemTemplate>
 					<DataTemplate>
@@ -72,7 +72,7 @@
 					</DataTemplate>
 				</TabControl.ContentTemplate>
 			</TabControl>
-		</DockPanel>
+		</Grid>
 	</ScrollViewer>
 
 </UserControl>

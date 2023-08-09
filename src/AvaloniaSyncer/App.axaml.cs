@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using Avalonia;
 using Avalonia.Markup.Xaml;
+using AvaloniaSyncer.Plugins;
+using AvaloniaSyncer.Plugins.Local;
+using AvaloniaSyncer.Plugins.SeaweedFS;
+using AvaloniaSyncer.Plugins.Sftp;
 using AvaloniaSyncer.ViewModels;
 using AvaloniaSyncer.Views;
 using CSharpFunctionalExtensions;
