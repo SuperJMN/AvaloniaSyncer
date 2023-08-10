@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reactive.Linq;
+using AvaloniaSyncer.Plugins;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 

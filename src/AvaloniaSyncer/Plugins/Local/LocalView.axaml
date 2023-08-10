@@ -2,10 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Views.Plugins.LocalView"
-             x:DataType="avaloniaSyncer:LocalPlugin">
+             x:Class="AvaloniaSyncer.Plugins.Local.LocalView"
+             x:DataType="local:LocalPlugin">
 
     <DockPanel>
 		<Image DockPanel.Dock="Left" Height="96" Margin="0 0 8 0">
