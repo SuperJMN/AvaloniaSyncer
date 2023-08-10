@@ -43,7 +43,7 @@ public class SeaweedFSPlugin : ReactiveValidationObject, IFileSystemPlugin
                 Timeout = TimeSpan.FromDays(1)
             };
             var seaweedFSClient = new SeaweedFSClient(httpClient);
-            return (IFileSystem) new SeaweedFileSystem(seaweedFSClient);
+            return (IFileSystem) new SeaweedFileSystem(seaweedFSClient, logger);
         });
 
         return Task.FromResult(fileSystem);

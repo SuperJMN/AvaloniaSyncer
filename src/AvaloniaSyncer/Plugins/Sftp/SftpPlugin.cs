@@ -4,6 +4,7 @@ using CSharpFunctionalExtensions;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
+using Serilog;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Sftp;
 
@@ -11,8 +12,11 @@ namespace AvaloniaSyncer.Plugins.Sftp;
 
 public class SftpPlugin : ReactiveValidationObject, IFileSystemPlugin
 {
-    public SftpPlugin()
+    private readonly Maybe<ILogger> logger;
+
+    public SftpPlugin(Maybe<ILogger> logger)
     {
+        this.logger = logger;
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Path cannot be empty");
         this.ValidationRule(x => x.Username, s => !string.IsNullOrEmpty(s), "Username cannot be empty");
         this.ValidationRule(x => x.Password, s => !string.IsNullOrEmpty(s), "Password cannot be empty");
@@ -30,7 +34,7 @@ public class SftpPlugin : ReactiveValidationObject, IFileSystemPlugin
 
     public async Task<Result<IFileSystem>> FileSystem()
     {
-        var f = await SftpFileSystem.Create(Host, Port, Username, Password);
+        var f = await SftpFileSystem.Create(Host, Port, Username, Password, logger);
         return f.Map(system => (IFileSystem) system);
     }
 

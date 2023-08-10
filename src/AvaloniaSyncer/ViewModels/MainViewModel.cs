@@ -7,6 +7,7 @@ using AvaloniaSyncer.Plugins;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
+using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 
@@ -15,9 +16,11 @@ namespace AvaloniaSyncer.ViewModels;
 public class MainViewModel : ViewModelBase
 {
     private int Number = 1;
+    private Maybe<ILogger> logger;
 
-    public MainViewModel(INotificationService notificationService, IList<IFileSystemPluginFactory> pluginFactories)
+    public MainViewModel(INotificationService notificationService, IList<IFileSystemPluginFactory> pluginFactories, Maybe<ILogger> logger)
     {
+        this.logger = logger;
         SourcePluginViewModel = new PluginSelectionViewModel("Source", pluginFactories);
         DestinationPluginViewModel = new PluginSelectionViewModel("Destination", pluginFactories);
 
@@ -55,6 +58,6 @@ public class MainViewModel : ViewModelBase
     {
         var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
         var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
-        return sourceDirResult.CombineAndMap(destDirResult, (a, b) => new SynchronizationViewModel($"Session {Number++}", myNotificationService, a, b));
+        return sourceDirResult.CombineAndMap(destDirResult, (a, b) => new SynchronizationViewModel($"Session {Number++}", myNotificationService, a, b, logger));
     }
 }

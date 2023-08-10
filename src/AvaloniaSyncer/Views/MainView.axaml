@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaSyncer.ViewModels"
              xmlns:views="clr-namespace:AvaloniaSyncer.Views"
-             xmlns:controls="clr-namespace:AvaloniaSyncer.Controls"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
              xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
@@ -24,55 +23,27 @@
 		</DataTemplate>
 	</UserControl.DataTemplates>
 
-	<ScrollViewer>
-		<Grid RowDefinitions="Auto *">
-            <WrapPanel ItemWidth="300" DockPanel.Dock="Top">
-                <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-                <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-                <Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
-                        VerticalContentAlignment="Center" Content="Create sync session" />
-            </WrapPanel>
-            <TabControl Grid.Row="1" ItemsSource="{Binding Syncronizations}">
+    <Grid RowDefinitions="Auto *">
+        <WrapPanel ItemWidth="300" DockPanel.Dock="Top">
+            <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+            <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+            <Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
+                    VerticalContentAlignment="Center" Content="Create sync session" />
+        </WrapPanel>
+        <TabControl Grid.Row="1" ItemsSource="{Binding Syncronizations}">
 
-				<TabControl.ItemTemplate>
-					<DataTemplate>
-						<TextBlock Text="{Binding Title}" />
-					</DataTemplate>
-				</TabControl.ItemTemplate>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
 
-				<TabControl.ContentTemplate>
-					<DataTemplate DataType="vm:SynchronizationViewModel">
-						<DockPanel>
-							<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-								<Button Content="Analyze"
-                                        Command="{Binding GenerateSyncActions}" />
-								<Button Content="Sync all" Command="{Binding SyncAll}" />
-								<CheckBox Content="Skip identical files" IsChecked="{Binding SkipIdentical}" />
-                            </StackPanel>
-							<DataGrid ItemsSource="{Binding SyncActions}">
-								<DataGrid.Columns>
-                                    <DataGridTextColumn Width="Auto" Binding="{Binding Title}" Header="Action" />
-                                    <DataGridTextColumn Width="*" Binding="{Binding Source}" Header="Source" />
-									<DataGridTextColumn Width="*" Binding="{Binding Destination}" Header="Destination" />
-									<DataGridCheckBoxColumn Width="Auto" IsReadOnly="True" Binding="{Binding Synced}" Header="Done" />
-									<DataGridTemplateColumn Width="200" Header="%">
-										<DataTemplate x:DataType="vm:SyncActionViewModel">
-											<ProgressBar VerticalAlignment="Stretch" Height="20" Margin="4" Maximum="1"
-                                                         Value="{Binding Progress^.Proportion}" />
-										</DataTemplate>
-									</DataGridTemplateColumn>
-									<DataGridTemplateColumn Width="Auto">
-										<DataTemplate x:DataType="vm:SyncActionViewModel">
-											<Button Content="Sync" Margin="4" Command="{Binding Sync}" />
-										</DataTemplate>
-									</DataGridTemplateColumn>
-								</DataGrid.Columns>
-							</DataGrid>
-						</DockPanel>
-					</DataTemplate>
-				</TabControl.ContentTemplate>
-			</TabControl>
-		</Grid>
-	</ScrollViewer>
+            <TabControl.ContentTemplate>
+                <DataTemplate>
+                    <views:SyncSessionView />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </Grid>
 
 </UserControl>

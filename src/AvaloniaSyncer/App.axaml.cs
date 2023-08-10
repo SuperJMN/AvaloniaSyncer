@@ -31,7 +31,8 @@ public partial class App : Application
         this.Connect(() => new MainView(), control =>
         {
             var fileSystemPlugins = AvailablePlugins();
-            return new MainViewModel(new NotificationDialog(DialogService.Create(ApplicationLifetime!, new Dictionary<Type, Type>(){ [typeof(MessageDialogViewModel)] = typeof(MessageDialogView) })), fileSystemPlugins);
+            var notificationService = new NotificationDialog(DialogService.Create(ApplicationLifetime!, new Dictionary<Type, Type>(){ [typeof(MessageDialogViewModel)] = typeof(MessageDialogView) }));
+            return new MainViewModel(notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
         }, () => new MainWindow());
        
         base.OnFrameworkInitializationCompleted();
@@ -39,11 +40,12 @@ public partial class App : Application
 
     private static IFileSystemPluginFactory[] AvailablePlugins()
     {
+        var logger = Maybe.From(Log.Logger);
         return new IFileSystemPluginFactory []
         {
-            new LocalFileSystemPluginFactory(), 
-            new SeaweedFileSystemPluginFactory(Maybe.From(Log.Logger)),
-            new SftpPluginFactory(),
+            new LocalFileSystemPluginFactory(logger), 
+            new SeaweedFileSystemPluginFactory(logger),
+            new SftpPluginFactory(logger),
         };
     }
 }

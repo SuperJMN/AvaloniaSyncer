@@ -4,6 +4,7 @@ using CSharpFunctionalExtensions;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
+using Serilog;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Local;
 
@@ -11,13 +12,15 @@ namespace AvaloniaSyncer.Plugins.Local;
 
 public class LocalPlugin : ReactiveValidationObject, IFileSystemPlugin
 {
-    public Task<Result<IFileSystem>> FileSystem() => Task.FromResult(Result.Success<IFileSystem>(new LocalFileSystem()));
+    private readonly Maybe<ILogger> logger;
+    public Task<Result<IFileSystem>> FileSystem() => Task.FromResult(Result.Success<IFileSystem>(new LocalFileSystem(logger)));
 
     [Reactive]
     public string Path { get; set; } = "";
 
-    public LocalPlugin()
+    public LocalPlugin(Maybe<ILogger> logger)
     {
+        this.logger = logger;
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Invalid path");
     }
 

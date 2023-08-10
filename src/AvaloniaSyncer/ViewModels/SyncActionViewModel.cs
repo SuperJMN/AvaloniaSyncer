@@ -7,7 +7,6 @@ using ReactiveUI.Fody.Helpers;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.ProgressReporting;
-using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
 
@@ -15,15 +14,17 @@ public class SyncActionViewModel : ViewModelBase
 {
     private readonly ISyncAction syncAction;
 
-    public SyncActionViewModel(INotificationService myNotificationService, ISyncAction syncAction)
+    public SyncActionViewModel(ISyncAction syncAction)
     {
         this.syncAction = syncAction;
         Progress = this.syncAction.Progress;
         Sync = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default).Do(_ => Synced = false).SelectMany(_ => this.syncAction.Sync()));
 
         Sync.IsSuccess().BindTo(this, x => x.Synced);
-        Sync.HandleErrorsWith(myNotificationService);
+        Sync.Failures().BindTo(this, x => x.Error);
     }
+
+    [Reactive] public string Error { get; private set; } = "";
 
     public IObservable<RelativeProgress<long>> Progress { get; }
 
@@ -53,4 +54,5 @@ public class SyncActionViewModel : ViewModelBase
     [Reactive] public bool Synced { get; set; }
 
     public ReactiveCommand<Unit, Result> Sync { get; }
+    public IObservable<bool> IsSyncing => Sync.IsExecuting;
 }
