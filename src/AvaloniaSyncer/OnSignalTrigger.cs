@@ -1,0 +1,28 @@
+using System;
+using System.Reactive;
+using System.Reactive.Linq;
+using Avalonia;
+using Avalonia.Xaml.Interactivity;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using ReactiveUI;
+
+namespace AvaloniaSyncer;
+
+public class OnSignalTrigger : Trigger
+{
+    public OnSignalTrigger()
+    {
+        this.WhenAnyObservable(x => x.Trigger)
+            .Do(_ => Interaction.ExecuteActions(this, Actions, null))
+            .Subscribe();
+    }
+
+    public static readonly StyledProperty<IObservable<Unit>> TriggerProperty = AvaloniaProperty.Register<OnSignalTrigger, IObservable<Unit>>(
+        nameof(Trigger));
+
+    public IObservable<Unit> Trigger
+    {
+        get => GetValue(TriggerProperty);
+        set => SetValue(TriggerProperty, value);
+    }
+}

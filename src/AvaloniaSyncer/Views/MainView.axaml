@@ -7,6 +7,7 @@
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
              xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
+             xmlns:controls="clr-namespace:AvaloniaSyncer.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.MainView"
              x:DataType="vm:MainViewModel">
@@ -24,12 +25,11 @@
 	</UserControl.DataTemplates>
 
     <Grid RowDefinitions="Auto *">
-        <WrapPanel ItemWidth="300" DockPanel.Dock="Top">
-            <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-            <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-            <Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
-                    VerticalContentAlignment="Center" Content="Create sync session" />
-        </WrapPanel>
+        <controls:AdaptiveStackPanel Margin="8" DockPanel.Dock="Top" Spacing="8">
+            <views:PluginSelectionView MinWidth="200" DataContext="{Binding SourcePluginViewModel}" />
+            <views:PluginSelectionView MinWidth="200" DataContext="{Binding DestinationPluginViewModel}" />
+            <Button Command="{Binding AddSession}" VerticalAlignment="Center" Content="Add session" />
+        </controls:AdaptiveStackPanel>
         <TabControl Grid.Row="1" ItemsSource="{Binding Syncronizations}">
 
             <TabControl.ItemTemplate>

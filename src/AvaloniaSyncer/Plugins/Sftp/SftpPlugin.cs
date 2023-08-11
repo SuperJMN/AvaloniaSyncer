@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Plugins.Sftp.Configuration;
 using CSharpFunctionalExtensions;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
@@ -22,9 +25,24 @@ public class SftpPlugin : ReactiveValidationObject, IFileSystemPlugin
         this.ValidationRule(x => x.Password, s => !string.IsNullOrEmpty(s), "Password cannot be empty");
         this.ValidationRule(x => x.Port, s => s > 0 && s < ushort.MaxValue, "Invalid port");
         this.ValidationRule(x => x.Host, s => !string.IsNullOrEmpty(s), "Host cannot be empty");
+        Config = new ConfigViewModel();
+        this.WhenAnyValue(x => x.Config.SelectedProfile)
+            .WhereNotNull()
+            .Do(model =>
+            {
+                Username = model.Username;
+                Host = model.Host;
+                Password = model.Password;
+                Port= model.Port;
+            })
+            .Subscribe();
+
+        Config.Load.Execute().Subscribe();
     }
 
-    public int Port { get; set; } = 22;
+    public ConfigViewModel Config { get; set; }
+
+    [Reactive] public int Port { get; set; } = 22;
 
     [Reactive] public string Username { get; set; } = "";
 

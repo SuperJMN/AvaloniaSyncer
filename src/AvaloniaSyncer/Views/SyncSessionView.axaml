@@ -12,11 +12,11 @@
     </UserControl.Resources>
 
     <Panel>
-		<DockPanel>
-			<StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+		<DockPanel IsEnabled="{Binding !IsBusy^}">
+			<StackPanel Spacing="6" Margin="6" Orientation="Horizontal" DockPanel.Dock="Top">
 				<Button Content="Analyze"
                         Command="{Binding GenerateSyncActions}" />
-				<Button Content="Sync all" Command="{Binding SyncAll}" />
+				<Button Content="Sync" ToolTip.Tip="Syncs pending items" Command="{Binding SyncAll}" />
 				<CheckBox Content="Skip identical files" IsChecked="{Binding SkipIdentical}" />
 			</StackPanel>
 			<DataGrid ItemsSource="{Binding SyncActions}" CanUserResizeColumns="True" CanUserSortColumns="True">
@@ -27,9 +27,17 @@
 					<DataGridTemplateColumn Width="Auto" IsReadOnly="True"
                                             Header="Status">
 						<DataTemplate x:DataType="viewModels:SyncActionViewModel">
-							<StackPanel HorizontalAlignment="Center">
-								<CheckBox IsChecked="{Binding Synced}" />
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+								<CheckBox IsEnabled="False" IsChecked="{Binding Synced}" />
 								<PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />
+								<Button x:Name="ToggleButton" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                    <PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />
+                                    <Button.Flyout>
+										<Flyout>
+                                            <TextBlock Text="{Binding Error}" />
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
                             </StackPanel>
 						</DataTemplate>
 					</DataGridTemplateColumn>

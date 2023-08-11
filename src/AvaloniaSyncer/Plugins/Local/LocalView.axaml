@@ -7,8 +7,7 @@
              x:Class="AvaloniaSyncer.Plugins.Local.LocalView"
              x:DataType="local:LocalPlugin">
 
-    <DockPanel>
-		<Image DockPanel.Dock="Left" Height="96" Margin="0 0 8 0">
+    <!--<Image DockPanel.Dock="Left" Height="96" Margin="0 0 8 0">
 			<Image.Resources>
 				<SolidColorBrush x:Key="Brush0" Color="#FF23475F" />
 				<SolidColorBrush x:Key="Brush1" Color="#FF3498DB" />
@@ -31,9 +30,8 @@
 					</DrawingGroup>
 				</DrawingGroup>
 			</DrawingImage>
-		</Image>
-		<StackPanel VerticalAlignment="Center">
-			<TextBox Watermark="Path" Text="{Binding Path}" />
-		</StackPanel>
-	</DockPanel>
+		</Image>-->
+    <StackPanel VerticalAlignment="Center">
+        <TextBox Watermark="Path" Text="{Binding Path}" />
+    </StackPanel>
 </UserControl>
