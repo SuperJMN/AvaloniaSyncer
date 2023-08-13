@@ -30,7 +30,7 @@ public class ConfigViewModel : ViewModelBase
 
         Edit = ReactiveCommand.Create(() =>
         {
-            WorkingProfile = new ProfileViewModel(SelectedProfile.Id)
+            WorkingProfile = new ProfileViewModel(SelectedProfile!.Id)
             {
                 Name = SelectedProfile.Name,
                 Address = SelectedProfile.Address,
@@ -39,8 +39,8 @@ public class ConfigViewModel : ViewModelBase
 
         AddOrUpdate = ReactiveCommand.Create(() =>
         {
-            profilesSource.AddOrUpdate(WorkingProfile);
-            SelectedProfile = WorkingProfile;
+            profilesSource!.AddOrUpdate(WorkingProfile);
+            SelectedProfile = WorkingProfile!;
         });
 
         profilesSource
@@ -53,7 +53,7 @@ public class ConfigViewModel : ViewModelBase
 
         Save = ReactiveCommand.CreateFromTask(OnSave);
         Load = ReactiveCommand.CreateFromTask(OnLoad);
-        Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile.Id));
+        Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile!.Id), this.WhenAnyValue(x => x.SelectedProfile).NotNull());
         AddOrUpdate.InvokeCommand(Save);
     }
 
@@ -69,9 +69,9 @@ public class ConfigViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, ProfileViewModel> CreateNewProfile { get; set; }
 
-    [Reactive] public ProfileViewModel SelectedProfile { get; set; } = new(Guid.NewGuid());
+    [Reactive] public ProfileViewModel? SelectedProfile { get; set; }
 
-    [Reactive] public ProfileViewModel WorkingProfile { get; set; } = new(Guid.NewGuid());
+    [Reactive] public ProfileViewModel? WorkingProfile { get; set; }
 
     public ReadOnlyObservableCollection<ProfileViewModel> Profiles { get; }
 
