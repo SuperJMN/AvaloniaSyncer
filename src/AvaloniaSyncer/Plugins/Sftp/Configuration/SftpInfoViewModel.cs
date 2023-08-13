@@ -19,9 +19,9 @@ public class SftpInfoViewModel : ReactiveValidationObject
 
     public Guid Id { get; private set; }
 
-    [Reactive] public string Name { get; set; }
-    [Reactive] public string Host { get; set; }
-    [Reactive] public int Port { get; set; }
-    [Reactive] public string Username { get; set; }
-    [Reactive] public string Password { get; set; }
+    [Reactive] public string Name { get; set; } = "";
+    [Reactive] public string Host { get; set; } = "";
+    [Reactive] public int Port { get; set; } = 22;
+    [Reactive] public string Username { get; set; } = "";
+    [Reactive] public string Password { get; set; } = "";
 }

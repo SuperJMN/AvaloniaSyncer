@@ -2,7 +2,7 @@
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class ConfigDto
+public class Config
 {
-    public List<ConfigItemDto> Items { get; set; }
+    public required List<ProfileDto> Profiles { get; init; }
 }

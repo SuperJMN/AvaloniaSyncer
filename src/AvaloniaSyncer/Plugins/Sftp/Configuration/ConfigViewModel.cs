@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -18,12 +17,12 @@ namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
 public class ConfigViewModel : ViewModelBase
 {
-    private readonly Persistency persistency = new();
     private readonly SourceCache<SftpInfoViewModel, Guid> profilesSource;
+    private readonly Repository repository = new();
 
     public ConfigViewModel()
     {
-        profilesSource = new(s => s.Id);
+        profilesSource = new SourceCache<SftpInfoViewModel, Guid>(s => s.Id);
         CreateNewProfile = ReactiveCommand.Create(() => WorkingProfile = new SftpInfoViewModel(Guid.NewGuid()));
 
         Edit = ReactiveCommand.Create(() =>
@@ -32,9 +31,9 @@ public class ConfigViewModel : ViewModelBase
             {
                 Host = SelectedProfile.Host,
                 Name = SelectedProfile.Name,
-                Username= SelectedProfile.Username,
+                Username = SelectedProfile.Username,
                 Password = SelectedProfile.Password,
-                Port = SelectedProfile.Port,
+                Port = SelectedProfile.Port
             };
         }, this.WhenAnyValue(x => x.SelectedProfile).WhereNotNull().SelectMany(x => x.IsValid()));
 
@@ -65,45 +64,44 @@ public class ConfigViewModel : ViewModelBase
 
     public IObservable<Unit> NewConfigAddedOrEdited { get; set; }
 
-    public ReactiveCommand<Unit, Unit> AddNew { get; set; }
+    public ReactiveCommand<Unit, Result> Load { get; }
 
-    public ReactiveCommand<Unit, Result> Load { get; set; }
-
-    public ReactiveCommand<Unit, Result> Save { get; set; }
+    public ReactiveCommand<Unit, Result> Save { get; }
 
     public ReactiveCommand<Unit, Unit> Edit { get; set; }
 
     public ReactiveCommand<Unit, SftpInfoViewModel> CreateNewProfile { get; set; }
 
     [Reactive] public SftpInfoViewModel SelectedProfile { get; set; } = new(Guid.NewGuid());
+
     [Reactive] public SftpInfoViewModel WorkingProfile { get; set; } = new(Guid.NewGuid());
 
     public ReadOnlyObservableCollection<SftpInfoViewModel> Profiles { get; }
 
     private Task<Result> OnSave()
     {
-        var toSave = new ConfigDto()
+        var toSave = new Config
         {
-            Items = Profiles.Select(x => new ConfigItemDto()
+            Profiles = Profiles.Select(x => new ProfileDto
             {
                 Id = x.Id,
                 Name = x.Name,
                 Host = x.Host,
                 Port = x.Port,
                 Username = x.Username,
-                Password = x.Password,
-            }).ToList(),
+                Password = x.Password
+            }).ToList()
         };
 
-        return persistency.Save(toSave);
+        return repository.Save(toSave);
     }
 
     private async Task<Result> OnLoad()
     {
-        var models = await persistency.Load()
+        var models = await repository.Load()
             .Map(dto =>
             {
-                return dto.Items.Select(itemDto => new SftpInfoViewModel(itemDto.Id)
+                return dto.Profiles.Select(itemDto => new SftpInfoViewModel(itemDto.Id)
                 {
                     Name = itemDto.Name,
                     Host = itemDto.Host,

@@ -2,7 +2,7 @@
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class ConfigItemDto
+public class ProfileDto
 {
     public string Host { get; set; }
     public int Port { get; set; }

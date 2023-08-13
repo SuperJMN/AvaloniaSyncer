@@ -6,14 +6,14 @@ using CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class Persistency
+public class Repository
 {
-    public Task<Result> Save(ConfigDto dto)
+    public Task<Result> Save(Config dto)
     {
         return OpenWrite("SFTP").Bind(stream => Save(dto, stream));
     }
 
-    private static Task<Result> Save(ConfigDto dto, Stream stream)
+    private static Task<Result> Save(Config dto, Stream stream)
     {
         return Result.Try(async () =>
         {
@@ -24,18 +24,18 @@ public class Persistency
         });
     }
 
-    private static Task<Result<ConfigDto>> Load(Stream stream)
+    private static Task<Result<Config>> Load(Stream stream)
     {
         return Result.Try(async () =>
         {
             await using (stream)
             {
-                return await JsonSerializer.DeserializeAsync<ConfigDto>(stream);
+                return await JsonSerializer.DeserializeAsync<Config>(stream);
             }
         }).EnsureNotNull("Could not load");
     }
 
-    public Task<Result<ConfigDto>> Load()
+    public Task<Result<Config>> Load()
     {
         return OpenRead("SFTP").Bind(stream => Load(stream));
     }
