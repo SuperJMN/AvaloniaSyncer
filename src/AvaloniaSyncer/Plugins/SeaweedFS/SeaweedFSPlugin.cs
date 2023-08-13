@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Net.Http;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Serilog;
+using Zafiro;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.SeaweedFS;
 using Zafiro.FileSystem.SeaweedFS.Filer.Client;
@@ -23,7 +27,19 @@ public class SeaweedFSPlugin : ReactiveValidationObject, IFileSystemPlugin
 
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Invalid path");
         this.ValidationRule(x => x.Address, s => !string.IsNullOrEmpty(s), "Invalid path");
+
+        Config = new ConfigViewModel(logger);
+        this.WhenAnyValue(x => x.Config.SelectedProfile)
+            .WhereNotNull()
+            .Do(model =>
+            {
+                Address= model.Address;
+            })
+            .Subscribe();
+        Config.Load.Execute().Subscribe();
     }
+
+    public ConfigViewModel Config { get; }
 
     [Reactive] public string Address { get; set; } = "";
 

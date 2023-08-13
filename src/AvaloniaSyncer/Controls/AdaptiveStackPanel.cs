@@ -10,9 +10,9 @@ using ReactiveUI;
 
 namespace AvaloniaSyncer.Controls;
 
-public class AdaptiveView : StackPanel
+public class AdaptiveStackPanel : StackPanel
 {
-    public AdaptiveView()
+    public AdaptiveStackPanel()
     {
         this.WhenAnyValue(view => view.Bounds)
             .Sample(TimeSpan.FromSeconds(0.2), AvaloniaScheduler.Instance)
