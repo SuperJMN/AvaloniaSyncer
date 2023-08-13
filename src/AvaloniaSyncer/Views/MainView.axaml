@@ -11,25 +11,14 @@
              x:Class="AvaloniaSyncer.Views.MainView"
              x:DataType="vm:MainViewModel">
 
-	<UserControl.DataTemplates>
-		<DataTemplate DataType="seaweedFs:SeaweedFSPlugin">
-			<seaweedFs:SeaweedFSView />
-		</DataTemplate>
-		<DataTemplate DataType="local:LocalPlugin">
-			<local:LocalView />
-		</DataTemplate>
-		<DataTemplate DataType="sftp:SftpPlugin">
-			<sftp:SftpView />
-		</DataTemplate>
-	</UserControl.DataTemplates>
-
     <Grid RowDefinitions="Auto *">
-        <WrapPanel ItemWidth="300" DockPanel.Dock="Top">
+        <Button Command="{Binding CreateSyncSession}" Content="New sync session" />
+        <!--<WrapPanel ItemWidth="300" DockPanel.Dock="Top">
             <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
             <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
             <Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
                     VerticalContentAlignment="Center" Content="Create sync session" />
-        </WrapPanel>
+        </WrapPanel>-->
         <TabControl Grid.Row="1" ItemsSource="{Binding Syncronizations}">
 
             <TabControl.ItemTemplate>
