@@ -11,17 +11,20 @@ using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
+using Serilog;
 using Zafiro.Mixins;
 
-namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
 
 public class ConfigViewModel : ViewModelBase
 {
+    private readonly Maybe<ILogger> logger;
     private readonly SourceCache<ProfileViewModel, Guid> profilesSource;
     private readonly Repository repository = new();
 
-    public ConfigViewModel()
+    public ConfigViewModel(Maybe<ILogger> logger)
     {
+        this.logger = logger;
         profilesSource = new SourceCache<ProfileViewModel, Guid>(s => s.Id);
         CreateNewProfile = ReactiveCommand.Create(() => WorkingProfile = new ProfileViewModel(Guid.NewGuid()));
 
@@ -29,11 +32,8 @@ public class ConfigViewModel : ViewModelBase
         {
             WorkingProfile = new ProfileViewModel(SelectedProfile.Id)
             {
-                Host = SelectedProfile.Host,
                 Name = SelectedProfile.Name,
-                Username = SelectedProfile.Username,
-                Password = SelectedProfile.Password,
-                Port = SelectedProfile.Port
+                Address = SelectedProfile.Address,
             };
         }, this.WhenAnyValue(x => x.SelectedProfile).WhereNotNull().SelectMany(x => x.IsValid()));
 
@@ -61,8 +61,6 @@ public class ConfigViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> Delete { get; set; }
 
-    public IObservable<Unit> NewConfigAddedOrEdited { get; set; }
-
     public ReactiveCommand<Unit, Result> Load { get; }
 
     public ReactiveCommand<Unit, Result> Save { get; }
@@ -85,14 +83,11 @@ public class ConfigViewModel : ViewModelBase
             {
                 Id = x.Id,
                 Name = x.Name,
-                Host = x.Host,
-                Port = x.Port,
-                Username = x.Username,
-                Password = x.Password
+                Address = x.Address,
             }).ToList()
         };
 
-        return repository.Save(toSave);
+        return repository.Save(toSave).TapError(s => logger.Execute(l => l.Warning(s)));
     }
 
     private async Task<Result> OnLoad()
@@ -103,13 +98,11 @@ public class ConfigViewModel : ViewModelBase
                 return dto.Profiles.Select(itemDto => new ProfileViewModel(itemDto.Id)
                 {
                     Name = itemDto.Name,
-                    Host = itemDto.Host,
-                    Username = itemDto.Username,
-                    Password = itemDto.Password,
-                    Port = itemDto.Port
+                    Address = itemDto.Address,
                 });
             });
 
-        return models.Tap(enumerable => profilesSource.Edit(x => x.Load(enumerable)));
+        return models.Tap(enumerable => profilesSource.Edit(x => x.Load(enumerable)))
+            .TapError(s => logger.Execute(l => l.Warning(s)));
     }
 }

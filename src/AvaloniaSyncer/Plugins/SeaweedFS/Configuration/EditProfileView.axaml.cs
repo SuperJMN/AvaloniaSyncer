@@ -2,7 +2,7 @@ using System.Windows.Input;
 using Avalonia;
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
 
 public partial class EditProfileView : UserControl
 {

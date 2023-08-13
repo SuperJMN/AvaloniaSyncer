@@ -32,7 +32,4 @@
     <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.16" />
     <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.16" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
 </Project>

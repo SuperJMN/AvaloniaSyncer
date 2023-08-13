@@ -5,9 +5,9 @@ using ReactiveUI.Validation.Helpers;
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class SftpInfoViewModel : ReactiveValidationObject
+public class ProfileViewModel : ReactiveValidationObject
 {
-    public SftpInfoViewModel(Guid id)
+    public ProfileViewModel(Guid id)
     {
         Id = id;
         this.ValidationRule(x => x.Name, s => !string.IsNullOrEmpty(s), "Cannot be empty");

@@ -2,10 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:configuration="clr-namespace:AvaloniaSyncer.Plugins.Sftp.Configuration"
+             xmlns:configuration="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS.Configuration"
              xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             xmlns:configuration1="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS.Configuration"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Plugins.Sftp.Config.ConfigView"
+             x:Class="AvaloniaSyncer.Plugins.SeaweedFS.Configuration.ConfigView"
              x:DataType="configuration:ConfigViewModel">
 	<StackPanel>
 		<ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}">
@@ -17,7 +18,7 @@
 			<Button Content="New" Command="{Binding CreateNewProfile}">
 				<Button.Flyout>
                     <Flyout>
-                        <configuration:EditProfileView CommandText="Create" Profile="{Binding WorkingProfile}" Command="{Binding AddOrUpdate}" />
+                        <configuration1:EditProfileView CommandText="Create" Profile="{Binding WorkingProfile}" Command="{Binding AddOrUpdate}" />
                         <Interaction.Behaviors>
                             <avaloniaSyncer:OnSignalTrigger Trigger="{Binding AddOrUpdate}">
                                 <CallMethodAction TargetObject="{Binding $parent[FlyoutBase]}" MethodName="Hide" />
@@ -29,7 +30,7 @@
             <Button Content="Edit" Command="{Binding Edit}">
                 <Button.Flyout>
                     <Flyout>
-                        <configuration:EditProfileView CommandText="Update" Profile="{Binding WorkingProfile}" Command="{Binding AddOrUpdate}" />
+                        <configuration1:EditProfileView CommandText="Update" Profile="{Binding WorkingProfile}" Command="{Binding AddOrUpdate}" />
                         <Interaction.Behaviors>
                             <avaloniaSyncer:OnSignalTrigger Trigger="{Binding AddOrUpdate}">
                                 <CallMethodAction TargetObject="{Binding $parent[FlyoutBase]}" MethodName="Hide" />
