@@ -13,7 +13,7 @@
 				<Binding x:DataType="configuration:ProfileViewModel" Path="Name" />
 			</ComboBox.DisplayMemberBinding>
 		</ComboBox>
-		<StackPanel Orientation="Horizontal">
+		<StackPanel Orientation="Horizontal" Spacing="8" Margin="8">
 			<Button Content="New" Command="{Binding CreateNewProfile}">
 				<Button.Flyout>
                     <Flyout>

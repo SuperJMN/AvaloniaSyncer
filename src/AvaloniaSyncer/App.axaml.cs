@@ -31,19 +31,24 @@ public partial class App : Application
         this.Connect(() => new MainView(), control =>
         {
             var fileSystemPlugins = AvailablePlugins();
-            var notificationService = new NotificationDialog(DialogService.Create(ApplicationLifetime!, new Dictionary<Type, Type>(){ [typeof(MessageDialogViewModel)] = typeof(MessageDialogView) }));
-            return new MainViewModel(notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
+            var dialogService = DialogService.Create(ApplicationLifetime!, new Dictionary<Type, Type>
+            {
+                [typeof(MessageDialogViewModel)] = typeof(MessageDialogView),
+                [typeof(CreateSyncSessionViewModel)] = typeof(CreateSyncSessionView),
+            });
+            var notificationService = new NotificationDialog(dialogService);
+            return new MainViewModel(dialogService, notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
         }, () => new MainWindow());
-       
+
         base.OnFrameworkInitializationCompleted();
     }
 
     private static IFileSystemPluginFactory[] AvailablePlugins()
     {
         var logger = Maybe.From(Log.Logger);
-        return new IFileSystemPluginFactory []
+        return new IFileSystemPluginFactory[]
         {
-            new LocalFileSystemPluginFactory(logger), 
+            new LocalFileSystemPluginFactory(logger),
             new SeaweedFileSystemPluginFactory(logger),
             new SftpPluginFactory(logger),
         };

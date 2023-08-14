@@ -1,0 +1,31 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:AvaloniaSyncer.Views"
+             xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
+             xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
+             xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
+             xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
+             mc:Ignorable="d" 
+             x:Class="AvaloniaSyncer.Views.CreateSyncSessionView"
+             x:DataType="viewModels:CreateSyncSessionViewModel">
+
+	<UserControl.DataTemplates>
+		<DataTemplate DataType="seaweedFs:SeaweedFSPlugin">
+			<seaweedFs:SeaweedFSView />
+		</DataTemplate>
+		<DataTemplate DataType="local:LocalPlugin">
+			<local:LocalView />
+		</DataTemplate>
+		<DataTemplate DataType="sftp:SftpPlugin">
+			<sftp:SftpView />
+		</DataTemplate>
+	</UserControl.DataTemplates>
+
+    <UniformGrid Rows="1" MinWidth="640" MinHeight="600">
+        <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+        <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+    </UniformGrid>
+
+</UserControl>

@@ -7,11 +7,17 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Plugins.SeaweedFS.SeaweedFSView"
              x:DataType="seaweedFs:SeaweedFSPlugin">
-    <StackPanel VerticalAlignment="Center" Spacing="4">
-        <Expander Header="Profiles" HorizontalAlignment="Stretch">
+	<DockPanel>
+
+        <Expander DockPanel.Dock="Bottom" Header="Profiles" HorizontalAlignment="Stretch">
             <configuration:ConfigView HorizontalAlignment="Stretch" DataContext="{Binding Config}" />
         </Expander>
-        <TextBox Watermark="Server address" Text="{Binding Address}" />
-        <TextBox Watermark="Path" Text="{Binding Path}" />
-    </StackPanel>
+
+        <StackPanel Spacing="4">
+			<TextBox Watermark="Server address" Text="{Binding Address}" />
+			<TextBox Watermark="Path" Text="{Binding Path}" />
+
+		</StackPanel>
+
+	</DockPanel>
 </UserControl>

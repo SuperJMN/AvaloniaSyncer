@@ -8,14 +8,19 @@
              x:Class="AvaloniaSyncer.Plugins.Sftp.SftpView"
              x:CompileBindings="True"
              x:DataType="sftp:SftpPlugin">
-    <StackPanel Spacing="4">
-        <Expander Header="Profiles" HorizontalAlignment="Stretch">
+	<DockPanel>
+
+        <Expander Header="Profiles" HorizontalAlignment="Stretch" DockPanel.Dock="Bottom">
             <config:ConfigView HorizontalAlignment="Stretch" DataContext="{Binding Config}" />
         </Expander>
-        <TextBox Watermark="Host" Text="{Binding Host}" />
-        <TextBox Watermark="Port" Text="{Binding Port}" />
-        <TextBox Watermark="Username" Text="{Binding Username}" />
-        <TextBox PasswordChar="*" Watermark="Password" Text="{Binding Password}" />
-        <TextBox Watermark="Path" Text="{Binding Path}" />
-    </StackPanel>
+
+        <StackPanel Spacing="4">
+			<TextBox Watermark="Host" Text="{Binding Host}" />
+			<TextBox Watermark="Port" Text="{Binding Port}" />
+			<TextBox Watermark="Username" Text="{Binding Username}" />
+			<TextBox PasswordChar="*" Watermark="Password" Text="{Binding Password}" />
+			<TextBox Watermark="Path" Text="{Binding Path}" />
+		</StackPanel>
+
+	</DockPanel>
 </UserControl>
