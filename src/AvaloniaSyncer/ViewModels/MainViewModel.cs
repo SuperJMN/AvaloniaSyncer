@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Plugins;
 using CSharpFunctionalExtensions;
@@ -9,7 +8,6 @@ using DynamicData;
 using ReactiveUI;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
-using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
@@ -35,7 +33,7 @@ public class MainViewModel : ViewModelBase
 
         CreateSyncSession = ReactiveCommand.CreateFromTask(async () =>
         {
-            await ShowDialog(dialogService, pluginFactories, Number);
+            await ShowDialog(dialogService, pluginFactories);
             Number++;
         });
     }
@@ -45,20 +43,23 @@ public class MainViewModel : ViewModelBase
 
     public IEnumerable<SynchronizationViewModel> Syncronizations { get; }
 
-    private async Task ShowDialog(IDialogService dialogService, IList<IFileSystemPluginFactory> pluginFactories, int number)
+    private Task ShowDialog(IDialogService dialogService, IList<IFileSystemPluginFactory> pluginFactories)
     {
+        var vm = new CreateSyncSessionViewModel(pluginFactories);
+
         var options = new[]
         {
             new OptionConfiguration<CreateSyncSessionViewModel>("Cancel", actionContext => ReactiveCommand.Create(() => actionContext.Window.Close())),
-            new OptionConfiguration<CreateSyncSessionViewModel>("Create", actionContext => ReactiveCommand.Create(() => actionContext.ViewModel.CreateSession))
+            new OptionConfiguration<CreateSyncSessionViewModel>("Create", actionContext =>
+            {
+                return vm.CreateSession.Extend(tuple =>
+                {
+                    sessions.AddOrUpdate(new SynchronizationViewModel($"Session {Number++}", notificationService, tuple.Item1, tuple.Item2, logger));
+                    actionContext.Window.Close();
+                });
+            })
         };
 
-        var createSyncSessionViewModel = new CreateSyncSessionViewModel(pluginFactories);
-        var subscription = createSyncSessionViewModel.CreateSession.Successes()
-            .Do(tuple => { sessions.AddOrUpdate(new SynchronizationViewModel($"Session {Number++}", notificationService, tuple.Item1, tuple.Item2, logger)); })
-            .Subscribe();
-
-        await dialogService.ShowDialog(createSyncSessionViewModel, "Create  sync session", options);
-        subscription.Dispose();
+        return dialogService.ShowDialog(vm, "Create  sync session", options);
     }
 }

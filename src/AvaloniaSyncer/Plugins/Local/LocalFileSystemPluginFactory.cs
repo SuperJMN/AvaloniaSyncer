@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System;
+using CSharpFunctionalExtensions;
 using Serilog;
 
 namespace AvaloniaSyncer.Plugins.Local;
@@ -13,6 +14,8 @@ class LocalFileSystemPluginFactory : IFileSystemPluginFactory
     }
 
     public string Name => "Local";
+    public Uri Icon => new Uri("avares://AvaloniaSyncer/Assets/sftp.png");
+
     public IFileSystemPlugin Create()
     {
         return new LocalPlugin(logger);

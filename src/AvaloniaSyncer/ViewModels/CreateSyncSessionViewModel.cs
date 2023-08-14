@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -21,12 +22,12 @@ public class CreateSyncSessionViewModel
             .CombineLatest(this.WhenAnyObservable(x => x.DestinationPluginViewModel.SelectedPlugin.IsValid), (isSrcValid, isDestValid) => isSrcValid && isDestValid);
 
         var createSession = ReactiveCommand
-            .CreateFromTask(() => CreateSyncSession(SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!),
+            .CreateFromObservable(() => Observable.FromAsync(() => CreateSyncSession(SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!)).Successes(),
                 canCreateSession);
         CreateSession = createSession;
     }
 
-    public ReactiveCommand<Unit, Result<(IZafiroDirectory, IZafiroDirectory)>> CreateSession { get; }
+    public ReactiveCommand<Unit, (IZafiroDirectory, IZafiroDirectory)> CreateSession { get; }
 
     private Task<Result<(IZafiroDirectory, IZafiroDirectory)>> CreateSyncSession(IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
     {

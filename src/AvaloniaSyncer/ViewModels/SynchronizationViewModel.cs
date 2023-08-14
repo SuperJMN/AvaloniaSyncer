@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
+using Zafiro.Mixins;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
@@ -18,6 +20,13 @@ public class SynchronizationViewModel : ViewModelBase
     public SynchronizationViewModel(string title, INotificationService notificationService, IZafiroDirectory origin, IZafiroDirectory dest, Maybe<ILogger> logger)
     {
         Title = title;
+
+        var isSyncing = new Subject<bool>();
+        var isAnalyzing = new Subject<bool>();
+        Stop = ReactiveCommand.Create(() => { }, isSyncing);
+        var canSync = this.WhenAnyValue(x => x.SyncActions).NotNull().CombineLatest(isAnalyzing, (containsActions, isSyncing) => containsActions && !isSyncing);
+        SyncAll = ReactiveCommand.CreateFromObservable(OnSyncAll, canSync);
+        SyncAll.IsExecuting.Subscribe(isSyncing);
 
         var reactiveCommand = ReactiveCommand.CreateFromObservable(() =>
         {
@@ -30,9 +39,10 @@ public class SynchronizationViewModel : ViewModelBase
                 });
 
             return observable;
-        });
+        }, SyncAll.IsExecuting.Not());
 
         GenerateSyncActions = reactiveCommand;
+        GenerateSyncActions.IsExecuting.Subscribe(isAnalyzing);
 
         reactiveCommand.Successes()
             .Select(list => list.Select(action => new SyncActionViewModel(action)).ToList())
@@ -45,17 +55,13 @@ public class SynchronizationViewModel : ViewModelBase
                 return Unit.Default;
             }).Subscribe();
 
-        SyncAll = ReactiveCommand.CreateFromObservable(OnSyncAll, this.WhenAnyValue(x => x.SyncActions, selector: list => list != null));
-        IsBusy = GenerateSyncActions.IsExecuting;
+        IsBusy = GenerateSyncActions.IsExecuting.Merge(SyncAll.IsExecuting);
+        IsSyncing = SyncAll.IsExecuting;
     }
 
-    private IObservable<Result> OnSyncAll()
-    {
-        return SyncActions!
-            .Where(x => !x.Synced)
-            .Select(x => x.Sync.Execute())
-            .Merge(3);
-    }
+    public IObservable<bool> IsSyncing { get; }
+
+    public ReactiveCommand<Unit, Unit> Stop { get; }
 
     [Reactive] public bool SkipIdentical { get; set; } = true;
 
@@ -67,4 +73,13 @@ public class SynchronizationViewModel : ViewModelBase
 
     public string Title { get; }
     public IObservable<bool> IsBusy { get; }
+
+    private IObservable<Result> OnSyncAll()
+    {
+        return SyncActions!
+            .Where(x => !x.Synced)
+            .Select(x => x.Sync.Execute())
+            .Merge(3)
+            .TakeUntil(Stop);
+    }
 }

@@ -4,22 +4,18 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaSyncer.ViewModels"
              xmlns:views="clr-namespace:AvaloniaSyncer.Views"
-             xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
-             xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
-             xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.MainView"
              x:DataType="vm:MainViewModel">
 
-    <Grid RowDefinitions="Auto *">
-        <Button Command="{Binding CreateSyncSession}" Content="New sync session" />
-        <!--<WrapPanel ItemWidth="300" DockPanel.Dock="Top">
-            <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-            <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-            <Button VerticalAlignment="Center" DockPanel.Dock="Right" Command="{Binding AddSession}"
-                    VerticalContentAlignment="Center" Content="Create sync session" />
-        </WrapPanel>-->
-        <TabControl Grid.Row="1" ItemsSource="{Binding Syncronizations}">
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Session">
+                <MenuItem Header="Create" Command="{Binding CreateSyncSession}" />
+            </MenuItem>
+        </Menu>
+        <TabControl ItemsSource="{Binding Syncronizations}">
 
             <TabControl.ItemTemplate>
                 <DataTemplate>
@@ -33,6 +29,6 @@
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>
-    </Grid>
+    </DockPanel>
 
 </UserControl>

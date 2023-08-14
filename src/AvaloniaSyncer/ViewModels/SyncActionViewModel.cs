@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -16,13 +17,22 @@ public class SyncActionViewModel : ViewModelBase
 
     public SyncActionViewModel(ISyncAction syncAction)
     {
+        var isSyncing = new Subject<bool>();
         this.syncAction = syncAction;
-        Progress = this.syncAction.Progress;
-        Sync = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default).Do(_ => Synced = false).SelectMany(_ => this.syncAction.Sync()));
 
+        Progress = this.syncAction.Progress;
+        Stop = ReactiveCommand.Create(() => { }, isSyncing);
+
+        Sync = ReactiveCommand.CreateFromObservable(() => Observable.Return(Unit.Default).Do(_ => Synced = false)
+            .SelectMany(_ => Observable.FromAsync(ct => this.syncAction.Sync(ct)))
+            .TakeUntil(Stop));
+
+        Sync.IsExecuting.Subscribe(isSyncing);
         Sync.IsSuccess().BindTo(this, x => x.Synced);
         Sync.Failures().BindTo(this, x => x.Error);
     }
+
+    public ReactiveCommand<Unit, Unit> Stop { get; set; }
 
     [Reactive] public string Error { get; private set; } = "";
 

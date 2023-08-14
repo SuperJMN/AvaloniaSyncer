@@ -1,4 +1,5 @@
-﻿using CSharpFunctionalExtensions;
+﻿using System;
+using CSharpFunctionalExtensions;
 using Serilog;
 
 namespace AvaloniaSyncer.Plugins.Sftp;
@@ -13,6 +14,9 @@ class SftpPluginFactory : IFileSystemPluginFactory
     }
 
     public string Name => "SFTP";
+
+    public Uri Icon => new Uri("avares://AvaloniaSyncer/Assets/sftp.png");
+    
     public IFileSystemPlugin Create()
     {
         return new SftpPlugin(logger);

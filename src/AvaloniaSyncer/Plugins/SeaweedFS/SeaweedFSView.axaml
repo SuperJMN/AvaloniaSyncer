@@ -3,14 +3,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
+             xmlns:configuration="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS.Configuration"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Plugins.SeaweedFS.SeaweedFSView"
              x:DataType="seaweedFs:SeaweedFSPlugin">
-    <DockPanel>
-        <Image DockPanel.Dock="Left" Height="96" Margin="0 0 8 0" Source="/Assets/seaweedfs.png"></Image>
-        <StackPanel VerticalAlignment="Center" Spacing="4">
-            <TextBox Watermark="Server address" Text="{Binding Address}" />
-            <TextBox Watermark="Path" Text="{Binding Path}" />
-        </StackPanel>
-    </DockPanel>
+	<DockPanel>
+
+        <Expander DockPanel.Dock="Bottom" Header="Profiles" HorizontalAlignment="Stretch">
+            <configuration:ConfigView HorizontalAlignment="Stretch" DataContext="{Binding Config}" />
+        </Expander>
+
+        <StackPanel Spacing="4">
+			<TextBox Watermark="Server address" Text="{Binding Address}" />
+			<TextBox Watermark="Path" Text="{Binding Path}" />
+
+		</StackPanel>
+
+	</DockPanel>
 </UserControl>

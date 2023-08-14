@@ -13,16 +13,19 @@ namespace AvaloniaSyncer.Plugins.Local;
 public class LocalPlugin : ReactiveValidationObject, IFileSystemPlugin
 {
     private readonly Maybe<ILogger> logger;
-    public Task<Result<IFileSystem>> FileSystem() => Task.FromResult(Result.Success<IFileSystem>(new LocalFileSystem(logger)));
-
-    [Reactive]
-    public string Path { get; set; } = "";
 
     public LocalPlugin(Maybe<ILogger> logger)
     {
         this.logger = logger;
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Invalid path");
     }
+
+    public Task<Result<IFileSystem>> FileSystem()
+    {
+        return Task.FromResult(Result.Success<IFileSystem>(new LocalFileSystem(logger)));
+    }
+
+    [Reactive] public string Path { get; set; } = "";
 
     public IObservable<bool> IsValid => this.IsValid();
 }

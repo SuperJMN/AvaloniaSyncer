@@ -7,32 +7,25 @@
              xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
              xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" 
              x:Class="AvaloniaSyncer.Views.CreateSyncSessionView"
              x:DataType="viewModels:CreateSyncSessionViewModel">
 
-    <UserControl.DataTemplates>
-        <DataTemplate DataType="seaweedFs:SeaweedFSPlugin">
-            <seaweedFs:SeaweedFSView />
-        </DataTemplate>
-        <DataTemplate DataType="local:LocalPlugin">
-            <local:LocalView />
-        </DataTemplate>
-        <DataTemplate DataType="sftp:SftpPlugin">
-            <sftp:SftpView />
-        </DataTemplate>
-    </UserControl.DataTemplates>
+	<UserControl.DataTemplates>
+		<DataTemplate DataType="seaweedFs:SeaweedFSPlugin">
+			<seaweedFs:SeaweedFSView />
+		</DataTemplate>
+		<DataTemplate DataType="local:LocalPlugin">
+			<local:LocalView />
+		</DataTemplate>
+		<DataTemplate DataType="sftp:SftpPlugin">
+			<sftp:SftpView />
+		</DataTemplate>
+	</UserControl.DataTemplates>
 
-    <DockPanel>
-
-        <Button DockPanel.Dock="Bottom" VerticalAlignment="Center" Command="{Binding CreateSession}"
-                VerticalContentAlignment="Center" Content="Create sync session" />
-
-        <UniformGrid>
-			<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-			<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-		</UniformGrid>
-        
-	</DockPanel>
+    <UniformGrid Rows="1" MinWidth="640" MinHeight="600">
+        <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+        <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+    </UniformGrid>
 
 </UserControl>
