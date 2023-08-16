@@ -42,16 +42,26 @@ public class Repository
 
     private static Result<Stream> OpenRead(string path)
     {
-        var isolatedStorageScope = IsolatedStorageScope.User | IsolatedStorageScope.Domain | IsolatedStorageScope.Assembly;
-        return Result.Try(() => IsolatedStorageFile.GetStore(isolatedStorageScope, null, null))
-            .Map(file => (Stream)file.OpenFile(path, FileMode.Open));
+        return Result.Try(GetStore)
+            .Bind(store =>
+            {
+                return Result.Try(() =>
+                {
+                    var isolatedStorageFileStream = new IsolatedStorageFileStream(path, FileMode.Open, store);
+                    return (Stream) isolatedStorageFileStream;
+                });
+            });
     }
 
     private static Result<Stream> OpenWrite(string path)
     {
-        var isolatedStorageScope = IsolatedStorageScope.User | IsolatedStorageScope.Domain | IsolatedStorageScope.Assembly;
-        return Result.Try(() => IsolatedStorageFile.GetStore(isolatedStorageScope, null, null))
-            .Map(file => (Stream)file.OpenFile(path, FileMode.Create));
+        return Result.Try(GetStore)
+            .Map(store => (Stream)new IsolatedStorageFileStream(path, FileMode.Create, store));
     }
 
+    private static IsolatedStorageFile GetStore()
+    {
+        var isolatedStorageFile = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Domain | IsolatedStorageScope.Assembly, null, null);
+        return isolatedStorageFile;
+    }
 }

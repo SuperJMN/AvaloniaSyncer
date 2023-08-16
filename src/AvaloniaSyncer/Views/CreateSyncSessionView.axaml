@@ -7,7 +7,7 @@
              xmlns:sftp="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
              xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              x:Class="AvaloniaSyncer.Views.CreateSyncSessionView"
              x:DataType="viewModels:CreateSyncSessionViewModel">
 
@@ -23,9 +23,11 @@
 		</DataTemplate>
 	</UserControl.DataTemplates>
 
-    <UniformGrid Rows="1" MinWidth="640" MinHeight="600">
-        <views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-        <views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-    </UniformGrid>
+	<ScrollViewer>
+		<UniformGrid Rows="1" MinWidth="640" MinHeight="600">
+			<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
+			<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
+		</UniformGrid>
+	</ScrollViewer>
 
 </UserControl>
