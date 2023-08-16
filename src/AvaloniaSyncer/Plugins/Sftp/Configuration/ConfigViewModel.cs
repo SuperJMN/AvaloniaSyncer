@@ -53,9 +53,8 @@ public class ConfigViewModel : ViewModelBase
 
         Save = ReactiveCommand.CreateFromTask(OnSave);
         Load = ReactiveCommand.CreateFromTask(OnLoad);
-        Load.ThrownExceptions.Subscribe(exception => { });
         Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile!.Id), this.WhenAnyValue(x => x.SelectedProfile).NotNull());
-        AddOrUpdate.InvokeCommand(Save);
+        AddOrUpdate.Merge(Delete).InvokeCommand(Save);
     }
 
     public ReactiveCommand<Unit, Unit> AddOrUpdate { get; set; }

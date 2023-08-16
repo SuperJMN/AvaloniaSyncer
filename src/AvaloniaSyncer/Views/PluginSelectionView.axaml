@@ -6,19 +6,23 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.PluginSelectionView"
              x:DataType="viewModels:PluginSelectionViewModel">
-    <DockPanel>
-		<ComboBox HorizontalAlignment="Stretch" PlaceholderText="{Binding Name}" DockPanel.Dock="Top" ItemsSource="{Binding PluginFactories}" SelectedItem="{Binding SelectedPluginFactory}">
-			<ComboBox.ItemTemplate>
-				<DataTemplate>
-					<DockPanel>
-                        <Image Height="32" Source="{Binding Icon}" DockPanel.Dock="Left" />
-						<TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
-                    </DockPanel>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-		</ComboBox>
-		<ContentControl Margin="0 8 0 0"
-						IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}"
-						Content="{Binding SelectedPlugin}" />
-	</DockPanel>
+	<Border BorderBrush="Black" BorderThickness="1" Padding="4">
+		<DockPanel>
+			<TextBlock Margin="0 4" FontWeight="Black" Text="{Binding Name}" DockPanel.Dock="Top" />
+			<ComboBox HorizontalAlignment="Stretch" PlaceholderText="Select a plugin" DockPanel.Dock="Top"
+                      ItemsSource="{Binding PluginFactories}" SelectedItem="{Binding SelectedPluginFactory}">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<DockPanel>
+							<Image Height="20" Source="{Binding Icon}" DockPanel.Dock="Left" />
+							<TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+						</DockPanel>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+			<ContentControl Margin="0 8 0 0"
+                            IsVisible="{Binding SelectedPlugin, Converter={x:Static ObjectConverters.IsNotNull}}"
+                            Content="{Binding SelectedPlugin}" />
+		</DockPanel>
+	</Border>
 </UserControl>
