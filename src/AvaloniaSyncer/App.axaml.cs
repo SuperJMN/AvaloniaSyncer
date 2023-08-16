@@ -35,12 +35,18 @@ public partial class App : Application
             {
                 [typeof(MessageDialogViewModel)] = typeof(MessageDialogView),
                 [typeof(CreateSyncSessionViewModel)] = typeof(CreateSyncSessionView),
-            });
+            }, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
             var notificationService = new NotificationDialog(dialogService);
             return new MainViewModel(dialogService, notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
         }, () => new MainWindow());
 
         base.OnFrameworkInitializationCompleted();
+    }
+
+    private static void ConfigureWindow(ConfigureWindowContext context)
+    {
+        context.ToConfigure.Width = context.Parent.Bounds.Width / 2;
+        context.ToConfigure.Height = context.Parent.Bounds.Height / 2;
     }
 
     private static IFileSystemPluginFactory[] AvailablePlugins()

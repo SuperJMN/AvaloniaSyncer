@@ -9,6 +9,7 @@
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
              mc:Ignorable="d"
              x:Class="AvaloniaSyncer.Views.CreateSyncSessionView"
+             d:DesignWidth="600"
              x:DataType="viewModels:CreateSyncSessionViewModel">
 
 	<UserControl.DataTemplates>
@@ -21,13 +22,46 @@
 		<DataTemplate DataType="sftp:SftpPlugin">
 			<sftp:SftpView />
 		</DataTemplate>
+
 	</UserControl.DataTemplates>
 
 	<ScrollViewer>
-		<UniformGrid Rows="1" MinWidth="640" MinHeight="600">
-			<views:PluginSelectionView Margin="8" DataContext="{Binding SourcePluginViewModel}" />
-			<views:PluginSelectionView Margin="8" DataContext="{Binding DestinationPluginViewModel}" />
-		</UniformGrid>
+
+		<ScrollViewer.Resources>
+            <DataTemplate x:Key="Horizontal" DataType="viewModels:CreateSyncSessionViewModel">
+                <UniformGrid Rows="1">
+                    <views:PluginSelectionView Margin="0 0 2 0" DataContext="{Binding SourcePluginViewModel}" />
+                    <views:PluginSelectionView Margin="2 0 0 0" DataContext="{Binding DestinationPluginViewModel}" />
+                </UniformGrid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="Vertical" DataType="viewModels:CreateSyncSessionViewModel">
+                <StackPanel>
+                    <views:PluginSelectionView DataContext="{Binding SourcePluginViewModel}" />
+                    <views:PluginSelectionView DataContext="{Binding DestinationPluginViewModel}" />
+                </StackPanel>
+            </DataTemplate>
+        </ScrollViewer.Resources>
+
+        <ContentControl MinWidth="320" Content="{Binding}">
+			<ContentControl.Styles>
+				<Style Selector="ContentControl.Horizontal">
+					<Setter Property="ContentTemplate" Value="{StaticResource Horizontal}" />
+				</Style>
+				<Style Selector="ContentControl.Vertical">
+					<Setter Property="ContentTemplate" Value="{StaticResource Vertical}" />
+				</Style>
+			</ContentControl.Styles>
+
+			<Interaction.Behaviors>
+				<AdaptiveBehavior SourceControl="{Binding $parent[TopLevel]}">
+                    <AdaptiveClassSetter ClassName="Vertical" MinWidth="0" MaxWidth="400" />
+                    <AdaptiveClassSetter ClassName="Horizontal" MinWidth="400" MaxWidth="Infinity" />
+                </AdaptiveBehavior>
+			</Interaction.Behaviors>
+
+		</ContentControl>
+
 	</ScrollViewer>
 
 </UserControl>
