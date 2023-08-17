@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Plugins.Local.LocalView"
-             x:DataType="local:LocalPlugin">
+             x:Class="AvaloniaSyncer.Plugins.Local.LocalPluginView"
+             x:DataType="local:LocalPluginViewModel">
 
     <StackPanel>
         <TextBox Watermark="Path" Text="{Binding Path}" />

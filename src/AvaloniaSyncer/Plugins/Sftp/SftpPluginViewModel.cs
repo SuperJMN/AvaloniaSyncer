@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.Plugins.Sftp.Configuration;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
@@ -16,12 +16,12 @@ using Zafiro.FileSystem.Sftp;
 
 namespace AvaloniaSyncer.Plugins.Sftp;
 
-public class SftpPlugin : ReactiveValidationObject, IFileSystemPlugin
+public class SftpPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
 {
     private readonly Maybe<ILogger> logger;
     private readonly ObservableAsPropertyHelper<List<ProfileDto>> profiles;
 
-    public SftpPlugin(Maybe<ILogger> logger)
+    public SftpPluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Path cannot be empty");
@@ -36,17 +36,17 @@ public class SftpPlugin : ReactiveValidationObject, IFileSystemPlugin
                 Username = model.Username;
                 Host = model.Host;
                 Password = model.Password;
-                Port= model.Port;
+                Port = model.Port;
             })
             .Subscribe();
         profiles = Observable.FromAsync(() => new Repository().Load()).Successes().Select(x => x.Profiles).ToProperty(this, x => x.Profiles);
+        Configuration = new ConfigViewModel();
     }
 
-    [Reactive]
-    public ProfileDto? SelectedProfile { get; set; }
+    [Reactive] public ProfileDto? SelectedProfile { get; set; }
 
     public List<ProfileDto> Profiles => profiles.Value;
-    
+
     [Reactive] public int Port { get; set; } = 22;
 
     [Reactive] public string Username { get; set; } = "";
@@ -64,4 +64,6 @@ public class SftpPlugin : ReactiveValidationObject, IFileSystemPlugin
     [Reactive] public string Path { get; set; } = "";
 
     public IObservable<bool> IsValid => this.IsValid();
+
+    public Maybe<IPluginConfiguration> Configuration { get; }
 }

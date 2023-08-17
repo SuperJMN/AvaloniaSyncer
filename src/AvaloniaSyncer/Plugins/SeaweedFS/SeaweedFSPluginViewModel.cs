@@ -11,7 +11,6 @@ using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Serilog;
-using Zafiro;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.SeaweedFS;
@@ -19,12 +18,12 @@ using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
-public class SeaweedFSPlugin : ReactiveValidationObject, IFileSystemPlugin
+public class SeaweedFSPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
 {
     private readonly Maybe<ILogger> logger;
     private readonly ObservableAsPropertyHelper<List<ProfileDto>> profiles;
 
-    public SeaweedFSPlugin(Maybe<ILogger> logger)
+    public SeaweedFSPluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
 
@@ -33,20 +32,16 @@ public class SeaweedFSPlugin : ReactiveValidationObject, IFileSystemPlugin
 
         this.WhenAnyValue(x => x.SelectedProfile)
             .WhereNotNull()
-            .Do(model =>
-            {
-                Address= model.Address;
-            })
+            .Do(model => { Address = model.Address; })
             .Subscribe();
-        
+
         profiles = Observable.FromAsync(() => new Repository().Load()).Successes().Select(x => x.Profiles).ToProperty(this, x => x.Profiles);
     }
 
 
     [Reactive] public string Address { get; set; } = "";
 
-    [Reactive]
-    public ProfileDto? SelectedProfile { get; set; }
+    [Reactive] public ProfileDto? SelectedProfile { get; set; }
 
     public List<ProfileDto> Profiles => profiles.Value;
 

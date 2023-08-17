@@ -14,14 +14,14 @@
              x:DataType="viewModels:CreateSyncSessionViewModel">
 
 	<UserControl.DataTemplates>
-		<DataTemplate DataType="seaweedFs:SeaweedFSPlugin">
-			<seaweedFs:SeaweedFSView />
+		<DataTemplate DataType="seaweedFs:SeaweedFSPluginViewModel">
+			<seaweedFs:SeaweedFSPluginView />
 		</DataTemplate>
-		<DataTemplate DataType="local:LocalPlugin">
-			<local:LocalView />
+		<DataTemplate DataType="local:LocalPluginViewModel">
+			<local:LocalPluginView />
 		</DataTemplate>
-		<DataTemplate DataType="sftp:SftpPlugin">
-			<sftp:SftpView />
+		<DataTemplate DataType="sftp:SftpPluginViewModel">
+			<sftp:SftpPluginView />
 		</DataTemplate>
 
 	</UserControl.DataTemplates>

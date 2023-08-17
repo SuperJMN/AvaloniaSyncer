@@ -1,4 +1,6 @@
 ﻿using System;
+using AvaloniaSyncer.Plugins.Local;
+using AvaloniaSyncer.Plugins.Sftp.Configuration;
 using CSharpFunctionalExtensions;
 using Serilog;
 
@@ -11,6 +13,7 @@ class SftpPluginFactory : IFileSystemPluginFactory
     public SftpPluginFactory(Maybe<ILogger> logger)
     {
         this.logger = logger;
+        Configuration = new ConfigViewModel();
     }
 
     public string Name => "SFTP";
@@ -19,6 +22,8 @@ class SftpPluginFactory : IFileSystemPluginFactory
     
     public IFileSystemPlugin Create()
     {
-        return new SftpPlugin(logger);
+        return new SftpPluginViewModel(logger);
     }
+
+    public Maybe<IPluginConfiguration> Configuration { get; }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using AvaloniaSyncer.Plugins.Local;
 using CSharpFunctionalExtensions;
 using Serilog;
 
@@ -11,6 +12,7 @@ class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
     public SeaweedFileSystemPluginFactory(Maybe<ILogger> logger)
     {
         this.logger = logger;
+        Configuration = new Configuration.ConfigViewModel(logger);
     }
 
     public string Name => "SeaweedFS";
@@ -19,6 +21,8 @@ class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
     
     public IFileSystemPlugin Create()
     {
-        return new SeaweedFSPlugin(logger);
+        return new SeaweedFSPluginViewModel(logger);
     }
+
+    public Maybe<IPluginConfiguration> Configuration { get; }
 }

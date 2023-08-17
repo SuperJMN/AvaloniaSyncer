@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using DynamicData;
@@ -15,7 +17,7 @@ using Zafiro.Mixins;
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class ConfigViewModel : ViewModelBase
+public class ConfigViewModel : ViewModelBase, IPluginConfiguration
 {
     private readonly SourceCache<ProfileViewModel, Guid> profilesSource;
     private readonly Repository repository = new();
@@ -61,7 +63,7 @@ public class ConfigViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Unit> Delete { get; set; }
 
-    public ReactiveCommand<Unit, Result> Load { get; }
+    public ICommand Load { get; }
 
     public ReactiveCommand<Unit, Result> Save { get; }
 

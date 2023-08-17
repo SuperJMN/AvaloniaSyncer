@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Plugins.Sftp.Config
+namespace AvaloniaSyncer.Plugins.Sftp.Configuration
 {
     public partial class ConfigView : UserControl
     {
