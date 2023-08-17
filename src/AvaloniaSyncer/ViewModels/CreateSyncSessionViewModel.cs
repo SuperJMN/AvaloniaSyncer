@@ -7,7 +7,6 @@ using AvaloniaSyncer.Plugins;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.CSharpFunctionalExtensions;
-using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.ViewModels;
 
@@ -22,21 +21,27 @@ public class CreateSyncSessionViewModel
             .CombineLatest(this.WhenAnyObservable(x => x.DestinationPluginViewModel.SelectedPlugin.IsValid), (isSrcValid, isDestValid) => isSrcValid && isDestValid);
 
         var createSession = ReactiveCommand
-            .CreateFromObservable(() => Observable.FromAsync(() => CreateSyncSession(SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!)).Successes(),
+            .CreateFromObservable(() => Observable.FromAsync(() => CreateSyncSession(SourcePluginViewModel.SelectedPlugin!, DestinationPluginViewModel.SelectedPlugin!)),
                 canCreateSession);
         CreateSession = createSession;
+        ErrorMessages = CreateSession.Failures();
+        IsBusy = CreateSession.IsExecuting;
     }
 
-    public ReactiveCommand<Unit, (IZafiroDirectory, IZafiroDirectory)> CreateSession { get; }
+    public IObservable<bool> IsBusy { get; }
 
-    private Task<Result<(IZafiroDirectory, IZafiroDirectory)>> CreateSyncSession(IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
-    {
-        var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
-        var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
-        return sourceDirResult.CombineAndMap(destDirResult, (source, dest) => (directory: source, zafiroDirectory: dest));
-    }
+    public IObservable<string> ErrorMessages { get; }
+
+    public ReactiveCommand<Unit, Result<SyncSession>> CreateSession { get; }
 
     public PluginSelectionViewModel DestinationPluginViewModel { get; }
 
     public PluginSelectionViewModel SourcePluginViewModel { get; }
+
+    private Task<Result<SyncSession>> CreateSyncSession(IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
+    {
+        var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
+        var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
+        return sourceDirResult.CombineAndMap(destDirResult, (source, dest) => new SyncSession(source, dest));
+    }
 }

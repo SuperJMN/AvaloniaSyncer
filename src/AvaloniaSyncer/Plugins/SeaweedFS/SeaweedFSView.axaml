@@ -9,9 +9,13 @@
              x:DataType="seaweedFs:SeaweedFSPlugin">
 	<DockPanel>
 
-        <Expander DockPanel.Dock="Bottom" Header="Profiles" HorizontalAlignment="Stretch">
-            <configuration:ConfigView HorizontalAlignment="Stretch" DataContext="{Binding Config}" />
-        </Expander>
+        <DockPanel DockPanel.Dock="Top" Margin="0 0 0 8">
+
+            <TextBlock Text="Profiles" DockPanel.Dock="Top" FontWeight="Bold" VerticalAlignment="Center" ></TextBlock>
+            <ComboBox DockPanel.Dock="Top" PlaceholderText="Select items" HorizontalAlignment="Stretch"
+                      DisplayMemberBinding="{Binding Name}"
+                      ItemsSource="{Binding Profiles}" SelectedItem="{Binding SelectedProfile}" />
+        </DockPanel>
 
         <StackPanel Spacing="4">
 			<TextBox Watermark="Server address" Text="{Binding Address}" />

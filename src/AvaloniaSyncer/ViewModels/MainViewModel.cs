@@ -8,6 +8,7 @@ using DynamicData;
 using ReactiveUI;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
+using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
@@ -52,10 +53,13 @@ public class MainViewModel : ViewModelBase
             new OptionConfiguration<CreateSyncSessionViewModel>("Cancel", actionContext => ReactiveCommand.Create(() => actionContext.Window.Close())),
             new OptionConfiguration<CreateSyncSessionViewModel>("Create", actionContext =>
             {
-                return vm.CreateSession.Extend(tuple =>
+                return vm.CreateSession.Extend(result =>
                 {
-                    sessions.AddOrUpdate(new SynchronizationViewModel($"Session {Number++}", notificationService, tuple.Item1, tuple.Item2, logger));
-                    actionContext.Window.Close();
+                    result.Tap(tuple =>
+                    {
+                        sessions.AddOrUpdate(new SynchronizationViewModel($"Session {Number++}", notificationService, tuple.Source, tuple.Destination, logger));
+                        actionContext.Window.Close();
+                    });
                 });
             })
         };

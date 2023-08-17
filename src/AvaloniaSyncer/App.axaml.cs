@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
@@ -45,8 +46,8 @@ public partial class App : Application
 
     private static void ConfigureWindow(ConfigureWindowContext context)
     {
-        context.ToConfigure.Width = context.Parent.Bounds.Width / 2;
-        context.ToConfigure.Height = context.Parent.Bounds.Height / 2;
+        context.ToConfigure.Width = context.Parent.Bounds.Width / 1.5;
+        context.ToConfigure.Height = context.Parent.Bounds.Height / 1.5;
     }
 
     private static IFileSystemPluginFactory[] AvailablePlugins()
