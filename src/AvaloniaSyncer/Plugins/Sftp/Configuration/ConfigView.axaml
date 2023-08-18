@@ -33,7 +33,7 @@
                     <Flyout>
                         <configuration:EditProfileView CommandText="Update" Profile="{Binding WorkingProfile}" Command="{Binding AddOrUpdate}" />
                         <Interaction.Behaviors>
-                            <avaloniaSyncer:OnSignalTrigger Trigger="{Binding AddOrUpdate}">
+                            <avaloniaSyncer:OnSignalTrigger Trigger="{Binding ProfileModified}">
                                 <CallMethodAction TargetObject="{Binding $parent[FlyoutBase]}" MethodName="Hide" />
                             </avaloniaSyncer:OnSignalTrigger>
                         </Interaction.Behaviors>

@@ -56,8 +56,12 @@ public class ConfigViewModel : ViewModelBase, IPluginConfiguration
         Save = ReactiveCommand.CreateFromTask(OnSave);
         Load = ReactiveCommand.CreateFromTask(OnLoad);
         Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile!.Id), this.WhenAnyValue(x => x.SelectedProfile).NotNull());
-        AddOrUpdate.Merge(Delete).InvokeCommand(Save);
+
+        ProfileModified = Edit.Merge(Delete);
+        ProfileModified.InvokeCommand(Save);
     }
+
+    public IObservable<Unit> ProfileModified { get; set; }
 
     public ReactiveCommand<Unit, Unit> AddOrUpdate { get; set; }
 
