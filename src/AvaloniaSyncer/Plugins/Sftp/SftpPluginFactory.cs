@@ -13,7 +13,7 @@ class SftpPluginFactory : IFileSystemPluginFactory
     public SftpPluginFactory(Maybe<ILogger> logger)
     {
         this.logger = logger;
-        Configuration = new ConfigViewModel();
+        Configuration = new ConfigViewModel(logger);
     }
 
     public string Name => "SFTP";

@@ -37,8 +37,7 @@ public class Repository
 
     public Task<Result<Config>> Load()
     {
-        var result = OpenRead("SFTP").Bind(stream => Load(stream));
-        return result;
+        return OpenRead("SFTP").Bind(stream => Load(stream));
     }
 
     private static Result<Stream> OpenRead(string path)

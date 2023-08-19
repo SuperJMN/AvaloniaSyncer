@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.Plugins.Sftp.Configuration;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
@@ -40,7 +39,6 @@ public class SftpPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
             })
             .Subscribe();
         profiles = Observable.FromAsync(() => new Repository().Load()).Successes().Select(x => x.Profiles).ToProperty(this, x => x.Profiles);
-        Configuration = new ConfigViewModel();
     }
 
     [Reactive] public ProfileDto? SelectedProfile { get; set; }
@@ -55,15 +53,13 @@ public class SftpPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
 
     [Reactive] public string Password { get; set; } = "";
 
+    [Reactive] public string Path { get; set; } = "";
+
     public async Task<Result<IFileSystem>> FileSystem()
     {
         var f = await SftpFileSystem.Create(Host, Port, Username, Password, logger);
         return f.Map(system => (IFileSystem) system);
     }
 
-    [Reactive] public string Path { get; set; } = "";
-
     public IObservable<bool> IsValid => this.IsValid();
-
-    public Maybe<IPluginConfiguration> Configuration { get; }
 }

@@ -14,6 +14,7 @@ public class ProfileViewModel : ReactiveValidationObject
         Id = id;
         this.ValidationRule(x => x.Name, s => !string.IsNullOrEmpty(s), "Cannot be empty");
         this.ValidationRule(x => x.Address, s => !string.IsNullOrEmpty(s), "Cannot be empty");
+        this.ValidationRule(x => x.Address, s => Uri.TryCreate(s, UriKind.Absolute, out _), "Invalid address");
         IsDirty = this.WhenAnyPropertyChanged().Select(x => true).StartWith(false);
     }
 
