@@ -6,17 +6,33 @@
              xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.SyncView" x:DataType="viewModels:SyncViewModel">
-    <TabControl ItemsSource="{Binding Syncronizations}">
-        <TabControl.ItemTemplate>
-            <DataTemplate>
-                <TextBlock Text="{Binding Title}" />
-            </DataTemplate>
-        </TabControl.ItemTemplate>
+	<DockPanel>
 
-        <TabControl.ContentTemplate>
-            <DataTemplate>
-                <views:SyncSessionView />
-            </DataTemplate>
-        </TabControl.ContentTemplate>
-    </TabControl>
+		<DockPanel.Styles>
+			<Style Selector="TabControl:empty">
+				<Setter Property="Template">
+                    <Setter.Value>
+						<ControlTemplate>
+							<TextBlock VerticalAlignment="Center" TextAlignment="Center">Please, create a synchronization session first</TextBlock>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </DockPanel.Styles>
+
+        <Button Command="{Binding CreateSyncSession}" Content="Create" ToolTip.Tip="Create a new synchronization session" DockPanel.Dock="Top" />
+        <TabControl ItemsSource="{Binding Syncronizations}">
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Title}" />
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+
+			<TabControl.ContentTemplate>
+				<DataTemplate>
+					<views:SyncSessionView />
+				</DataTemplate>
+			</TabControl.ContentTemplate>
+		</TabControl>
+	</DockPanel>
 </UserControl>

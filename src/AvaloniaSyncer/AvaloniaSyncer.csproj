@@ -33,15 +33,4 @@
 		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.16" />
 		<PackageReference Include="Zafiro.UI" Version="4.0.6" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Compile Update="Plugins\Local\LocalPluginView.axaml.cs">
-	    <DependentUpon>LocalPluginView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\SeaweedFSPluginView.axaml.cs">
-	    <DependentUpon>SeaweedFSPluginView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\SftpPluginView.axaml.cs">
-	    <DependentUpon>SftpPluginView.axaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
 </Project>
