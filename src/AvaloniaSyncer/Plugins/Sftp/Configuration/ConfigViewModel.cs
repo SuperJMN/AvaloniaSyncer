@@ -70,6 +70,9 @@ public class ConfigViewModel : ViewModelBase, IPluginConfiguration
                 Id = x.Id,
                 Name = x.Name,
                 Password= x.Password,
+                Port = x.Port,
+                Host = x.Host,
+                Username = x.Username,
             }).ToList()
         };
 
