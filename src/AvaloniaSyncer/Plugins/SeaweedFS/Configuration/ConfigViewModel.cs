@@ -28,22 +28,9 @@ public class ConfigViewModel : ViewModelBase, IPluginConfiguration
     {
         this.logger = logger;
         profilesSource = new SourceCache<ProfileViewModel, Guid>(s => s.Id);
-        CreateNewProfile = ReactiveCommand.Create(() => WorkingProfile = new ProfileViewModel(Guid.NewGuid()));
+        CreateNewProfile = ReactiveCommand.Create(() => SelectedProfile = new ProfileViewModel(Guid.NewGuid()));
 
-        Edit = ReactiveCommand.Create(() =>
-        {
-            WorkingProfile = new ProfileViewModel(SelectedProfile!.Id)
-            {
-                Name = SelectedProfile.Name,
-                Address = SelectedProfile.Address,
-            };
-        }, this.WhenAnyValue(x => x.SelectedProfile).WhereNotNull().SelectMany(x => x.IsValid()));
-
-        AddOrUpdate = ReactiveCommand.Create(() =>
-        {
-            profilesSource!.AddOrUpdate(WorkingProfile);
-            SelectedProfile = WorkingProfile!;
-        });
+        Update = ReactiveCommand.Create(() => { profilesSource.AddOrUpdate(SelectedProfile!); }, this.WhenAnyValue(x => x.SelectedProfile).SelectMany(x => x is null ? Observable.Return(false) : x.IsValid()));
 
         profilesSource
             .Connect()
@@ -57,29 +44,22 @@ public class ConfigViewModel : ViewModelBase, IPluginConfiguration
         Load = ReactiveCommand.CreateFromTask(OnLoad);
         Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile!.Id), this.WhenAnyValue(x => x.SelectedProfile).NotNull());
 
-        ProfileModified = Edit.Merge(Delete);
-        ProfileModified.InvokeCommand(Save);
+        Update.InvokeCommand(Save);
     }
-
-    public IObservable<Unit> ProfileModified { get; set; }
-
-    public ReactiveCommand<Unit, Unit> AddOrUpdate { get; set; }
 
     public ReactiveCommand<Unit, Unit> Delete { get; set; }
 
-    public ICommand Load { get; }
-
     public ReactiveCommand<Unit, Result> Save { get; }
 
-    public ReactiveCommand<Unit, Unit> Edit { get; set; }
+    public ReactiveCommand<Unit, Unit> Update { get; set; }
 
     public ReactiveCommand<Unit, ProfileViewModel> CreateNewProfile { get; set; }
 
     [Reactive] public ProfileViewModel? SelectedProfile { get; set; }
 
-    [Reactive] public ProfileViewModel? WorkingProfile { get; set; }
-
     public ReadOnlyObservableCollection<ProfileViewModel> Profiles { get; }
+
+    public ICommand Load { get; }
 
     private Task<Result> OnSave()
     {
@@ -89,7 +69,7 @@ public class ConfigViewModel : ViewModelBase, IPluginConfiguration
             {
                 Id = x.Id,
                 Name = x.Name,
-                Address = x.Address,
+                Address = x.Address
             }).ToList()
         };
 
@@ -104,7 +84,7 @@ public class ConfigViewModel : ViewModelBase, IPluginConfiguration
                 return dto.Profiles.Select(itemDto => new ProfileViewModel(itemDto.Id)
                 {
                     Name = itemDto.Name,
-                    Address = itemDto.Address,
+                    Address = itemDto.Address
                 });
             });
 
