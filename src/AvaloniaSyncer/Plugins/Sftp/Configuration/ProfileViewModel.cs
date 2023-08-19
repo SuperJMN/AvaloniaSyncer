@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Net;
+using System.Reactive.Linq;
+using DynamicData.Binding;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
@@ -15,7 +18,10 @@ public class ProfileViewModel : ReactiveValidationObject
         this.ValidationRule(x => x.Port, s => s is > 0 and < ushort.MaxValue, "Cannot be empty");
         this.ValidationRule(x => x.Username, s => !string.IsNullOrEmpty(s), "Cannot be empty");
         this.ValidationRule(x => x.Password, s => !string.IsNullOrEmpty(s), "Cannot be empty");
+        IsDirty = this.WhenAnyPropertyChanged().Select(x => true).StartWith(false);
     }
+
+    public IObservable<bool> IsDirty { get; set; }
 
     public Guid Id { get; private set; }
 

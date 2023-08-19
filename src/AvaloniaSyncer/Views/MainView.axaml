@@ -3,32 +3,22 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaSyncer.ViewModels"
-             xmlns:views="clr-namespace:AvaloniaSyncer.Views"
+             xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.MainView"
              x:DataType="vm:MainViewModel">
 
-    <DockPanel>
-
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="Session">
-                <MenuItem Header="Create" Command="{Binding CreateSyncSession}" />
-            </MenuItem>
-        </Menu>
-        <TabControl ItemsSource="{Binding Syncronizations}">
-
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Title}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-
-            <TabControl.ContentTemplate>
-                <DataTemplate>
-                    <views:SyncSessionView />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
-    </DockPanel>
+    <controls:MasterDetailsView ItemsSource="{Binding Sections}">
+        <controls:MasterDetailsView.ItemTemplate>
+            <DataTemplate x:DataType="vm:Section">
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+        </controls:MasterDetailsView.ItemTemplate>
+        <controls:MasterDetailsView.DetailsTemplate>
+            <DataTemplate DataType="vm:Section">
+                <ContentControl Content="{Binding ViewModel}" />
+            </DataTemplate>
+        </controls:MasterDetailsView.DetailsTemplate>
+    </controls:MasterDetailsView>
 
 </UserControl>

@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace AvaloniaSyncer.Plugins.Sftp
 {
-    public partial class SftpView : UserControl
+    public partial class SftpPluginView : UserControl
     {
-        public SftpView()
+        public SftpPluginView()
         {
             InitializeComponent();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -10,38 +11,39 @@ using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Serilog;
-using Zafiro;
+using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.SeaweedFS;
 using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
-public class SeaweedFSPlugin : ReactiveValidationObject, IFileSystemPlugin
+public class SeaweedFSPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
 {
     private readonly Maybe<ILogger> logger;
+    private readonly ObservableAsPropertyHelper<List<ProfileDto>> profiles;
 
-    public SeaweedFSPlugin(Maybe<ILogger> logger)
+    public SeaweedFSPluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
 
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Invalid path");
         this.ValidationRule(x => x.Address, s => !string.IsNullOrEmpty(s), "Invalid path");
 
-        Config = new ConfigViewModel(logger);
-        this.WhenAnyValue(x => x.Config.SelectedProfile)
+        this.WhenAnyValue(x => x.SelectedProfile)
             .WhereNotNull()
-            .Do(model =>
-            {
-                Address= model.Address;
-            })
+            .Do(model => { Address = model.Address; })
             .Subscribe();
-        Config.Load.Execute().Subscribe();
+
+        profiles = Observable.FromAsync(() => new Repository().Load()).Successes().Select(x => x.Profiles).ToProperty(this, x => x.Profiles);
     }
 
-    public ConfigViewModel Config { get; }
 
     [Reactive] public string Address { get; set; } = "";
+
+    [Reactive] public ProfileDto? SelectedProfile { get; set; }
+
+    public List<ProfileDto> Profiles => profiles.Value;
 
     public Task<Result<IFileSystem>> FileSystem()
     {

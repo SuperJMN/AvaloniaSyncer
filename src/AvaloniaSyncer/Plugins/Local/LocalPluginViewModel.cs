@@ -10,11 +10,11 @@ using Zafiro.FileSystem.Local;
 
 namespace AvaloniaSyncer.Plugins.Local;
 
-public class LocalPlugin : ReactiveValidationObject, IFileSystemPlugin
+public class LocalPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
 {
     private readonly Maybe<ILogger> logger;
 
-    public LocalPlugin(Maybe<ILogger> logger)
+    public LocalPluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Invalid path");

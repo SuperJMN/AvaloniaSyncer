@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using DynamicData;
@@ -11,37 +13,24 @@ using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
+using Serilog;
 using Zafiro.Mixins;
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class ConfigViewModel : ViewModelBase
+public class ConfigViewModel : ViewModelBase, IPluginConfiguration
 {
+    private readonly Maybe<ILogger> logger;
     private readonly SourceCache<ProfileViewModel, Guid> profilesSource;
     private readonly Repository repository = new();
 
-    public ConfigViewModel()
+    public ConfigViewModel(Maybe<ILogger> logger)
     {
+        this.logger = logger;
         profilesSource = new SourceCache<ProfileViewModel, Guid>(s => s.Id);
-        CreateNewProfile = ReactiveCommand.Create(() => WorkingProfile = new ProfileViewModel(Guid.NewGuid()));
+        CreateNewProfile = ReactiveCommand.Create(() => SelectedProfile = new ProfileViewModel(Guid.NewGuid()));
 
-        Edit = ReactiveCommand.Create(() =>
-        {
-            WorkingProfile = new ProfileViewModel(SelectedProfile!.Id)
-            {
-                Host = SelectedProfile.Host,
-                Name = SelectedProfile.Name,
-                Username = SelectedProfile.Username,
-                Password = SelectedProfile.Password,
-                Port = SelectedProfile.Port
-            };
-        }, this.WhenAnyValue(x => x.SelectedProfile).WhereNotNull().SelectMany(x => x.IsValid()));
-
-        AddOrUpdate = ReactiveCommand.Create(() =>
-        {
-            profilesSource!.AddOrUpdate(WorkingProfile);
-            SelectedProfile = WorkingProfile;
-        });
+        Update = ReactiveCommand.Create(() => { profilesSource.AddOrUpdate(SelectedProfile!); }, this.WhenAnyValue(x => x.SelectedProfile).SelectMany(x => x is null ? Observable.Return(false) : x.IsValid()));
 
         profilesSource
             .Connect()
@@ -54,26 +43,23 @@ public class ConfigViewModel : ViewModelBase
         Save = ReactiveCommand.CreateFromTask(OnSave);
         Load = ReactiveCommand.CreateFromTask(OnLoad);
         Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile!.Id), this.WhenAnyValue(x => x.SelectedProfile).NotNull());
-        AddOrUpdate.Merge(Delete).InvokeCommand(Save);
-    }
 
-    public ReactiveCommand<Unit, Unit> AddOrUpdate { get; set; }
+        Update.InvokeCommand(Save);
+    }
 
     public ReactiveCommand<Unit, Unit> Delete { get; set; }
 
-    public ReactiveCommand<Unit, Result> Load { get; }
-
     public ReactiveCommand<Unit, Result> Save { get; }
 
-    public ReactiveCommand<Unit, Unit> Edit { get; set; }
+    public ReactiveCommand<Unit, Unit> Update { get; set; }
 
     public ReactiveCommand<Unit, ProfileViewModel> CreateNewProfile { get; set; }
 
     [Reactive] public ProfileViewModel? SelectedProfile { get; set; }
 
-    [Reactive] public ProfileViewModel? WorkingProfile { get; set; }
-
     public ReadOnlyObservableCollection<ProfileViewModel> Profiles { get; }
+
+    public ICommand Load { get; }
 
     private Task<Result> OnSave()
     {
@@ -83,14 +69,11 @@ public class ConfigViewModel : ViewModelBase
             {
                 Id = x.Id,
                 Name = x.Name,
-                Host = x.Host,
-                Port = x.Port,
-                Username = x.Username,
-                Password = x.Password
+                Password= x.Password,
             }).ToList()
         };
 
-        return repository.Save(toSave);
+        return repository.Save(toSave).TapError(s => logger.Execute(l => l.Warning(s)));
     }
 
     private async Task<Result> OnLoad()
@@ -101,13 +84,14 @@ public class ConfigViewModel : ViewModelBase
                 return dto.Profiles.Select(itemDto => new ProfileViewModel(itemDto.Id)
                 {
                     Name = itemDto.Name,
+                    Port = itemDto.Port,
                     Host = itemDto.Host,
                     Username = itemDto.Username,
                     Password = itemDto.Password,
-                    Port = itemDto.Port
                 });
             });
 
-        return models.Tap(enumerable => profilesSource.Edit(x => x.Load(enumerable)));
+        return models.Tap(enumerable => profilesSource.Edit(x => x.Load(enumerable)))
+            .TapError(s => logger.Execute(l => l.Warning(s)));
     }
 }
