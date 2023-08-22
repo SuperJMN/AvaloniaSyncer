@@ -11,7 +11,7 @@ class LocalFileSystemPluginFactory : IFileSystemPluginFactory
     public LocalFileSystemPluginFactory(Maybe<ILogger> logger)
     {
         this.logger = logger;
-        Configuration = Maybe<IPluginConfiguration>.None;
+        Settings = Maybe<IPluginSettings>.None;
     }
 
     public string Name => "Local";
@@ -22,5 +22,5 @@ class LocalFileSystemPluginFactory : IFileSystemPluginFactory
         return new LocalPluginViewModel(logger);
     }
 
-    public Maybe<IPluginConfiguration> Configuration { get; }
+    public Maybe<IPluginSettings> Settings { get; }
 }

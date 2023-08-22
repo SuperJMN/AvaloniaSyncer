@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:configuration="clr-namespace:AvaloniaSyncer.Plugins.Sftp.Configuration"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Plugins.Sftp.Configuration.ConfigView"
-             x:DataType="configuration:ConfigViewModel">
+             x:Class="AvaloniaSyncer.Plugins.Sftp.Configuration.SettingsView"
+             x:DataType="configuration:SettingsViewModel">
 	<DockPanel>
 		<Panel>
 			<ListBox DockPanel.Dock="Left" MinWidth="200" ItemsSource="{Binding Profiles}"

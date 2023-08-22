@@ -12,7 +12,7 @@ class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
     public SeaweedFileSystemPluginFactory(Maybe<ILogger> logger)
     {
         this.logger = logger;
-        Configuration = new Configuration.ConfigViewModel(logger);
+        Settings = new Configuration.SettingsViewModel(logger);
     }
 
     public string Name => "SeaweedFS";
@@ -24,5 +24,5 @@ class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
         return new SeaweedFSPluginViewModel(logger);
     }
 
-    public Maybe<IPluginConfiguration> Configuration { get; }
+    public Maybe<IPluginSettings> Settings { get; }
 }

@@ -6,14 +6,14 @@ namespace AvaloniaSyncer;
 
 public class PluginConfigurationViewModel : ViewModelBase
 {
-    public PluginConfigurationViewModel(string name, Maybe<IPluginConfiguration> configuration)
+    public PluginConfigurationViewModel(string name, Maybe<IPluginSettings> configuration)
     {
         Name = name;
         Configuration = configuration;
         Configuration.Execute(config => config.Load.Execute(null));
     }
 
-    public Maybe<IPluginConfiguration> Configuration { get; }
+    public Maybe<IPluginSettings> Configuration { get; }
 
     public string Name { get; }
 }

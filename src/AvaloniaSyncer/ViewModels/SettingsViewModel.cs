@@ -8,7 +8,7 @@ public class SettingsViewModel : ViewModelBase
 {
     public SettingsViewModel(IEnumerable<IFileSystemPluginFactory> pluginFactories)
     {
-        Configurations = pluginFactories.Select(c => new PluginConfigurationViewModel(c.Name, c.Configuration)).ToList();
+        Configurations = pluginFactories.Select(c => new PluginConfigurationViewModel(c.Name, c.Settings)).ToList();
     }
 
     public List<PluginConfigurationViewModel> Configurations { get; }

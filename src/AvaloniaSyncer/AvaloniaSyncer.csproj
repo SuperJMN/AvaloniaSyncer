@@ -33,4 +33,12 @@
 		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.16" />
 		<PackageReference Include="Zafiro.UI" Version="4.0.6" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Compile Update="Plugins\SeaweedFS\Configuration\SettingsView.axaml.cs">
+	    <DependentUpon>SettingsView.axaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Plugins\Sftp\Configuration\SettingsView.axaml.cs">
+	    <DependentUpon>SettingsView.axaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
 </Project>

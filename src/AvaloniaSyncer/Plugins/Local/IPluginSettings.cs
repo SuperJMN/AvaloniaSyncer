@@ -2,7 +2,7 @@
 
 namespace AvaloniaSyncer.Plugins.Local;
 
-public interface IPluginConfiguration
+public interface IPluginSettings
 {
     ICommand Load { get; }
 }

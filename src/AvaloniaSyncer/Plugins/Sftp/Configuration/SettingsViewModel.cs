@@ -18,13 +18,13 @@ using Zafiro.Mixins;
 
 namespace AvaloniaSyncer.Plugins.Sftp.Configuration;
 
-public class ConfigViewModel : ViewModelBase, IPluginConfiguration
+public class SettingsViewModel : ViewModelBase, IPluginSettings
 {
     private readonly Maybe<ILogger> logger;
     private readonly SourceCache<ProfileViewModel, Guid> profilesSource;
     private readonly Repository repository = new();
 
-    public ConfigViewModel(Maybe<ILogger> logger)
+    public SettingsViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
         profilesSource = new SourceCache<ProfileViewModel, Guid>(s => s.Id);
