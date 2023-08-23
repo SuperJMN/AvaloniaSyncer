@@ -21,10 +21,10 @@
         </DockPanel.Styles>
 
         <Button Command="{Binding SelectPlugins}" Content="Create" ToolTip.Tip="Create a new synchronization session" DockPanel.Dock="Top" />
-        <TabControl ItemsSource="{Binding Syncronizations}">
+        <TabControl ItemsSource="{Binding BareSessions}">
 			<TabControl.ItemTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding Title}" />
+					<TextBlock Text="{Binding Name}" />
 				</DataTemplate>
 			</TabControl.ItemTemplate>
 
