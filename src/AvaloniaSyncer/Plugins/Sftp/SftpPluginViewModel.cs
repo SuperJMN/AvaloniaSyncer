@@ -15,7 +15,7 @@ using Zafiro.FileSystem.Sftp;
 
 namespace AvaloniaSyncer.Plugins.Sftp;
 
-public class SftpPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
+public class SftpPluginViewModel : ReactiveValidationObject, ISession
 {
     private readonly Maybe<ILogger> logger;
     private readonly ObservableAsPropertyHelper<List<ProfileDto>> profiles;

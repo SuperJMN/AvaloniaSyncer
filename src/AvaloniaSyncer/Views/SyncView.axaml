@@ -20,7 +20,7 @@
             </Style>
         </DockPanel.Styles>
 
-        <Button Command="{Binding CreateSyncSession}" Content="Create" ToolTip.Tip="Create a new synchronization session" DockPanel.Dock="Top" />
+        <Button Command="{Binding SelectPlugins}" Content="Create" ToolTip.Tip="Create a new synchronization session" DockPanel.Dock="Top" />
         <TabControl ItemsSource="{Binding Syncronizations}">
 			<TabControl.ItemTemplate>
 				<DataTemplate>

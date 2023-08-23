@@ -6,7 +6,7 @@ namespace AvaloniaSyncer.ViewModels;
 
 public class SettingsViewModel : ViewModelBase
 {
-    public SettingsViewModel(IEnumerable<IFileSystemPluginFactory> pluginFactories)
+    public SettingsViewModel(IEnumerable<IPlugin> pluginFactories)
     {
         Configurations = pluginFactories.Select(c => new PluginConfigurationViewModel(c.Name, c.Settings)).ToList();
     }

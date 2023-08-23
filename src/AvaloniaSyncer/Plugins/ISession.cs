@@ -6,7 +6,7 @@ using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.Plugins;
 
-public interface IFileSystemPlugin
+public interface ISession
 {
     public Task<Result<IFileSystem>> FileSystem();
     public string Path { get; set; }

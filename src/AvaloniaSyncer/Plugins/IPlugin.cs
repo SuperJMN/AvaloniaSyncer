@@ -4,10 +4,10 @@ using CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer.Plugins;
 
-public interface IFileSystemPluginFactory
+public interface IPlugin
 {
     public string Name { get; }
     public Uri Icon { get; }
-    public IFileSystemPlugin Create();
+    public ISession Create();
     public Maybe<IPluginSettings> Settings { get; }
 }

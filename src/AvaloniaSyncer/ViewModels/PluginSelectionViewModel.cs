@@ -8,9 +8,9 @@ namespace AvaloniaSyncer.ViewModels;
 
 public class PluginSelectionViewModel : ViewModelBase
 {
-    private readonly ObservableAsPropertyHelper<IFileSystemPlugin?> sourcePlugin;
+    private readonly ObservableAsPropertyHelper<ISession?> sourcePlugin;
 
-    public PluginSelectionViewModel(string name, IEnumerable<IFileSystemPluginFactory> pluginFactories)
+    public PluginSelectionViewModel(string name, IEnumerable<IPlugin> pluginFactories)
     {
         Name = name;
         PluginFactories = pluginFactories;
@@ -23,11 +23,11 @@ public class PluginSelectionViewModel : ViewModelBase
     }
 
 
-    public IFileSystemPlugin? SelectedPlugin => sourcePlugin.Value;
+    public ISession? SelectedPlugin => sourcePlugin.Value;
 
-    [Reactive] public IFileSystemPluginFactory? SelectedPluginFactory { get; set; }
+    [Reactive] public IPlugin? SelectedPluginFactory { get; set; }
 
     public string Name { get; }
 
-    public IEnumerable<IFileSystemPluginFactory> PluginFactories { get; set; }
+    public IEnumerable<IPlugin> PluginFactories { get; set; }
 }

@@ -17,7 +17,7 @@
 		<DataTemplate DataType="seaweedFs:SeaweedFSPluginViewModel">
 			<seaweedFs:SeaweedFSPluginView />
 		</DataTemplate>
-		<DataTemplate DataType="local:LocalPluginViewModel">
+		<DataTemplate DataType="local:Session">
 			<local:LocalPluginView />
 		</DataTemplate>
 		<DataTemplate DataType="sftp:SftpPluginViewModel">

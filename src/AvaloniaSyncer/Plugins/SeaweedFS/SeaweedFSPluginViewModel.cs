@@ -18,7 +18,7 @@ using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
-public class SeaweedFSPluginViewModel : ReactiveValidationObject, IFileSystemPlugin
+public class SeaweedFSPluginViewModel : ReactiveValidationObject, ISession
 {
     private readonly Maybe<ILogger> logger;
     private readonly ObservableAsPropertyHelper<List<ProfileDto>> profiles;

@@ -12,7 +12,7 @@ namespace AvaloniaSyncer.ViewModels;
 
 public class CreateSyncSessionViewModel
 {
-    public CreateSyncSessionViewModel(IList<IFileSystemPluginFactory> pluginFactories)
+    public CreateSyncSessionViewModel(IList<IPlugin> pluginFactories)
     {
         SourcePluginViewModel = new PluginSelectionViewModel("Source", pluginFactories);
         DestinationPluginViewModel = new PluginSelectionViewModel("Destination", pluginFactories);
@@ -38,7 +38,7 @@ public class CreateSyncSessionViewModel
 
     public PluginSelectionViewModel SourcePluginViewModel { get; }
 
-    private Task<Result<SyncSession>> CreateSyncSession(IFileSystemPlugin sourcePlugin, IFileSystemPlugin destination)
+    private Task<Result<SyncSession>> CreateSyncSession(ISession sourcePlugin, ISession destination)
     {
         var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
         var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));

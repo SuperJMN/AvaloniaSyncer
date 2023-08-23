@@ -5,11 +5,11 @@ using Serilog;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
-class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
+class SeaweedPlugin : IPlugin
 {
     private readonly Maybe<ILogger> logger;
 
-    public SeaweedFileSystemPluginFactory(Maybe<ILogger> logger)
+    public SeaweedPlugin(Maybe<ILogger> logger)
     {
         this.logger = logger;
         Settings = new Configuration.SettingsViewModel(logger);
@@ -19,7 +19,7 @@ class SeaweedFileSystemPluginFactory : IFileSystemPluginFactory
 
     public Uri Icon => new Uri("avares://AvaloniaSyncer/Assets/sftp.png");
     
-    public IFileSystemPlugin Create()
+    public ISession Create()
     {
         return new SeaweedFSPluginViewModel(logger);
     }

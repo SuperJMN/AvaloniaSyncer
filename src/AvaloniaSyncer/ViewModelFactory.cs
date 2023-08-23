@@ -34,14 +34,14 @@ public static class ViewModelFactory
         context.ToConfigure.Height = context.Parent.Bounds.Height / 1.5;
     }
 
-    private static IFileSystemPluginFactory[] AvailablePlugins()
+    private static IPlugin[] AvailablePlugins()
     {
         var logger = Maybe.From(Log.Logger);
-        return new IFileSystemPluginFactory[]
+        return new IPlugin[]
         {
-            new LocalFileSystemPluginFactory(logger),
-            new SeaweedFileSystemPluginFactory(logger),
-            new SftpPluginFactory(logger)
+            new LocalPlugin(logger),
+            new SeaweedPlugin(logger),
+            new SftpPlugin(logger)
         };
     }
 
