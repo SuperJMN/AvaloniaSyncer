@@ -67,6 +67,7 @@ public class SeaweedFSPluginViewModel : ReactiveValidationObject, ISession
         return Task.FromResult(fileSystem);
     }
 
+    public IObservable<IZafiroDirectory> Directory => Observable.Never<IZafiroDirectory>();
     public IObservable<bool> IsValid => this.IsValid();
 
     [Reactive] public string Path { get; set; } = "";

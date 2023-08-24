@@ -51,7 +51,7 @@ public class SyncViewModel : ViewModelBase
 
         SelectPlugins = ReactiveCommand.CreateFromTask(async () => { return await dialogService.Prompt("Select your plugins", new SelectPluginsViewModel(pluginFactories), "OK", vm => ReactiveCommand.Create(() => new PluginSelection(vm.Source!, vm.Destination!), vm.IsValid())); });
 
-        SelectPlugins.Values().Do(selection => bareSessions.AddOrUpdate(new SessionViewModel("Session", selection))).Subscribe();
+        SelectPlugins.Values().Do(selection => bareSessions.AddOrUpdate(new SessionViewModel("Session", selection, notificationService, logger))).Subscribe();
     }
 
     public ReadOnlyObservableCollection<SessionViewModel> BareSessions { get; set; }
@@ -85,18 +85,6 @@ public class SyncViewModel : ViewModelBase
 
         return dialogService.ShowDialog(vm, "Create  sync session", options);
     }
-}
-
-public class SessionViewModel
-{
-    public SessionViewModel(string name, PluginSelection selection)
-    {
-        Name = name;
-        Selection = selection;
-    }
-
-    public string Name { get; }
-    public PluginSelection Selection { get; }
 }
 
 public record PluginSelection(IPlugin Source, IPlugin Destination);

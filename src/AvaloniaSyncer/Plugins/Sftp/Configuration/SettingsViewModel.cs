@@ -5,7 +5,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using DynamicData;

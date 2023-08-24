@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace AvaloniaSyncer.Plugins.Local;
 
-public partial class LocalPluginView : UserControl
+public partial class SessionView : UserControl
 {
-    public LocalPluginView()
+    public SessionView()
     {
         InitializeComponent();
     }

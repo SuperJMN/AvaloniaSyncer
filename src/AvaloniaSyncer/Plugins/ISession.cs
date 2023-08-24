@@ -10,5 +10,6 @@ public interface ISession
 {
     public Task<Result<IFileSystem>> FileSystem();
     public string Path { get; set; }
+    public IObservable<IZafiroDirectory> Directory { get; }
     IObservable<bool> IsValid { get; }
 }

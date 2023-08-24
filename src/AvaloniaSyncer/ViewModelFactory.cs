@@ -39,7 +39,7 @@ public static class ViewModelFactory
         var logger = Maybe.From(Log.Logger);
         return new IPlugin[]
         {
-            new LocalPlugin(logger),
+            new LocalPluginViewModel(logger),
             new SeaweedPlugin(logger),
             new SftpPlugin(logger)
         };

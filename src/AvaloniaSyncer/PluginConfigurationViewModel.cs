@@ -1,4 +1,4 @@
-using AvaloniaSyncer.Plugins.Local;
+using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 

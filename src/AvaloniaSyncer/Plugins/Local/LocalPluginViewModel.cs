@@ -1,14 +1,15 @@
 ﻿using System;
+using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using Serilog;
 
 namespace AvaloniaSyncer.Plugins.Local;
 
-class LocalPlugin : IPlugin
+class LocalPluginViewModel : ViewModelBase, IPlugin
 {
     private readonly Maybe<ILogger> logger;
 
-    public LocalPlugin(Maybe<ILogger> logger)
+    public LocalPluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
         Settings = Maybe<IPluginSettings>.None;
@@ -19,7 +20,7 @@ class LocalPlugin : IPlugin
 
     public ISession Create()
     {
-        return new Session(logger);
+        return new SessionViewModel(logger);
     }
 
     public Maybe<IPluginSettings> Settings { get; }

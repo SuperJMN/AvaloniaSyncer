@@ -29,9 +29,9 @@
 			</TabControl.ItemTemplate>
 
 			<TabControl.ContentTemplate>
-				<DataTemplate>
-					<views:SyncSessionView />
-				</DataTemplate>
+				<DataTemplate DataType="viewModels:SessionViewModel">
+					<ContentControl Content="{Binding}" />
+                </DataTemplate>
 			</TabControl.ContentTemplate>
 		</TabControl>
 	</DockPanel>

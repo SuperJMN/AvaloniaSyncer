@@ -39,6 +39,7 @@ public class SftpPluginViewModel : ReactiveValidationObject, ISession
             })
             .Subscribe();
         profiles = Observable.FromAsync(() => new Repository().Load()).Successes().Select(x => x.Profiles).ToProperty(this, x => x.Profiles);
+
     }
 
     [Reactive] public ProfileDto? SelectedProfile { get; set; }
@@ -62,4 +63,6 @@ public class SftpPluginViewModel : ReactiveValidationObject, ISession
     }
 
     public IObservable<bool> IsValid => this.IsValid();
+
+    public IObservable<IZafiroDirectory> Directory => Observable.Never<IZafiroDirectory>();
 }

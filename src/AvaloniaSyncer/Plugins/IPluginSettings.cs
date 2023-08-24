@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace AvaloniaSyncer.Plugins.Local;
+namespace AvaloniaSyncer.Plugins;
 
 public interface IPluginSettings
 {

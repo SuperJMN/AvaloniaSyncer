@@ -34,6 +34,12 @@
 		<PackageReference Include="Zafiro.UI" Version="4.0.6" />
 	</ItemGroup>
 	<ItemGroup>
+	  <Compile Update="Plugins\Local\Configuration\ConfigurationView.axaml.cs">
+	    <DependentUpon>ConfigurationView.axaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Plugins\Local\SessionView.axaml.cs">
+	    <DependentUpon>SessionView.axaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Plugins\SeaweedFS\Configuration\SettingsView.axaml.cs">
 	    <DependentUpon>SettingsView.axaml</DependentUpon>
 	  </Compile>
