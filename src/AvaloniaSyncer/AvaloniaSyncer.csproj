@@ -23,6 +23,7 @@
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
 		<PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.1" />
 		<PackageReference Include="HttpClient.Extensions.LoggingHttpMessageHandler" Version="1.0.3" />
+		<PackageReference Include="Nuke.Common" Version="7.0.2" />
 		<PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
 		<PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
@@ -47,11 +48,11 @@
 	  <Compile Update="Plugins\SeaweedFS-new\Settings\SeaweedSettingsView.axaml.cs">
 	    <DependentUpon>SeaweedSettingsView.axaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\Configuration\SettingsView.axaml.cs">
-	    <DependentUpon>SettingsView.axaml</DependentUpon>
+	  <Compile Update="Views\PluginConfiguratorView.axaml.cs">
+	    <DependentUpon>PluginConfiguratorView.axaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Plugins\Sftp\Configuration\SettingsView.axaml.cs">
-	    <DependentUpon>SettingsView.axaml</DependentUpon>
+	  <Compile Update="Views\SynchronizationView.axaml.cs">
+	    <DependentUpon>SynchronizationView.axaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 </Project>

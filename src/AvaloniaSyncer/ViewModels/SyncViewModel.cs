@@ -41,14 +41,6 @@ public class SyncViewModel : ViewModelBase
 
         BareSessions = bareSessionsCollection;
 
-        Syncronizations = collection;
-
-        CreateSyncSession = ReactiveCommand.CreateFromTask(async () =>
-        {
-            await ShowDialog(dialogService, pluginFactories);
-            Number++;
-        });
-
         SelectPlugins = ReactiveCommand.CreateFromTask(async () => { return await dialogService.Prompt("Select your plugins", new SelectPluginsViewModel(pluginFactories), "OK", vm => ReactiveCommand.Create(() => new PluginSelection(vm.Source!, vm.Destination!), vm.IsValid())); });
 
         SelectPlugins.Values().Do(selection => bareSessions.AddOrUpdate(new SessionViewModel("Session", selection, notificationService, logger))).Subscribe();
@@ -57,34 +49,4 @@ public class SyncViewModel : ViewModelBase
     public ReadOnlyObservableCollection<SessionViewModel> BareSessions { get; set; }
 
     public ReactiveCommand<Unit, Maybe<PluginSelection>> SelectPlugins { get; }
-
-    public ReactiveCommand<Unit, Unit> CreateSyncSession { get; set; }
-
-
-    public IEnumerable<SynchronizationViewModel> Syncronizations { get; }
-
-    private Task ShowDialog(IDialogService dialogService, IList<IPlugin> pluginFactories)
-    {
-        var vm = new CreateSyncSessionViewModel(pluginFactories);
-
-        var options = new[]
-        {
-            new OptionConfiguration<CreateSyncSessionViewModel>("Cancel", actionContext => ReactiveCommand.Create(() => actionContext.Window.Close())),
-            new OptionConfiguration<CreateSyncSessionViewModel>("Create", actionContext =>
-            {
-                return vm.CreateSession.Extend(result =>
-                {
-                    result.Tap(tuple =>
-                    {
-                        sessions.AddOrUpdate(new SynchronizationViewModel($"Session {Number++}", notificationService, tuple.Source, tuple.Destination, logger));
-                        actionContext.Window.Close();
-                    });
-                });
-            })
-        };
-
-        return dialogService.ShowDialog(vm, "Create  sync session", options);
-    }
 }
-
-public record PluginSelection(IPlugin Source, IPlugin Destination);

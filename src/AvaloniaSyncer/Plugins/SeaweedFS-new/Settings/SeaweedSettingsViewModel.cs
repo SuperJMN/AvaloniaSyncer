@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaSyncer.Settings;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using Serilog;
+using Zafiro.CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
 
@@ -25,6 +28,11 @@ internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
     public ProfilesViewModel<SeaweedProfile> ProfilesManager { get; }
 
     public ICommand Load { get; }
+    public async Task<Maybe<IEnumerable<IProfile>>> GetProfiles()
+    {
+        var seaweedProfiles = await ProfilesManager.Load.Execute().Successes().FirstAsync();
+        return Maybe<IEnumerable<IProfile>>.From(seaweedProfiles);
+    }
 
     private SeaweedProfileDto ToDto(SeaweedProfile model)
     {

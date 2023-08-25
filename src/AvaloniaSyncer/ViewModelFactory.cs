@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Styling;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
-using AvaloniaSyncer.Plugins.Sftp;
 using AvaloniaSyncer.ViewModels;
-using AvaloniaSyncer.Views;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
@@ -21,7 +18,6 @@ public static class ViewModelFactory
         var dialogService = DialogService.Create(applicationLifetime, new Dictionary<Type, Type>
         {
             [typeof(MessageDialogViewModel)] = typeof(MessageDialogView),
-            [typeof(CreateSyncSessionViewModel)] = typeof(CreateSyncSessionView)
         }, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         var notificationService = new NotificationDialog(dialogService);
         return new SyncViewModel(dialogService, notificationService, fileSystemPlugins, Maybe.From(Log.Logger));

@@ -3,6 +3,8 @@ using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration;
+using AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
+using AvaloniaSyncer.Settings;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
 using ReactiveUI;
@@ -28,19 +30,25 @@ public class SessionViewModel : ReactiveValidationObject, ISession
         var configurationViewModel = new ConfigurationViewModel();
         Configuration = configurationViewModel;
 
-        Directory = Configuration.IsValid()
+        Directory = IsValid
             .Where(b => b)
             .Select(_ => this.WhenAnyValue(x => x.Path, s => s.Configuration)
                 .SelectMany(tuple => GetDirectory(tuple.Item1, tuple.Item2)).Successes())
             .Switch();
     }
 
-    private ConfigurationViewModel Configuration { get; }
+    public ConfigurationViewModel Configuration { get; }
 
     [Reactive] public string Path { get; set; } = "";
 
+    public void SetProfile(IProfile profile)
+    {
+        var pr = (SeaweedProfile) profile;
+        Configuration.Address = pr.Configuration.Address;
+    }
+
     public IObservable<IZafiroDirectory> Directory { get; }
-    public IObservable<bool> IsValid => this.IsValid();
+    public IObservable<bool> IsValid => this.IsValid().CombineLatest(Configuration.IsValid(), (imValid, configIsValid) => imValid && configIsValid);
 
     private Task<Result<IZafiroDirectory>> GetDirectory(string path, ConfigurationViewModel configuration)
     {

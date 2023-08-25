@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
-using AvaloniaSyncer.Plugins;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.UI;
@@ -12,20 +12,19 @@ public class SessionViewModel : ViewModelBase
     public SessionViewModel(string name, PluginSelection selection, INotificationService notificationService, Maybe<ILogger> logger)
     {
         Name = name;
-        Selection = selection;
-        SourceSession = selection.Source.Create();
-        DestinationSession = selection.Destination.Create();
+        SourceSession = new PluginConfiguratorViewModel(selection.Source);
+        DestinationSession = new PluginConfiguratorViewModel(selection.Destination);
 
-        Materialized = SourceSession.Directory
-            .CombineLatest(DestinationSession.Directory, (source, dest) => Maybe.From(new SynchronizationViewModel("Título", notificationService, source, dest, logger)))
+        Materialized = SourceSession.Session.Directory
+            .CombineLatest(DestinationSession.Session.Directory, (source, dest) => Maybe.From(new SynchronizationViewModel(name, notificationService, source, dest, logger)))
             .StartWith(Maybe<SynchronizationViewModel>.None);
     }
 
     public IObservable<Maybe<SynchronizationViewModel>> Materialized { get; }
 
-    public ISession DestinationSession { get; }
+    public PluginConfiguratorViewModel DestinationSession { get; }
 
-    public ISession SourceSession { get; }
+    public PluginConfiguratorViewModel SourceSession { get; }
 
     public string Name { get; }
 

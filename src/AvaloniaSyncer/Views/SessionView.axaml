@@ -6,26 +6,23 @@
              xmlns:views="clr-namespace:AvaloniaSyncer.Views"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.SessionView" x:DataType="viewModels:SessionViewModel">
-	<StackPanel Spacing="8">
-		<ContentControl Content="{Binding SourceSession}" />
-		<ContentControl Content="{Binding DestinationSession}" />
-		<ContentControl Content="{Binding Materialized^.Value}">
-			<ContentControl.Styles>
-				<Style Selector="ContentPresenter:empty">
-					<Setter Property="ContentTemplate">
-						<Setter.Value>
-							<DataTemplate>
-								<TextBlock>Please, select source and destination</TextBlock>
-							</DataTemplate>
-						</Setter.Value>
-					</Setter>
-				</Style>
-			</ContentControl.Styles>
-			<ContentControl.ContentTemplate>
-				<DataTemplate>
-					<views:SyncSessionView />
-				</DataTemplate>
-			</ContentControl.ContentTemplate>
-		</ContentControl>
-	</StackPanel>
+	<DockPanel>
+		<StackPanel Spacing="8" DockPanel.Dock="Top">
+			<ContentControl Content="{Binding SourceSession}" />
+			<ContentControl Content="{Binding DestinationSession}" />
+		</StackPanel>
+        <ContentControl Content="{Binding Materialized^.Value}">
+            <ContentControl.Styles>
+                <Style Selector="ContentControl > ContentPresenter:empty">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock>Please, select source and destination</TextBlock>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ContentControl.Styles>
+        </ContentControl>
+	</DockPanel>
 </UserControl>

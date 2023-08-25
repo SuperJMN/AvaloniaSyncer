@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Settings;
 using CSharpFunctionalExtensions;
-using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
@@ -32,6 +32,10 @@ public class SessionViewModel : ReactiveValidationObject, ISession
     }
 
     [Reactive] public string Path { get; set; } = "";
+
+    public void SetProfile(IProfile profile)
+    {
+    }
 
     public IObservable<IZafiroDirectory> Directory { get; }
     public IObservable<bool> IsValid => this.IsValid();
