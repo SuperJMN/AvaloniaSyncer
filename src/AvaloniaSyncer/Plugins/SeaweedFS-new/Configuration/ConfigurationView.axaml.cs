@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Plugins.Local.Configuration
+namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration
 {
     public partial class ConfigurationView : UserControl
     {

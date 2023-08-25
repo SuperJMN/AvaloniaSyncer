@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Plugins.Local.Configuration;
 using CSharpFunctionalExtensions;
 using DynamicData.Binding;
 using ReactiveUI;

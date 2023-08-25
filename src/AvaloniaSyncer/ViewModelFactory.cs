@@ -4,7 +4,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Styling;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
-using AvaloniaSyncer.Plugins.SeaweedFS;
 using AvaloniaSyncer.Plugins.Sftp;
 using AvaloniaSyncer.ViewModels;
 using AvaloniaSyncer.Views;
@@ -39,9 +38,9 @@ public static class ViewModelFactory
         var logger = Maybe.From(Log.Logger);
         return new IPlugin[]
         {
-            new LocalPluginViewModel(logger),
-            new SeaweedPlugin(logger),
-            new SftpPlugin(logger)
+            new PluginViewModel(logger),
+            new AvaloniaSyncer.Plugins.SeaweedFS_new.PluginViewModel(logger),
+            //new SftpPlugin(logger)
         };
     }
 

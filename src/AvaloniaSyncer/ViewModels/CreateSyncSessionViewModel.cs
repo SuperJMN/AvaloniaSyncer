@@ -40,8 +40,9 @@ public class CreateSyncSessionViewModel
 
     private Task<Result<SyncSession>> CreateSyncSession(ISession sourcePlugin, ISession destination)
     {
-        var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
-        var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
-        return sourceDirResult.CombineAndMap(destDirResult, (source, dest) => new SyncSession(source, dest));
+        throw new NotImplementedException();
+        //var sourceDirResult = sourcePlugin.FileSystem().Bind(fs => fs.GetDirectory(sourcePlugin.Path));
+        //var destDirResult = destination.FileSystem().Bind(fs => fs.GetDirectory(destination.Path));
+        //return sourceDirResult.CombineAndMap(destDirResult, (source, dest) => new SyncSession(source, dest));
     }
 }

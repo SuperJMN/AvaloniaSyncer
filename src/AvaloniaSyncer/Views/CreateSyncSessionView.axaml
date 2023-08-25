@@ -8,6 +8,7 @@
              xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Local"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+             xmlns:seaweedFsNew="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS_new"
              mc:Ignorable="d"
              x:Class="AvaloniaSyncer.Views.CreateSyncSessionView"
              d:DesignWidth="600"
@@ -18,7 +19,7 @@
 			<seaweedFs:SeaweedFSPluginView />
 		</DataTemplate>
 		<DataTemplate DataType="local:SessionViewModel">
-			<local:SessionView />
+			<seaweedFsNew:SessionView />
 		</DataTemplate>
 		<DataTemplate DataType="sftp:SftpPluginViewModel">
 			<sftp:SftpPluginView />

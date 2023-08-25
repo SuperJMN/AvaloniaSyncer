@@ -8,8 +8,7 @@ namespace AvaloniaSyncer.Plugins;
 
 public interface ISession
 {
-    public Task<Result<IFileSystem>> FileSystem();
-    public string Path { get; set; }
+    //public Task<Result<IFileSystem>> FileSystem(ISessionConfiguration configuration);
     public IObservable<IZafiroDirectory> Directory { get; }
     IObservable<bool> IsValid { get; }
 }

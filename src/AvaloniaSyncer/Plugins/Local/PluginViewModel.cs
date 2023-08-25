@@ -5,11 +5,11 @@ using Serilog;
 
 namespace AvaloniaSyncer.Plugins.Local;
 
-class LocalPluginViewModel : ViewModelBase, IPlugin
+class PluginViewModel : ViewModelBase, IPlugin
 {
     private readonly Maybe<ILogger> logger;
 
-    public LocalPluginViewModel(Maybe<ILogger> logger)
+    public PluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
         Settings = Maybe<IPluginSettings>.None;

@@ -13,6 +13,7 @@
 		<None Remove="Assets\sftp.png" />
 	</ItemGroup>
 	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
@@ -34,11 +35,14 @@
 		<PackageReference Include="Zafiro.UI" Version="4.0.6" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Compile Update="Plugins\Local\Configuration\ConfigurationView.axaml.cs">
-	    <DependentUpon>ConfigurationView.axaml</DependentUpon>
-	  </Compile>
 	  <Compile Update="Plugins\Local\SessionView.axaml.cs">
 	    <DependentUpon>SessionView.axaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Plugins\SeaweedFS-new\Configuration\ConfigurationView.axaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	  <Compile Update="Plugins\SeaweedFS-new\SessionView.axaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
 	  <Compile Update="Plugins\SeaweedFS\Configuration\SettingsView.axaml.cs">
 	    <DependentUpon>SettingsView.axaml</DependentUpon>
