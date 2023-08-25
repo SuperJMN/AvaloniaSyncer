@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration;
 using AvaloniaSyncer.Settings;
 using DynamicData.Binding;
 using ReactiveUI.Validation.Extensions;
@@ -13,9 +14,10 @@ public class SeaweedProfile : ReactiveValidationObject, IProfile
     {
         Id = id;
         IsDirty = this.WhenAnyPropertyChanged().Select(x => true).StartWith(false);
+        Configuration = new ConfigurationViewModel();
     }
 
-    public string Address { get; set; } = "";
+    public ConfigurationViewModel Configuration { get; }
     public IObservable<bool> IsDirty { get; }
     public Guid Id { get; }
     public string Name { get; set; } = "";

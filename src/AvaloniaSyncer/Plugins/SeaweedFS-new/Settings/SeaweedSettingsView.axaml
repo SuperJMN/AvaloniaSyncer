@@ -41,7 +41,7 @@
 					<TextBox Watermark="Name" Text="{Binding SelectedProfile.Name}" />
 				</HeaderedContentControl>
 				<HeaderedContentControl Header="Address">
-					<TextBox Watermark="Address" Text="{Binding SelectedProfile.Address}" />
+					<TextBox Watermark="Address" Text="{Binding SelectedProfile.Configuration.Address}" />
 				</HeaderedContentControl>
 			</StackPanel>
 		</DockPanel>

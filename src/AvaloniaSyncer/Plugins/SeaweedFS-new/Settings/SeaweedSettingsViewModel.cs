@@ -31,7 +31,7 @@ internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
         return new SeaweedProfileDto
         {
             Name = model.Name,
-            Address = model.Address,
+            Address = model.Configuration.Address,
             Id = model.Id
         };
     }
@@ -41,7 +41,10 @@ internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
         return new SeaweedProfile(dto.Id)
         {
             Name = dto.Name,
-            Address = dto.Address
+            Configuration =
+            {
+                Address = dto.Address,
+            }
         };
     }
 }
