@@ -44,6 +44,9 @@
 	  <Compile Update="Plugins\SeaweedFS-new\SessionView.axaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
+	  <Compile Update="Plugins\SeaweedFS-new\Settings\SeaweedSettingsView.axaml.cs">
+	    <DependentUpon>SeaweedSettingsView.axaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Plugins\SeaweedFS\Configuration\SettingsView.axaml.cs">
 	    <DependentUpon>SettingsView.axaml</DependentUpon>
 	  </Compile>

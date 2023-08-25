@@ -1,4 +1,5 @@
 ﻿using System;
+using AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using Serilog;
@@ -12,11 +13,12 @@ class PluginViewModel : ViewModelBase, IPlugin
     public PluginViewModel(Maybe<ILogger> logger)
     {
         this.logger = logger;
-        Settings = Maybe<IPluginSettings>.None;
+        Settings = new SeaweedSettingsViewModel(logger);
     }
 
     public string Name => "SeaweedFS";
-    public Uri Icon => new Uri("avares://AvaloniaSyncer/Assets/seaweedfs.png");
+
+    public Uri Icon => new("avares://AvaloniaSyncer/Assets/seaweedfs.png");
 
     public ISession Create()
     {

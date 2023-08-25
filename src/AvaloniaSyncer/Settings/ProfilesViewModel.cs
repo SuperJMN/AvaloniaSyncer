@@ -4,8 +4,6 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using DynamicData;
@@ -13,11 +11,12 @@ using DynamicData.Binding;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Serilog;
+using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.Mixins;
 
 namespace AvaloniaSyncer.Settings;
 
-public class ProfilesViewModel<T> : ViewModelBase, IPluginSettings where T : IProfile
+public class ProfilesViewModel<T> : ViewModelBase where T : IProfile
 {
     private readonly Maybe<ILogger> logger;
 
@@ -41,9 +40,15 @@ public class ProfilesViewModel<T> : ViewModelBase, IPluginSettings where T : IPr
         Load = ReactiveCommand.CreateFromTask(onLoad);
         Delete = ReactiveCommand.Create(() => profilesSource.RemoveKey(SelectedProfile!.Id), this.WhenAnyValue(x => x.SelectedProfile).NotNull());
 
+        Load.Successes()
+            .Do(profiles => profilesSource.Edit(x => x.Load(profiles)))
+            .Subscribe();
+
         Update.InvokeCommand(Save);
     }
 
+    public ReactiveCommand<Unit, Result<IEnumerable<T>>> Load { get; set; }
+    
     public ReactiveCommand<Unit, Unit> Delete { get; set; }
 
     public ReactiveCommand<Unit, Result> Save { get; }
@@ -56,5 +61,4 @@ public class ProfilesViewModel<T> : ViewModelBase, IPluginSettings where T : IPr
 
     public ReadOnlyObservableCollection<T> Profiles { get; }
 
-    public ICommand Load { get; }
 }
