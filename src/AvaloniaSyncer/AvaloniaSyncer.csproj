@@ -54,5 +54,8 @@
 	  <Compile Update="Views\SynchronizationView.axaml.cs">
 	    <DependentUpon>SynchronizationView.axaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\SyncSectionView.axaml.cs">
+	    <DependentUpon>SyncSectionView.axaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 </Project>

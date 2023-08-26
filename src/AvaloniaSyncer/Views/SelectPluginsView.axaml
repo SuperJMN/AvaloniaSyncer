@@ -9,9 +9,6 @@
              x:DataType="viewModels:SelectPluginsViewModel">
 
 	<UserControl.Styles>
-        <Style Selector="ComboBox">
-			<Setter Property="HorizontalAlignment" Value="Stretch" />
-        </Style>
         <Style Selector="HeaderedContentControl">
 			<Setter Property="HorizontalAlignment" Value="Stretch" />
 			<Setter Property="Margin" Value="8" />
@@ -23,10 +20,10 @@
 			<ControlTemplate>
 				<UniformGrid Rows="1">
 					<HeaderedContentControl Classes="Section" Header="Source">
-						<ComboBox DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Source}" />
+						<ComboBox Classes="FullWidth" DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Source}" />
 					</HeaderedContentControl>
 					<HeaderedContentControl Classes="Section" Header="Destination">
-						<ComboBox DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Destination}" />
+						<ComboBox Classes="FullWidth" DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Destination}" />
 					</HeaderedContentControl>
 				</UniformGrid>
 			</ControlTemplate>
@@ -35,10 +32,10 @@
 			<ControlTemplate>
 				<StackPanel>
 					<HeaderedContentControl Classes="Section" Header="Source">
-						<ComboBox DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Source}" />
+						<ComboBox Classes="FullWidth" DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Source}" />
 					</HeaderedContentControl>
 					<HeaderedContentControl Classes="Section" Header="Destination">
-						<ComboBox DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Destination}" />
+						<ComboBox Classes="FullWidth" DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Plugins}" SelectedItem="{Binding Destination}" />
 					</HeaderedContentControl>
 				</StackPanel>
 			</ControlTemplate>

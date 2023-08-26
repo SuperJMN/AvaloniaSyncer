@@ -12,7 +12,7 @@ namespace AvaloniaSyncer;
 
 public static class ViewModelFactory
 {
-    public static SyncViewModel GetSyncViewModel(IApplicationLifetime applicationLifetime)
+    public static SyncSectionViewModel GetSyncViewModel(IApplicationLifetime applicationLifetime)
     {
         var fileSystemPlugins = AvailablePlugins();
         var dialogService = DialogService.Create(applicationLifetime, new Dictionary<Type, Type>
@@ -20,7 +20,7 @@ public static class ViewModelFactory
             [typeof(MessageDialogViewModel)] = typeof(MessageDialogView),
         }, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         var notificationService = new NotificationDialog(dialogService);
-        return new SyncViewModel(dialogService, notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
+        return new SyncSectionViewModel(dialogService, notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)

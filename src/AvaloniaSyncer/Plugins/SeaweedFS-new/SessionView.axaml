@@ -7,8 +7,10 @@
              x:Class="AvaloniaSyncer.Plugins.SeaweedFS_new.SessionView"
              x:DataType="local:SessionViewModel">
 
-    <StackPanel>
-        <ContentControl Content="{Binding Configuration}" />
-        <TextBox Watermark="Path" Text="{Binding Path}" />
-    </StackPanel>
+	<StackPanel>
+		<ContentControl Content="{Binding Configuration}" />
+		<HeaderedContentControl Header="Path">
+			<TextBox Watermark="Path" Text="{Binding Path}" />
+		</HeaderedContentControl>
+	</StackPanel>
 </UserControl>

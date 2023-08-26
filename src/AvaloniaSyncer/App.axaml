@@ -27,5 +27,9 @@
             </Setter>
 		</Style>
 
+        <Style Selector="ComboBox.FullWidth">
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+
 	</Application.Styles>
 </Application>

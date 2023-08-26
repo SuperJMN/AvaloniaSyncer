@@ -16,7 +16,7 @@ using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
 
-public class SyncViewModel : ViewModelBase
+public class SyncSectionViewModel : ViewModelBase
 {
     private readonly SourceCache<SessionViewModel, string> bareSessions = new(x => x.Name);
     private readonly Maybe<ILogger> logger;
@@ -24,7 +24,7 @@ public class SyncViewModel : ViewModelBase
     private readonly SourceCache<SynchronizationViewModel, string> sessions = new(x => x.Title);
     private int Number = 1;
 
-    public SyncViewModel(IDialogService dialogService, INotificationService notificationService, IList<IPlugin> pluginFactories, Maybe<ILogger> logger)
+    public SyncSectionViewModel(IDialogService dialogService, INotificationService notificationService, IList<IPlugin> pluginFactories, Maybe<ILogger> logger)
     {
         this.notificationService = notificationService;
         this.logger = logger;
