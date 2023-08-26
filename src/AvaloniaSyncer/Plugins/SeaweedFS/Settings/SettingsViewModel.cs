@@ -1,40 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using AvaloniaSyncer.Settings;
-using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using Serilog;
-using Zafiro.CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
-internal class SettingsViewModel : ViewModelBase, IPluginSettings
+internal class SettingsViewModel : SettingsViewModelBase<Profile, ProfileDto>
 {
-    public SettingsViewModel(Maybe<ILogger> logger)
+    public SettingsViewModel(Maybe<ILogger> logger) : base(logger, "SeaweedFS.Profiles", () => new Profile(Guid.NewGuid()))
     {
-        var store = new ObjectStore<IEnumerable<ProfileDto>>("SeaweedFS.Profiles");
-        ProfilesManager = new ProfilesViewModel<Profile>(
-            logger,
-            () => new Profile(Guid.NewGuid()),
-            toSave => store.Save(toSave.Select(ToDto)),
-            () => store.Load().Map(dtos => dtos.Select(FromDto)));
-        Load = ProfilesManager.Load;
     }
 
-    public ProfilesViewModel<Profile> ProfilesManager { get; }
-
-    public ICommand Load { get; }
-    public async Task<Maybe<IEnumerable<IProfile>>> GetProfiles()
-    {
-        var seaweedProfiles = await ProfilesManager.Load.Execute().Successes().FirstAsync();
-        return Maybe<IEnumerable<IProfile>>.From(seaweedProfiles);
-    }
-
-    private ProfileDto ToDto(Profile model)
+    protected override ProfileDto ToDto(Profile model)
     {
         return new ProfileDto
         {
@@ -44,7 +21,7 @@ internal class SettingsViewModel : ViewModelBase, IPluginSettings
         };
     }
 
-    private Profile FromDto(ProfileDto dto)
+    protected override Profile FromDto(ProfileDto dto)
     {
         return new Profile(dto.Id)
         {
