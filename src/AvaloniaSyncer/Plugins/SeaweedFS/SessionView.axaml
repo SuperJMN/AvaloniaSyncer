@@ -7,7 +7,7 @@
              x:Class="AvaloniaSyncer.Plugins.SeaweedFS.SessionView"
              x:DataType="seaweedFs:SessionViewModel">
 
-	<StackPanel>
+	<StackPanel Spacing="8">
 		<ContentControl Content="{Binding Configuration}" />
 		<HeaderedContentControl Header="Path">
 			<TextBox Watermark="Path" Text="{Binding Path}" />
