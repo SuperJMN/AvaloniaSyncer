@@ -3,9 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:settings="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS_new.Settings"
+             xmlns:settings1="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS.Settings"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Plugins.SeaweedFS_new.Settings.SeaweedSettingsView"
-             x:DataType="settings:SeaweedSettingsViewModel">
+             x:Class="AvaloniaSyncer.Plugins.SeaweedFS.Settings.SeaweedSettingsView"
+             x:DataType="settings1:SeaweedSettingsViewModel">
 	<DockPanel DataContext="{Binding ProfilesManager}">
 		<Panel>
 			<ListBox DockPanel.Dock="Left" MinWidth="200" ItemsSource="{Binding Profiles}"

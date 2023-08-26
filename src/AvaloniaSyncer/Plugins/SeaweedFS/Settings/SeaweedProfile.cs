@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Reactive.Linq;
-using AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration;
+using AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
 using AvaloniaSyncer.Settings;
 using DynamicData.Binding;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
 public class SeaweedProfile : ReactiveValidationObject, IProfile
 {

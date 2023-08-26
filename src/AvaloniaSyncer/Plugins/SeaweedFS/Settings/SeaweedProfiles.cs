@@ -5,7 +5,7 @@ using AvaloniaSyncer.Settings;
 using CSharpFunctionalExtensions;
 using Serilog;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
 public class SeaweedProfiles
 {

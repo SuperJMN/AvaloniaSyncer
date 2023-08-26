@@ -10,7 +10,7 @@ using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
 internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
 {

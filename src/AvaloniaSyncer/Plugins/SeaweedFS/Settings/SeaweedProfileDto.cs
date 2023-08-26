@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
 public class SeaweedProfileDto
 {

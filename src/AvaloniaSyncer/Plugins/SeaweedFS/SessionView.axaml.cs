@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new;
+namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
 public partial class SessionView : UserControl
 {

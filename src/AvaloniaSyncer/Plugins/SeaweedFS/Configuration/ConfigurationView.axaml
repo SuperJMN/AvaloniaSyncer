@@ -3,9 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:configuration="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration"
+             xmlns:configuration1="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS.Configuration"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration.ConfigurationView"
-             x:DataType="configuration:ConfigurationViewModel">
+             x:Class="AvaloniaSyncer.Plugins.SeaweedFS.Configuration.ConfigurationView"
+             x:DataType="configuration1:ConfigurationViewModel">
     <HeaderedContentControl Header="Server Address">
         <TextBox Watermark="Server Address" Text="{Binding Address}" />
     </HeaderedContentControl>

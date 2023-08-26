@@ -1,16 +1,15 @@
 ﻿using System;
-using AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
-using AvaloniaSyncer.ViewModels;
+using AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 using CSharpFunctionalExtensions;
 using Serilog;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new;
+namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
-class PluginViewModel : ViewModelBase, IPlugin
+public class Plugin : IPlugin
 {
     private readonly Maybe<ILogger> logger;
 
-    public PluginViewModel(Maybe<ILogger> logger)
+    public Plugin(Maybe<ILogger> logger)
     {
         this.logger = logger;
         Settings = new SeaweedSettingsViewModel(logger);

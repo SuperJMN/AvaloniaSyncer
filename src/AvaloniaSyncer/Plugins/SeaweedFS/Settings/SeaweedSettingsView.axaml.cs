@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Settings
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings
 {
     public partial class SeaweedSettingsView: UserControl
     {

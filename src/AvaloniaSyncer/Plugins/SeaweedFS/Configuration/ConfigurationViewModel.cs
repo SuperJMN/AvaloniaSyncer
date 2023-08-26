@@ -3,7 +3,7 @@ using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration;
+namespace AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
 
 public class ConfigurationViewModel : ReactiveValidationObject, ISessionConfiguration
 {

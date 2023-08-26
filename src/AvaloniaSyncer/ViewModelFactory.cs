@@ -34,8 +34,8 @@ public static class ViewModelFactory
         var logger = Maybe.From(Log.Logger);
         return new IPlugin[]
         {
-            new PluginViewModel(logger),
-            new AvaloniaSyncer.Plugins.SeaweedFS_new.PluginViewModel(logger),
+            new Plugins.Local.Plugin(logger),
+            new Plugins.SeaweedFS.Plugin(logger),
             //new SftpPlugin(logger)
         };
     }

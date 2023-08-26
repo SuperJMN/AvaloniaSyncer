@@ -2,8 +2,8 @@
 using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration;
-using AvaloniaSyncer.Plugins.SeaweedFS_new.Settings;
+using AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
+using AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 using AvaloniaSyncer.Settings;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
@@ -17,7 +17,7 @@ using Zafiro.FileSystem;
 using Zafiro.FileSystem.SeaweedFS;
 using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS_new;
+namespace AvaloniaSyncer.Plugins.SeaweedFS;
 
 public class SessionViewModel : ReactiveValidationObject, ISession
 {
