@@ -2,7 +2,7 @@
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
-public class SeaweedProfileDto
+public class ProfileDto
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

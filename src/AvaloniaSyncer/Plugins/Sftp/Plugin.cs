@@ -1,9 +1,9 @@
 ﻿using System;
-using AvaloniaSyncer.Plugins.SeaweedFS.Settings;
+using AvaloniaSyncer.Plugins.Sftp.Settings;
 using CSharpFunctionalExtensions;
 using Serilog;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS;
+namespace AvaloniaSyncer.Plugins.Sftp;
 
 public class Plugin : IPlugin
 {
@@ -15,7 +15,7 @@ public class Plugin : IPlugin
         Settings = new SettingsViewModel(logger);
     }
 
-    public string Name => "SeaweedFS";
+    public string Name => "SFTP (SSH)";
 
     public Uri Icon => new("avares://AvaloniaSyncer/Assets/seaweedfs.png");
 

@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings
 {
-    public partial class SeaweedSettingsView: UserControl
+    public partial class SettingsView: UserControl
     {
-        public SeaweedSettingsView()
+        public SettingsView()
         {
             InitializeComponent();
         }

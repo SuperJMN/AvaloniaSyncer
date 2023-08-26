@@ -10,22 +10,22 @@ using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 
-namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
+namespace AvaloniaSyncer.Plugins.Sftp.Settings;
 
-internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
+internal class SettingsViewModel : ViewModelBase, IPluginSettings
 {
-    public SeaweedSettingsViewModel(Maybe<ILogger> logger)
+    public SettingsViewModel(Maybe<ILogger> logger)
     {
-        var store = new ObjectStore<IEnumerable<SeaweedProfileDto>>("SeaweedFS.Profiles");
-        ProfilesManager = new ProfilesViewModel<SeaweedProfile>(
+        var store = new ObjectStore<IEnumerable<ProfileDto>>("Sftp.Profiles");
+        ProfilesManager = new ProfilesViewModel<Profile>(
             logger,
-            () => new SeaweedProfile(Guid.NewGuid()),
+            () => new Profile(Guid.NewGuid()),
             toSave => store.Save(toSave.Select(ToDto)),
             () => store.Load().Map(dtos => dtos.Select(FromDto)));
         Load = ProfilesManager.Load;
     }
 
-    public ProfilesViewModel<SeaweedProfile> ProfilesManager { get; }
+    public ProfilesViewModel<Profile> ProfilesManager { get; }
 
     public ICommand Load { get; }
     public async Task<Maybe<IEnumerable<IProfile>>> GetProfiles()
@@ -34,9 +34,9 @@ internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
         return Maybe<IEnumerable<IProfile>>.From(seaweedProfiles);
     }
 
-    private SeaweedProfileDto ToDto(SeaweedProfile model)
+    private ProfileDto ToDto(Profile model)
     {
-        return new SeaweedProfileDto
+        return new ProfileDto
         {
             Name = model.Name,
             Address = model.Configuration.Address,
@@ -44,9 +44,9 @@ internal class SeaweedSettingsViewModel : ViewModelBase, IPluginSettings
         };
     }
 
-    private SeaweedProfile FromDto(SeaweedProfileDto dto)
+    private Profile FromDto(ProfileDto dto)
     {
-        return new SeaweedProfile(dto.Id)
+        return new Profile(dto.Id)
         {
             Name = dto.Name,
             Configuration =

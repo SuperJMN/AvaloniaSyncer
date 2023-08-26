@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:settings="clr-namespace:AvaloniaSyncer.Plugins.SeaweedFS.Settings"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Plugins.SeaweedFS.Settings.SettingsView"
+             x:DataType="settings:SettingsViewModel">
+	<DockPanel DataContext="{Binding ProfilesManager}">
+		<Panel>
+			<ListBox DockPanel.Dock="Left" MinWidth="200" ItemsSource="{Binding Profiles}"
+                     SelectedValue="{Binding SelectedProfile}">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock>
+                            <TextBlock.Inlines>
+								<Run Classes.Dirty="{Binding IsDirty^}" Text="{Binding Name}">
+                                    <Run.Styles>
+                                        <Style Selector="Run.Dirty">
+                                            <Setter Property="FontWeight" Value="Black" />
+                                        </Style>
+                                    </Run.Styles>
+                                </Run>
+                            </TextBlock.Inlines>
+                        </TextBlock>
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+			</ListBox>
+			<StackPanel Spacing="8" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8" VerticalAlignment="Bottom">
+				<Button Content="New"
+                        Command="{Binding CreateNewProfile}" />
+				<Button Content="Delete" Command="{Binding Delete}" />
+			</StackPanel>
+		</Panel>
+		<DockPanel Margin="8">
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom" Spacing="8">
+				<Button Content="Update" Command="{Binding Update}" />
+			</StackPanel>
+			<StackPanel Spacing="8" Grid.IsSharedSizeScope="True">
+				<HeaderedContentControl Header="Name">
+					<TextBox Watermark="Name" Text="{Binding SelectedProfile.Name}" />
+				</HeaderedContentControl>
+				<HeaderedContentControl Header="Address">
+					<TextBox Watermark="Address" Text="{Binding SelectedProfile.Configuration.Address}" />
+				</HeaderedContentControl>
+			</StackPanel>
+		</DockPanel>
+	</DockPanel>
+</UserControl>

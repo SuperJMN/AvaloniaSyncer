@@ -39,14 +39,23 @@
 	  <Compile Update="Plugins\Local\SessionView.axaml.cs">
 	    <DependentUpon>SessionView.axaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Plugins\Sftp\Configuration\ConfigurationView.axaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	  <Compile Update="Plugins\Sftp\SessionView.axaml.cs">
+	    <DependentUpon>%(Filename)</DependentUpon>
+	  </Compile>
+	  <Compile Update="Plugins\Sftp\Settings\SettingsView.axaml.cs">
+	    <DependentUpon>SettingsView.axaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Plugins\SeaweedFS\Configuration\ConfigurationView.axaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
 	  <Compile Update="Plugins\SeaweedFS\SessionView.axaml.cs">
 	    <DependentUpon>%(Filename)</DependentUpon>
 	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\Settings\SeaweedSettingsView.axaml.cs">
-	    <DependentUpon>SeaweedSettingsView.axaml</DependentUpon>
+	  <Compile Update="Plugins\SeaweedFS\Settings\SettingsView.axaml.cs">
+	    <DependentUpon>SettingsView.axaml</DependentUpon>
 	  </Compile>
 	  <Compile Update="Views\PluginConfiguratorView.axaml.cs">
 	    <DependentUpon>PluginConfiguratorView.axaml</DependentUpon>

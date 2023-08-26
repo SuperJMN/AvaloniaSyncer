@@ -36,7 +36,7 @@ public static class ViewModelFactory
         {
             new Plugins.Local.Plugin(logger),
             new Plugins.SeaweedFS.Plugin(logger),
-            //new SftpPlugin(logger)
+            new Plugins.Sftp.Plugin(logger)
         };
     }
 

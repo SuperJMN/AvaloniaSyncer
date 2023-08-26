@@ -8,9 +8,9 @@ using ReactiveUI.Validation.Helpers;
 
 namespace AvaloniaSyncer.Plugins.SeaweedFS.Settings;
 
-public class SeaweedProfile : ReactiveValidationObject, IProfile
+public class Profile : ReactiveValidationObject, IProfile
 {
-    public SeaweedProfile(Guid id)
+    public Profile(Guid id)
     {
         Id = id;
         IsDirty = this.WhenAnyPropertyChanged().Select(x => true).StartWith(false);
