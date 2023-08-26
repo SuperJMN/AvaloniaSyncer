@@ -6,7 +6,18 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Plugins.Sftp.Configuration.ConfigurationView"
              x:DataType="configuration:ConfigurationViewModel">
-    <HeaderedContentControl Header="Server Address">
-        <TextBox Watermark="Server Address" Text="{Binding Address}" />
-    </HeaderedContentControl>
+	<StackPanel Spacing="8">
+		<HeaderedContentControl Header="Host">
+			<TextBox Watermark="Host" Text="{Binding Host}" />
+		</HeaderedContentControl>
+		<HeaderedContentControl Header="Port">
+			<TextBox Watermark="Port" Text="{Binding Port}" />
+		</HeaderedContentControl>
+		<HeaderedContentControl Header="Username">
+			<TextBox Watermark="Username" Text="{Binding Username}" />
+		</HeaderedContentControl>
+		<HeaderedContentControl Header="Password">
+			<TextBox PasswordChar="*" Watermark="Password" Text="{Binding Password}" />
+		</HeaderedContentControl>
+	</StackPanel>
 </UserControl>

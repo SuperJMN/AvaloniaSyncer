@@ -40,10 +40,8 @@
 				<HeaderedContentControl Header="Name">
 					<TextBox Watermark="Name" Text="{Binding SelectedProfile.Name}" />
 				</HeaderedContentControl>
-				<HeaderedContentControl Header="Address">
-					<TextBox Watermark="Address" Text="{Binding SelectedProfile.Configuration.Address}" />
-				</HeaderedContentControl>
-			</StackPanel>
+				<ContentControl Content="{Binding SelectedProfile.Configuration}" />
+            </StackPanel>
 		</DockPanel>
 	</DockPanel>
 </UserControl>

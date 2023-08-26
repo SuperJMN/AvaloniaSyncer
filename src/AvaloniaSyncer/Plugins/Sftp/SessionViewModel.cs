@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Net.Http;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Plugins.Sftp.Configuration;
 using AvaloniaSyncer.Plugins.Sftp.Settings;
 using AvaloniaSyncer.Settings;
 using CSharpFunctionalExtensions;
-using HttpClient.Extensions.LoggingHttpMessageHandler;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
@@ -14,8 +12,7 @@ using ReactiveUI.Validation.Helpers;
 using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
-using Zafiro.FileSystem.SeaweedFS;
-using Zafiro.FileSystem.SeaweedFS.Filer.Client;
+using Zafiro.FileSystem.Sftp;
 
 namespace AvaloniaSyncer.Plugins.Sftp;
 
@@ -44,7 +41,10 @@ public class SessionViewModel : ReactiveValidationObject, ISession
     public void SetProfile(IProfile profile)
     {
         var pr = (Profile) profile;
-        Configuration.Address = pr.Configuration.Address;
+        Configuration.Host = pr.Configuration.Host;
+        Configuration.Port = pr.Configuration.Port;
+        Configuration.Username = pr.Configuration.Username;
+        Configuration.Password = pr.Configuration.Password;
     }
 
     public IObservable<IZafiroDirectory> Directory { get; }
@@ -52,28 +52,12 @@ public class SessionViewModel : ReactiveValidationObject, ISession
 
     private Task<Result<IZafiroDirectory>> GetDirectory(string path, ConfigurationViewModel configuration)
     {
-        return GetFileSystem(configuration.Address).Bind(system => system.GetDirectory(path));
+        return GetFileSystem(configuration.Host, configuration.Port, configuration.Username, configuration.Password).Bind(system => system.GetDirectory(path));
     }
 
-    private Task<Result<IFileSystem>> GetFileSystem(string address)
+    private async Task<Result<IFileSystem>> GetFileSystem(string host, int port, string username, string password)
     {
-        var fileSystem = Result.Try(() =>
-        {
-            var handler = logger.Match<HttpMessageHandler, ILogger>(f =>
-            {
-                var loggingHttpMessageHandler = new LoggingHttpMessageHandler(new LoggerAdapter(f));
-                loggingHttpMessageHandler.InnerHandler = new HttpClientHandler();
-                return loggingHttpMessageHandler;
-            }, () => new HttpClientHandler());
-            var httpClient = new System.Net.Http.HttpClient(handler)
-            {
-                BaseAddress = new Uri(address),
-                Timeout = TimeSpan.FromDays(1)
-            };
-            var seaweedFSClient = new SeaweedFSClient(httpClient);
-            return (IFileSystem) new SeaweedFileSystem(seaweedFSClient, logger);
-        });
-
-        return Task.FromResult(fileSystem);
+        var createResult = await SftpFileSystem.Create(host, port, username, password, logger);
+        return createResult.Map(system => (IFileSystem) system);
     }
 }

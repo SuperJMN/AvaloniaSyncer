@@ -39,8 +39,11 @@ internal class SettingsViewModel : ViewModelBase, IPluginSettings
         return new ProfileDto
         {
             Name = model.Name,
-            Address = model.Configuration.Address,
-            Id = model.Id
+            Id = model.Id,
+            Host = model.Configuration.Host,
+            Port = model.Configuration.Port,
+            Username = model.Configuration.Username,
+            Password = model.Configuration.Password,
         };
     }
 
@@ -51,7 +54,10 @@ internal class SettingsViewModel : ViewModelBase, IPluginSettings
             Name = dto.Name,
             Configuration =
             {
-                Address = dto.Address,
+                Host = dto.Host,
+                Port = dto.Port,
+                Username = dto.Username,
+                Password = dto.Password,
             }
         };
     }
