@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Plugins.SeaweedFS_new.Configuration.ConfigurationView"
              x:DataType="configuration:ConfigurationViewModel">
-    <HeaderedContentControl Header="Address">
-        <TextBox Watermark="Address" Text="{Binding Address}" />
+    <HeaderedContentControl Header="Server Address">
+        <TextBox Watermark="Server Address" Text="{Binding Address}" />
     </HeaderedContentControl>
 </UserControl>
