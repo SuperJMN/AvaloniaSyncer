@@ -5,12 +5,12 @@
              xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.SessionView" x:DataType="viewModels:SessionViewModel">
-	<DockPanel>
+	<Grid RowDefinitions="* *">
 		<UniformGrid Rows="1" DockPanel.Dock="Top">
 			<ContentControl Content="{Binding SourceSession}" />
 			<ContentControl Content="{Binding DestinationSession}" />
 		</UniformGrid>
-        <ContentControl Content="{Binding Materialized^.Value}">
+        <ContentControl Grid.Row="1" Content="{Binding Materialized^.Value}">
             <ContentControl.Styles>
                 <Style Selector="ContentControl > ContentPresenter:empty">
                     <Setter Property="ContentTemplate">
@@ -23,5 +23,5 @@
                 </Style>
             </ContentControl.Styles>
         </ContentControl>
-	</DockPanel>
+	</Grid>
 </UserControl>

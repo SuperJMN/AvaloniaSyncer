@@ -36,6 +36,9 @@
 		<PackageReference Include="Zafiro.UI" Version="4.0.6" />
 	</ItemGroup>
 	<ItemGroup>
+	  <ProjectReference Include="C:\Users\JMN\source\repos\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj" />
+	</ItemGroup>
+	<ItemGroup>
 	  <Compile Update="Plugins\Local\SessionView.axaml.cs">
 	    <DependentUpon>SessionView.axaml</DependentUpon>
 	  </Compile>

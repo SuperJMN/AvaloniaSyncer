@@ -6,14 +6,15 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.PluginConfiguratorView"
              x:DataType="viewModels:PluginConfiguratorViewModel">
-	<StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
-		<TextBlock Text="{Binding Name}" />
-        <HeaderedContentControl  IsVisible="{Binding Profiles^.HasValue}" 
-                                 Header="Profiles">
-            <ComboBox Classes="FullWidth"
+	<DockPanel Grid.IsSharedSizeScope="True">
+		<TextBlock Text="{Binding Name}" DockPanel.Dock="Top" />
+		<HeaderedContentControl  IsVisible="{Binding Profiles^.HasValue}"
+                                 Header="Profiles" DockPanel.Dock="Top">
+			<ComboBox Classes="FullWidth"
                       SelectedItem="{Binding SelectedProfile}"
                       DisplayMemberBinding="{Binding Name}"
-                      ItemsSource="{Binding Profiles^.Value}" /></HeaderedContentControl>
-        <ContentControl Content="{Binding Session}" />
-    </StackPanel>
+                      ItemsSource="{Binding Profiles^.Value}" />
+		</HeaderedContentControl>
+		<ContentControl Content="{Binding Session}" />
+	</DockPanel>
 </UserControl>

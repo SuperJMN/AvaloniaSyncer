@@ -7,8 +7,8 @@
              x:Class="AvaloniaSyncer.Plugins.Local.SessionView"
              x:DataType="local:SessionViewModel">
 
-    <StackPanel>
-        <ContentControl Content="{Binding Configuration.Value}" />
-        <TextBox Watermark="Path" Text="{Binding Path}" />
-    </StackPanel>
+	<Grid RowDefinitions="Auto *">
+		<ContentControl Content="{Binding Configuration.Value}"  DockPanel.Dock="Top" />
+		<ContentControl Grid.Row="1" Content="{Binding FileExplorerViewModel}" />
+	</Grid>
 </UserControl>
