@@ -2,16 +2,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Plugins.Sftp.SessionView"
              x:DataType="seaweedFs:SessionViewModel">
-
-	<StackPanel Spacing="8">
-		<ContentControl Content="{Binding Configuration}" />
-		<HeaderedContentControl Header="Path">
-			<TextBox Watermark="Path" Text="{Binding Path}" />
-		</HeaderedContentControl>
-	</StackPanel>
+    <Grid RowDefinitions="Auto *">
+        <ContentControl Content="{Binding Configuration}"  DockPanel.Dock="Top" />
+        <DockPanel Grid.Row="1" VerticalAlignment="Top">
+            <Button VerticalAlignment="Top" Content="Browse…" Command="{Binding BrowseFolder}" DockPanel.Dock="Right" />
+            <TextBox Watermark="Path to source folder" Text="{Binding Path}" />
+        </DockPanel>
+    </Grid>
 </UserControl>

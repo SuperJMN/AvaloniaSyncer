@@ -46,9 +46,9 @@ public class ViewModelFactory
         var logger = Maybe.From(Log.Logger);
         return new IPlugin[]
         {
-            new Plugins.Local.Plugin(system => new FolderPicker(DialogService, system, NotificationService), logger),
-            new Plugins.SeaweedFS.Plugin(system => new FolderPicker(DialogService, system, NotificationService), logger),
-            new Plugins.Sftp.Plugin(logger)
+            new Plugins.Local.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
+            new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
+            new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger)
         };
     }
 
