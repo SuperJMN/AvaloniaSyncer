@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Plugins.Sftp"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Plugins.Sftp.SessionView"
+             x:DataType="seaweedFs:SessionViewModel">
+	<StackPanel Spacing="8">
+		<ContentControl Content="{Binding Configuration}" DockPanel.Dock="Top" />
+		<DockPanel>
+			<Button Content="…" VerticalAlignment="Center" Margin="4 0" Command="{Binding BrowseFolder}" DockPanel.Dock="Right"  />
+			<HeaderedContentControl Header="Directory">
+				<TextBox Watermark="Path to directory" Text="{Binding Path}" />
+			</HeaderedContentControl>
+		</DockPanel>
+	</StackPanel>
+</UserControl>

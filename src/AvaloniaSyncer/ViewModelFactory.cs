@@ -1,31 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Styling;
+using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
-using AvaloniaSyncer.Plugins.Local;
-using AvaloniaSyncer.Plugins.SeaweedFS;
-using AvaloniaSyncer.Plugins.Sftp;
 using AvaloniaSyncer.ViewModels;
-using AvaloniaSyncer.Views;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
+using Zafiro.Avalonia.FileExplorer.Pickers;
+using Zafiro.Avalonia.Notifications;
 
 namespace AvaloniaSyncer;
 
-public static class ViewModelFactory
+public class ViewModelFactory
 {
-    public static SyncViewModel GetSyncViewModel(IApplicationLifetime applicationLifetime)
+    public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control)
     {
-        var fileSystemPlugins = AvailablePlugins();
-        var dialogService = DialogService.Create(applicationLifetime, new Dictionary<Type, Type>
-        {
-            [typeof(MessageDialogViewModel)] = typeof(MessageDialogView),
-            [typeof(CreateSyncSessionViewModel)] = typeof(CreateSyncSessionView)
-        }, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
-        var notificationService = new NotificationDialog(dialogService);
-        return new SyncViewModel(dialogService, notificationService, fileSystemPlugins, Maybe.From(Log.Logger));
+        NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
+        DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, new Dictionary<Type, Type>(), configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
+        Plugins = AvailablePlugins();
+    }
+
+    public NotificationService NotificationService { get; set; }
+
+    private IPlugin[] Plugins { get; }
+
+    private IDialogService DialogService { get; }
+
+    public SyncSectionViewModel GetSyncViewModel()
+    {
+        var notificationService = new NotificationDialog(DialogService);
+        return new SyncSectionViewModel(DialogService, notificationService, Plugins, Maybe.From(Log.Logger));
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)
@@ -34,19 +41,19 @@ public static class ViewModelFactory
         context.ToConfigure.Height = context.Parent.Bounds.Height / 1.5;
     }
 
-    private static IFileSystemPluginFactory[] AvailablePlugins()
+    private IPlugin[] AvailablePlugins()
     {
         var logger = Maybe.From(Log.Logger);
-        return new IFileSystemPluginFactory[]
+        return new IPlugin[]
         {
-            new LocalFileSystemPluginFactory(logger),
-            new SeaweedFileSystemPluginFactory(logger),
-            new SftpPluginFactory(logger)
+            new Plugins.Local.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
+            new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
+            new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger)
         };
     }
 
-    public static SettingsViewModel GetSettingsViewModel()
+    public SettingsViewModel GetSettingsViewModel()
     {
-        return new SettingsViewModel(AvailablePlugins());
+        return new SettingsViewModel(Plugins);
     }
 }

@@ -1,17 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using Avalonia;
-using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using AvaloniaSyncer.ViewModels;
 using AvaloniaSyncer.Views;
-using JetBrains.Annotations;
-using Renci.SshNet;
 using Serilog;
 using Zafiro.Avalonia.Mixins;
 
 namespace AvaloniaSyncer;
 
-public partial class App : Application
+public class App : Application
 {
     public override void Initialize()
     {
@@ -24,7 +22,20 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        this.Connect(() => new MainView(), _ => new MainViewModel(), () => new MainWindow());
+       
+
+        this.Connect(() => new MainView(), view =>
+        {
+            var vm = new ViewModelFactory(ApplicationLifetime!, view);
+
+            var sections = new List<Section>
+            {
+                new("Synchronize", vm.GetSyncViewModel()),
+                new("Settings", vm.GetSettingsViewModel())
+            };
+
+            return new MainViewModel(sections);
+        }, () => new MainWindow());
 
         base.OnFrameworkInitializationCompleted();
     }

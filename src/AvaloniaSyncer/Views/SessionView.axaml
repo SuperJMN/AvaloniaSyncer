@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Views.SessionView" x:DataType="viewModels:SessionViewModel">
+
+	<Grid RowDefinitions="* *">
+		<UniformGrid Rows="1" DockPanel.Dock="Top">
+
+			<UniformGrid.Styles>
+				<Style Selector="UniformGrid > :is(Control)">
+					<Setter Property="Margin" Value="16"></Setter>
+				</Style>
+			</UniformGrid.Styles>
+			<HeaderedContentControl Header="Source directory" Classes="Section">
+				<Border Padding="12" BorderBrush="{DynamicResource AccentButtonBackground}" BorderThickness="1">
+					<ContentControl Content="{Binding SourceSession}" />
+				</Border>
+			</HeaderedContentControl>
+			<HeaderedContentControl Header="Destination directory" Classes="Section">
+				<Border Padding="12" BorderBrush="{DynamicResource AccentButtonBackground}" BorderThickness="1">
+					<ContentControl Content="{Binding DestinationSession}" />
+				</Border>
+			</HeaderedContentControl>
+		</UniformGrid>
+		<ContentControl Grid.Row="1" Content="{Binding Materialized^.Value}">
+			<ContentControl.Styles>
+				<Style Selector="ContentControl > ContentPresenter:empty">
+					<Setter Property="ContentTemplate">
+						<Setter.Value>
+							<DataTemplate>
+								<TextBlock>Please, select source and destination</TextBlock>
+							</DataTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</ContentControl.Styles>
+		</ContentControl>
+	</Grid>
+</UserControl>
