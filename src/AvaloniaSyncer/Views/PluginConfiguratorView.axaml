@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.PluginConfiguratorView"
              x:DataType="viewModels:PluginConfiguratorViewModel">
-	<DockPanel Grid.IsSharedSizeScope="True">
+	<StackPanel Grid.IsSharedSizeScope="True" Spacing="8">
 		<TextBlock Text="{Binding Name}" DockPanel.Dock="Top" />
 		<HeaderedContentControl  IsVisible="{Binding Profiles^.HasValue}"
                                  Header="Profiles" DockPanel.Dock="Top">
@@ -16,5 +16,5 @@
                       ItemsSource="{Binding Profiles^.Value}" />
 		</HeaderedContentControl>
 		<ContentControl Content="{Binding Session}" />
-	</DockPanel>
+	</StackPanel>
 </UserControl>

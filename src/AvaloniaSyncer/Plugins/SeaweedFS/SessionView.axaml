@@ -7,11 +7,13 @@
              x:Class="AvaloniaSyncer.Plugins.SeaweedFS.SessionView"
              x:DataType="seaweedFs:SessionViewModel">
 
-    <Grid RowDefinitions="Auto *">
-        <ContentControl Content="{Binding Configuration}"  DockPanel.Dock="Top" />
-        <DockPanel Grid.Row="1" VerticalAlignment="Top">
-            <Button VerticalAlignment="Top" Content="Browse…" Command="{Binding BrowseFolder}" DockPanel.Dock="Right" />
-            <TextBox Watermark="Path to source folder" Text="{Binding Path}" />
-        </DockPanel>
-    </Grid>
+	<StackPanel Spacing="8">
+		<ContentControl Content="{Binding Configuration}"  DockPanel.Dock="Top" />
+		<DockPanel >
+			<Button VerticalAlignment="Center" Margin="4 0" Content="…" Command="{Binding BrowseFolder}" DockPanel.Dock="Right" />
+			<HeaderedContentControl Header="Folder">
+				<TextBox Watermark="Path to source folder" Text="{Binding Path}" />
+			</HeaderedContentControl>
+		</DockPanel>
+	</StackPanel>
 </UserControl>

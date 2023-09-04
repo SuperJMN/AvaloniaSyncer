@@ -36,7 +36,6 @@ public class SessionViewModel : ReactiveValidationObject, ISession
         browseFolder.Values().Select(x => x.Path.ToString()).BindTo(this, x => x.Path);
         BrowseFolder = browseFolder;
 
-
         Directory = IsValid
             .Where(b => b)
             .Select(_ => this.WhenAnyValue(x => x.Path, s => s.Configuration)
