@@ -8,6 +8,5 @@ public interface ISession
 {
     public IObservable<IZafiroDirectory> Directory { get; }
     IObservable<bool> IsValid { get; }
-    public string Path { get; set; }
     void SetProfile(IProfile profile);
 }

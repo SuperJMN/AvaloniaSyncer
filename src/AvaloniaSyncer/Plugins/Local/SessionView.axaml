@@ -9,6 +9,9 @@
 
 	<Grid RowDefinitions="Auto *">
 		<ContentControl Content="{Binding Configuration.Value}"  DockPanel.Dock="Top" />
-		<ContentControl Grid.Row="1" Content="{Binding FileExplorerViewModel}" />
+		<DockPanel Grid.Row="1" VerticalAlignment="Top">
+            <Button VerticalAlignment="Top" Content="Browse…" Command="{Binding BrowseFolder}" DockPanel.Dock="Right" />
+            <TextBox Watermark="Path to source folder" Text="{Binding Path}" />
+        </DockPanel>
 	</Grid>
 </UserControl>

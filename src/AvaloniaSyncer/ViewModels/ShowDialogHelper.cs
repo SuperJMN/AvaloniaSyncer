@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.Avalonia.Dialogs;
+using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
 

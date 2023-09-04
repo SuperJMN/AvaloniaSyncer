@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Android", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Desktop", "src\AvaloniaSyncer.Desktop\AvaloniaSyncer.Desktop.csproj", "{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Avalonia.FileExplorer", "C:\Users\JMN\source\repos\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj", "{BE333663-8C8C-4E0A-B2AD-9BF8F443EA40}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +35,6 @@ Global
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE333663-8C8C-4E0A-B2AD-9BF8F443EA40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE333663-8C8C-4E0A-B2AD-9BF8F443EA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE333663-8C8C-4E0A-B2AD-9BF8F443EA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE333663-8C8C-4E0A-B2AD-9BF8F443EA40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
