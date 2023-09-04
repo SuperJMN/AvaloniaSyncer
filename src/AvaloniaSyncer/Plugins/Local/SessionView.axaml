@@ -11,7 +11,7 @@
 		<ContentControl Content="{Binding Configuration.Value}"  DockPanel.Dock="Top" />
 		<DockPanel>
             <Button VerticalAlignment="Center" Margin="4 0" Content="…" Command="{Binding BrowseFolder}" DockPanel.Dock="Right" />
-            <TextBox Watermark="Path to source folder" Text="{Binding Path}" />
+            <TextBox Watermark="Path to directory" Text="{Binding Path}" />
         </DockPanel>
 	</StackPanel>
 </UserControl>
