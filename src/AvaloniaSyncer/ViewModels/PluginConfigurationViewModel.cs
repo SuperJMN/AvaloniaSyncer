@@ -1,8 +1,7 @@
 using AvaloniaSyncer.Plugins;
-using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 
-namespace AvaloniaSyncer;
+namespace AvaloniaSyncer.ViewModels;
 
 public class PluginConfigurationViewModel : ViewModelBase
 {
