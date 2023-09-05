@@ -1,12 +1,12 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             xmlns:misc="clr-namespace:Zafiro.Avalonia.Misc;assembly=Zafiro.Avalonia"
              x:Class="AvaloniaSyncer.App"
              RequestedThemeVariant="Default">
 	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
 	<Application.DataTemplates>
-		<avaloniaSyncer:ViewLocator />
+		<misc:NamingConventionViewLocator />
 	</Application.DataTemplates>
 
 	<Application.Styles>

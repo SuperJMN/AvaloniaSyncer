@@ -5,7 +5,8 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
-using AvaloniaSyncer.ViewModels;
+using AvaloniaSyncer.Sections.Settings;
+using AvaloniaSyncer.Sections.Synchronize;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
@@ -52,8 +53,8 @@ public class ViewModelFactory
         };
     }
 
-    public SettingsViewModel GetSettingsViewModel()
+    public SettingsSectionViewModel GetSettingsViewModel()
     {
-        return new SettingsViewModel(Plugins);
+        return new SettingsSectionViewModel(Plugins);
     }
 }

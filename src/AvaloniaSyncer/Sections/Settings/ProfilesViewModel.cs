@@ -14,7 +14,7 @@ using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.Mixins;
 
-namespace AvaloniaSyncer.Settings;
+namespace AvaloniaSyncer.Sections.Settings;
 
 public class ProfilesViewModel<T> : ViewModelBase where T : IProfile
 {
@@ -48,7 +48,7 @@ public class ProfilesViewModel<T> : ViewModelBase where T : IProfile
     }
 
     public ReactiveCommand<Unit, Result<IEnumerable<T>>> Load { get; set; }
-    
+
     public ReactiveCommand<Unit, Unit> Delete { get; set; }
 
     public ReactiveCommand<Unit, Result> Save { get; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 using AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
-using AvaloniaSyncer.Settings;
+using AvaloniaSyncer.Sections.Settings;
 using DynamicData.Binding;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;

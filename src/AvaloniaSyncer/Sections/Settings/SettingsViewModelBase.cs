@@ -10,7 +10,7 @@ using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.CSharpFunctionalExtensions;
 
-namespace AvaloniaSyncer.Settings;
+namespace AvaloniaSyncer.Sections.Settings;
 
 internal abstract class SettingsViewModelBase<TProfile, TDto> : ViewModelBase, IPluginSettings where TProfile : IProfile
 {

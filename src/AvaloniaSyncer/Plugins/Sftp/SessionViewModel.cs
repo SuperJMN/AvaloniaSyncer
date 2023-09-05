@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaSyncer.Plugins.Sftp.Configuration;
 using AvaloniaSyncer.Plugins.Sftp.Settings;
-using AvaloniaSyncer.Settings;
+using AvaloniaSyncer.Sections.Settings;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

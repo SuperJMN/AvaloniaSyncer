@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using AvaloniaSyncer.Plugins;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
+using Zafiro.Avalonia.Model;
 
 namespace AvaloniaSyncer.ViewModels;
 
-public class PluginSelectionViewModel : ViewModelBase
+public class PluginSelectionViewModel : ReactiveValidationObject, IValidatable
 {
     private readonly ObservableAsPropertyHelper<ISession?> sourcePlugin;
 
@@ -30,4 +34,5 @@ public class PluginSelectionViewModel : ViewModelBase
     public string Name { get; }
 
     public IEnumerable<IPlugin> PluginFactories { get; set; }
+    public IObservable<bool> IsValid => this.IsValid();
 }

@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AvaloniaSyncer.Settings;
+namespace AvaloniaSyncer.Sections.Settings;
 
 public class ObjectStore<T> where T : class
 {
@@ -55,7 +55,7 @@ public class ObjectStore<T> where T : class
                 return Result.Try(() =>
                 {
                     var isolatedStorageFileStream = new IsolatedStorageFileStream(path, FileMode.Open, store);
-                    return (Stream) isolatedStorageFileStream;
+                    return (Stream)isolatedStorageFileStream;
                 });
             });
     }

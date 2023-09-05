@@ -3,8 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
+             xmlns:synchronize="clr-namespace:AvaloniaSyncer.Sections.Synchronize"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Views.SyncSectionView" x:DataType="viewModels:SyncSectionViewModel">
+             x:Class="AvaloniaSyncer.Sections.Synchronize.SyncSectionView" x:DataType="synchronize:SyncSectionViewModel">
 	<DockPanel>
 
 		<DockPanel.Styles>

@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Plugins;
+using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
@@ -14,7 +15,7 @@ using Zafiro.Avalonia.Dialogs;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.ViewModels;
+namespace AvaloniaSyncer.Sections.Synchronize;
 
 public class SyncSectionViewModel : ViewModelBase
 {

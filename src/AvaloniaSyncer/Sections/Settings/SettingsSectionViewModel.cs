@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AvaloniaSyncer.Plugins;
+using AvaloniaSyncer.ViewModels;
 
-namespace AvaloniaSyncer.ViewModels;
+namespace AvaloniaSyncer.Sections.Settings;
 
-public class SettingsViewModel : ViewModelBase
+public class SettingsSectionViewModel : ViewModelBase
 {
-    public SettingsViewModel(IEnumerable<IPlugin> plugins)
+    public SettingsSectionViewModel(IEnumerable<IPlugin> plugins)
     {
         Configurations = plugins.Select(c => new PluginConfigurationViewModel(c.Name, c.Settings)).ToList();
     }
