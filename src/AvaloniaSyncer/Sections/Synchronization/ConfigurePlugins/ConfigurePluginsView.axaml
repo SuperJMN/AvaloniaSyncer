@@ -1,0 +1,49 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:configurePlugins="clr-namespace:AvaloniaSyncer.Sections.Synchronize.ConfigurePlugins"
+             xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
+             xmlns:configurePlugins1="clr-namespace:AvaloniaSyncer.Sections.Synchronization.ConfigurePlugins"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Sections.Synchronization.ConfigurePlugins.ConfigurePluginsView" x:DataType="configurePlugins1:ConfigurePluginsViewModel">
+	<controls:AdaptiveControl>
+		<controls:AdaptiveControl.HorizontalTemplate>
+			<ControlTemplate>
+                <UniformGrid Rows="1" DockPanel.Dock="Top">
+                    <UniformGrid.Styles>
+                        <Style Selector="UniformGrid > :is(Control)">
+                            <Setter Property="Margin" Value="16"></Setter>
+                        </Style>
+                    </UniformGrid.Styles>
+                    <HeaderedContentControl Header="Source directory" Classes="Section">
+                        <Border Padding="12" BorderBrush="{DynamicResource AccentButtonBackground}" BorderThickness="1">
+                            <ContentControl Content="{Binding SourceSession}" />
+                        </Border>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Header="Destination directory" Classes="Section">
+                        <Border Padding="12" BorderBrush="{DynamicResource AccentButtonBackground}" BorderThickness="1">
+                            <ContentControl Content="{Binding DestinationSession}" />
+                        </Border>
+                    </HeaderedContentControl>
+                </UniformGrid>
+            </ControlTemplate>
+        </controls:AdaptiveControl.HorizontalTemplate>
+        <controls:AdaptiveControl.VerticalTemplate>
+            <ControlTemplate>
+                <StackPanel Spacing="8">
+                    <HeaderedContentControl Header="Source directory" Classes="Section">
+                        <Border Padding="12" BorderBrush="{DynamicResource AccentButtonBackground}" BorderThickness="1">
+                            <ContentControl Content="{Binding SourceSession}" />
+                        </Border>
+                    </HeaderedContentControl>
+                    <HeaderedContentControl Header="Destination directory" Classes="Section">
+                        <Border Padding="12" BorderBrush="{DynamicResource AccentButtonBackground}" BorderThickness="1">
+                            <ContentControl Content="{Binding DestinationSession}" />
+                        </Border>
+                    </HeaderedContentControl>
+                </StackPanel>
+            </ControlTemplate>
+        </controls:AdaptiveControl.VerticalTemplate>
+    </controls:AdaptiveControl>
+</UserControl>

@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using AvaloniaSyncer.Plugins;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
+using Zafiro.Avalonia.Model;
 
-namespace AvaloniaSyncer.ViewModels;
+namespace AvaloniaSyncer.Sections.Synchronize.SelectPlugins;
 
-public class SelectPluginsViewModel : ReactiveValidationObject
+public class SelectPluginsViewModel : ReactiveValidationObject, IValidatable
 {
     public IEnumerable<IPlugin> Plugins { get; }
 
@@ -19,4 +21,5 @@ public class SelectPluginsViewModel : ReactiveValidationObject
 
     [Reactive] public IPlugin? Source { get; set; }
     [Reactive] public IPlugin? Destination { get; set; }
+    public IObservable<bool> IsValid => this.IsValid();
 }

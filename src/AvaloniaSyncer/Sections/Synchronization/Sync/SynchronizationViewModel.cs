@@ -4,18 +4,22 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
 using Serilog;
+using Zafiro.Avalonia.Model;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.Mixins;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.ViewModels;
+namespace AvaloniaSyncer.Sections.Synchronization.Sync;
 
-public class SynchronizationViewModel : ViewModelBase
+public class SynchronizationViewModel : ReactiveValidationObject, IValidatable
 {
     public SynchronizationViewModel(string title, INotificationService notificationService, IZafiroDirectory origin, IZafiroDirectory dest, Maybe<ILogger> logger)
     {
@@ -73,6 +77,8 @@ public class SynchronizationViewModel : ViewModelBase
 
     public string Title { get; }
     public IObservable<bool> IsBusy { get; }
+
+    public IObservable<bool> IsValid => this.IsValid();
 
     private IObservable<Result> OnSyncAll()
     {

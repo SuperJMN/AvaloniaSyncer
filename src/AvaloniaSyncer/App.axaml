@@ -7,7 +7,7 @@
 
 	<Application.DataTemplates>
 		<misc:NamingConventionViewLocator />
-	</Application.DataTemplates>
+    </Application.DataTemplates>
 
 	<Application.Styles>
 		<FluentTheme />
@@ -17,7 +17,7 @@
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
 		<StyleInclude Source="avares://AvaloniaProgressRing/Styles/ProgressRing.xaml"/>
 
-		<Style Selector="HeaderedContentControl.Section">
+        <Style Selector="HeaderedContentControl.Section">
             <Setter Property="Template">
 				<ControlTemplate TargetType="HeaderedContentControl">
                     <StackPanel Spacing="4">

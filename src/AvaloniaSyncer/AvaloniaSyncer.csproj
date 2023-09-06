@@ -28,8 +28,8 @@
 		<PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-		<PackageReference Include="Zafiro.Avalonia" Version="3.0.32" />
-		<PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.32" />
+		<PackageReference Include="Zafiro.Avalonia" Version="3.0.33" />
+		<PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.33" />
 		<PackageReference Include="Zafiro.Avalonia.FileExplorer.Pickers" Version="1.0.1" />
 		<PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.18" />
 		<PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.18" />
@@ -61,14 +61,23 @@
 	  <Compile Update="Sections\Settings\SettingsSectionView.axaml.cs">
 	    <DependentUpon>SettingsSectionView.axaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Sections\Synchronization\ConfigurePlugins\ConfigurePluginsView.axaml.cs">
+	    <DependentUpon>ConfigurePluginsView.axaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Sections\Synchronization\SynchronizeWizardSectionView.axaml.cs">
+	    <DependentUpon>SynchronizeWizardSectionView.axaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\PluginConfiguratorView.axaml.cs">
 	    <DependentUpon>PluginConfiguratorView.axaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Views\SynchronizationView.axaml.cs">
+	  <Compile Update="Sections\Synchronization\Sync\SynchronizationView.axaml.cs">
 	    <DependentUpon>SynchronizationView.axaml</DependentUpon>
 	  </Compile>
-	  <Compile Update="Sections\Synchronize\SyncSectionView.axaml.cs">
+	  <Compile Update="Sections\Synchronization\SyncSectionView.axaml.cs">
 	    <DependentUpon>SyncSectionView.axaml</DependentUpon>
 	  </Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Sections\SyncronizeWizard\" />
 	</ItemGroup>
 </Project>

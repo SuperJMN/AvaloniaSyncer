@@ -6,6 +6,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Sections.Settings;
+using AvaloniaSyncer.Sections.Synchronization;
 using AvaloniaSyncer.Sections.Synchronize;
 using CSharpFunctionalExtensions;
 using Serilog;
@@ -56,5 +57,10 @@ public class ViewModelFactory
     public SettingsSectionViewModel GetSettingsViewModel()
     {
         return new SettingsSectionViewModel(Plugins);
+    }
+
+    public SynchronizeWizardSectionViewModel SynchronizeWizardSection()
+    {
+        return new SynchronizeWizardSectionViewModel(Plugins, NotificationService, Maybe<ILogger>.From(Log.Logger));
     }
 }
