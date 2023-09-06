@@ -1,0 +1,18 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:sync="clr-namespace:AvaloniaSyncer.Sections.Synchronization.Sync"
+             mc:Ignorable="d" d:DesignWidth="800"
+             x:Class="AvaloniaSyncer.Sections.Synchronization.Sync.TopBar"
+             x:DataType="sync:SynchronizationViewModel">
+  <StackPanel Spacing="6" Margin="6" Orientation="Horizontal" DockPanel.Dock="Top">
+	<Button Content="Analyze"
+            Command="{Binding GenerateSyncActions}" />
+	<StackPanel>
+		<Button Content="Sync" IsVisible="{Binding !IsSyncing^, FallbackValue='True'}" ToolTip.Tip="Syncs pending items" Command="{Binding SyncAll}" />
+        <Button Content="Stop" IsVisible="{Binding IsSyncing^, FallbackValue='False'}" ToolTip.Tip="Syncs pending items" Command="{Binding Stop}" />
+    </StackPanel>
+	<CheckBox Content="Skip identical files" IsChecked="{Binding SkipIdentical}" />
+</StackPanel>
+</UserControl>

@@ -14,16 +14,9 @@
 
 	<Panel>
 		<DockPanel>
-			<StackPanel Spacing="6" Margin="6" Orientation="Horizontal" DockPanel.Dock="Top">
-				<Button Content="Analyze"
-                        Command="{Binding GenerateSyncActions}" />
-				<StackPanel>
-					<Button Content="Sync" IsVisible="{Binding !IsSyncing^}" ToolTip.Tip="Syncs pending items" Command="{Binding SyncAll}" />
-                    <Button Content="Stop" IsVisible="{Binding IsSyncing^}" ToolTip.Tip="Syncs pending items" Command="{Binding Stop}" />
-                </StackPanel>
-				<CheckBox Content="Skip identical files" IsChecked="{Binding SkipIdentical}" />
-			</StackPanel>
-			<DataGrid ItemsSource="{Binding SyncActions}" CanUserResizeColumns="True" CanUserSortColumns="True">
+			<sync:TopBar DockPanel.Dock="Top" />
+			<ListBox ItemsSource="{Binding SyncActions}"></ListBox>
+            <!--<DataGrid ItemsSource="{Binding SyncActions}" CanUserResizeColumns="True" CanUserSortColumns="True">
 				<DataGrid.Columns>
 					<DataGridTextColumn Width="Auto" Binding="{Binding Title}" Header="Action" />
 					<DataGridTextColumn Width="*" Binding="{Binding Source}" Header="Source" />
@@ -61,7 +54,7 @@
 						</DataTemplate>
 					</DataGridTemplateColumn>
 				</DataGrid.Columns>
-			</DataGrid>
+			</DataGrid>-->
 		</DockPanel>
 		<avaloniaProgressRing:ProgressRing Width="80"
                                Height="80"
