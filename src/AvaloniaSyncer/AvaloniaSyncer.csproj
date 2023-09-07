@@ -9,10 +9,6 @@
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Assets\seaweedfs.png" />
-		<None Remove="Assets\sftp.png" />
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
@@ -35,49 +31,5 @@
 		<PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.18" />
 		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.18" />
 		<PackageReference Include="Zafiro.UI" Version="4.0.7" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Update="Plugins\Local\SessionView.axaml.cs">
-	    <DependentUpon>SessionView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\Configuration\ConfigurationView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\SessionView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\Settings\SettingsView.axaml.cs">
-	    <DependentUpon>SettingsView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\Configuration\ConfigurationView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\SessionView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\Settings\SettingsView.axaml.cs">
-	    <DependentUpon>SettingsView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Sections\Settings\SettingsSectionView.axaml.cs">
-	    <DependentUpon>SettingsSectionView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Sections\Synchronization\ConfigurePlugins\ConfigurePluginsView.axaml.cs">
-	    <DependentUpon>ConfigurePluginsView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Sections\Synchronization\SynchronizeWizardSectionView.axaml.cs">
-	    <DependentUpon>SynchronizeWizardSectionView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\PluginConfiguratorView.axaml.cs">
-	    <DependentUpon>PluginConfiguratorView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Sections\Synchronization\Sync\SynchronizationView.axaml.cs">
-	    <DependentUpon>SynchronizationView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Sections\Synchronization\SyncSectionView.axaml.cs">
-	    <DependentUpon>SyncSectionView.axaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Sections\SyncronizeWizard\" />
 	</ItemGroup>
 </Project>

@@ -5,7 +5,7 @@
              xmlns:configurePlugins1="clr-namespace:AvaloniaSyncer.Sections.Synchronization.ConfigurePlugins"
              xmlns:synchronization="clr-namespace:AvaloniaSyncer.Sections.Synchronization"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Sections.Synchronize.SyncSectionView" x:DataType="synchronization:SyncSectionViewModel">
+             x:Class="AvaloniaSyncer.Sections.Synchronization.SyncSectionView" x:DataType="synchronization:SyncSectionViewModel">
 	<DockPanel>
 
 		<DockPanel.Styles>

@@ -15,6 +15,7 @@ using ReactiveUI.Validation.Extensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.CSharpFunctionalExtensions;
+using Zafiro.FileSystem;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Synchronization;
@@ -27,7 +28,7 @@ public class SyncSectionViewModel : ViewModelBase
     private readonly SourceCache<SynchronizationViewModel, string> sessions = new(x => x.Title);
     private int Number = 1;
 
-    public SyncSectionViewModel(IDialogService dialogService, INotificationService notificationService, IList<IPlugin> pluginFactories, Maybe<ILogger> logger)
+    public SyncSectionViewModel(IDialogService dialogService, INotificationService notificationService, IEnumerable<IPlugin> pluginFactories, Maybe<ILogger> logger)
     {
         this.notificationService = notificationService;
         this.logger = logger;
@@ -44,12 +45,21 @@ public class SyncSectionViewModel : ViewModelBase
 
         BareSessions = bareSessionsCollection;
 
-        SelectPlugins = ReactiveCommand.CreateFromTask(async () => { return await dialogService.Prompt("Select your plugins", new SelectPluginsViewModel(pluginFactories), "OK", vm => ReactiveCommand.Create(() => new PluginSelection(vm.Source!, vm.Destination!), vm.IsValid())); });
+        SelectPlugins = ReactiveCommand.CreateFromTask(async () =>
+        {
+            return await dialogService.Prompt("Select your plugins", new WizardViewModel(pluginFactories, notificationService, logger), "OK", vm => ReactiveCommand.Create(() =>
+            {
+                var configurePluginsViewModel = ((ConfigurePluginsViewModel) vm.Wizard.CurrentPage.Content);
+                var destinationDirectory = configurePluginsViewModel.DestinationDirectory;
+                var sourceDirectory = configurePluginsViewModel.SourceDirectory;
+                return (sourceDirectory, destinationDirectory);
+            }, vm.Wizard.CurrentPage.Content.IsValid));
+        });
 
-        SelectPlugins.Values().Do(selection => bareSessions.AddOrUpdate(new ConfigurePluginsViewModel("Session", selection))).Subscribe();
+        SelectPlugins.Values().Do(selection => {}).Subscribe();
     }
 
     public ReadOnlyObservableCollection<ConfigurePluginsViewModel> BareSessions { get; set; }
 
-    public ReactiveCommand<Unit, Maybe<PluginSelection>> SelectPlugins { get; }
+    public ReactiveCommand<Unit, Maybe<(IZafiroDirectory sourceDirectory, IZafiroDirectory destinationDirectory)>> SelectPlugins { get; }
 }

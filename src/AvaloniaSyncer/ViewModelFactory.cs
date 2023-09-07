@@ -59,8 +59,8 @@ public class ViewModelFactory
         return new SettingsSectionViewModel(Plugins);
     }
 
-    public SynchronizeWizardSectionViewModel SynchronizeWizardSection()
+    public WizardViewModel SynchronizeWizardSection()
     {
-        return new SynchronizeWizardSectionViewModel(Plugins, NotificationService, Maybe<ILogger>.From(Log.Logger));
+        return new WizardViewModel(Plugins, NotificationService, Maybe<ILogger>.From(Log.Logger));
     }
 }

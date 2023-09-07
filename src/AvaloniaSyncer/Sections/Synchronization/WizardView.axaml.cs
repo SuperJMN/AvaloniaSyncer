@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace AvaloniaSyncer.Sections.Synchronization
 {
-    public partial class SynchronizeWizardSectionView : UserControl
+    public partial class WizardView : UserControl
     {
-        public SynchronizeWizardSectionView()
+        public WizardView()
         {
             InitializeComponent();
         }
