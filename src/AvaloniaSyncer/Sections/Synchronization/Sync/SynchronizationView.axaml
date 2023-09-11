@@ -2,7 +2,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:sync="clr-namespace:AvaloniaSyncer.Sections.Synchronization.Sync"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -15,7 +14,36 @@
 	<Panel>
 		<DockPanel>
 			<sync:TopBar DockPanel.Dock="Top" />
-			<ListBox ItemsSource="{Binding SyncActions}"></ListBox>
+			<ListBox ItemsSource="{Binding SyncActions}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="sync:SyncItemViewModel">
+                        <StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding Title}" />
+                            <TextBlock Text="{Binding Source}" />
+                            <TextBlock Text="{Binding Destination}" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <CheckBox IsEnabled="False" IsChecked="{Binding Synced}" />
+                                <PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />
+                                <Button x:Name="ToggleButton" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                    <PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />
+                                    <Button.Flyout>
+                                        <Flyout>
+                                            <TextBlock TextWrapping="Wrap" Text="{Binding Error}" />
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                            </StackPanel>
+                            <ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
+                                         Height="20" Margin="4" Maximum="1"
+                                         Value="{Binding Progress^.Proportion}" />
+                            <StackPanel>
+                                <Button Content="Sync" IsVisible="{Binding !IsSyncing^}" Margin="4" Command="{Binding Sync}" />
+                                <Button Content="Stop" IsVisible="{Binding IsSyncing^}" ToolTip.Tip="Syncs pending items" Command="{Binding Stop}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
             <!--<DataGrid ItemsSource="{Binding SyncActions}" CanUserResizeColumns="True" CanUserSortColumns="True">
 				<DataGrid.Columns>
 					<DataGridTextColumn Width="Auto" Binding="{Binding Title}" Header="Action" />

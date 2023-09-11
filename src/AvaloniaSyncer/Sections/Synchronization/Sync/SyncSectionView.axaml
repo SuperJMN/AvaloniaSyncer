@@ -3,9 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:configurePlugins1="clr-namespace:AvaloniaSyncer.Sections.Synchronization.ConfigurePlugins"
-             xmlns:synchronization="clr-namespace:AvaloniaSyncer.Sections.Synchronization"
+             xmlns:sync="clr-namespace:AvaloniaSyncer.Sections.Synchronization.Sync"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Sections.Synchronization.SyncSectionView" x:DataType="synchronization:SyncSectionViewModel">
+             x:Class="AvaloniaSyncer.Sections.Synchronization.Sync.SyncSectionView" x:DataType="sync:SyncSectionViewModel">
 	<DockPanel>
 
 		<DockPanel.Styles>
@@ -21,10 +21,10 @@
         </DockPanel.Styles>
 
         <Button Command="{Binding SelectPlugins}" Content="Create" ToolTip.Tip="Create a new synchronization session" DockPanel.Dock="Top" />
-        <TabControl ItemsSource="{Binding BareSessions}">
+        <TabControl ItemsSource="{Binding Sessions}">
 			<TabControl.ItemTemplate>
 				<DataTemplate>
-					<TextBlock Text="{Binding Name}" />
+					<TextBlock Text="{Binding Title}" />
 				</DataTemplate>
 			</TabControl.ItemTemplate>
 

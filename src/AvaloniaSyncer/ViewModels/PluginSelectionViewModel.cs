@@ -6,7 +6,7 @@ using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
-using Zafiro.Avalonia.Model;
+using Zafiro.Avalonia.Wizard.Interfaces;
 
 namespace AvaloniaSyncer.ViewModels;
 

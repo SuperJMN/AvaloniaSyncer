@@ -4,14 +4,13 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Serilog;
-using Zafiro.Avalonia.Model;
+using Zafiro.Avalonia.Wizard.Interfaces;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.Mixins;
@@ -49,7 +48,7 @@ public class SynchronizationViewModel : ReactiveValidationObject, IValidatable
         GenerateSyncActions.IsExecuting.Subscribe(isAnalyzing);
 
         reactiveCommand.Successes()
-            .Select(list => list.Select(action => new SyncActionViewModel(action)).ToList())
+            .Select(list => list.Select(action => new SyncItemViewModel(action)).ToList())
             .BindTo(this, model => model.SyncActions);
 
         reactiveCommand.Failures()
@@ -71,7 +70,7 @@ public class SynchronizationViewModel : ReactiveValidationObject, IValidatable
 
     public ReactiveCommand<Unit, Result> SyncAll { get; set; }
 
-    [Reactive] public List<SyncActionViewModel>? SyncActions { get; set; }
+    [Reactive] public List<SyncItemViewModel>? SyncActions { get; set; }
 
     public ReactiveCommand<Unit, Result<List<ISyncAction>>> GenerateSyncActions { get; }
 

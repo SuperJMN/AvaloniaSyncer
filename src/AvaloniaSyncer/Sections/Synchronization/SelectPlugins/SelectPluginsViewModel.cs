@@ -4,11 +4,12 @@ using AvaloniaSyncer.Plugins;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
-using Zafiro.Avalonia.Model;
+using Zafiro.Avalonia.Misc;
+using Zafiro.Avalonia.Wizard.Interfaces;
 
-namespace AvaloniaSyncer.Sections.Synchronize.SelectPlugins;
+namespace AvaloniaSyncer.Sections.Synchronization.SelectPlugins;
 
-public class SelectPluginsViewModel : ReactiveValidationObject, IValidatable
+public class SelectPluginsViewModel : ReactiveValidationObject, IValidatable, IViewModel
 {
     public IEnumerable<IPlugin> Plugins { get; }
 

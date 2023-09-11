@@ -32,7 +32,6 @@ public class App : Application
             {
                 new("Synchronize", vm.GetSyncViewModel()),
                 new("Settings", vm.GetSettingsViewModel()),
-                new("Wizard", vm.SynchronizeWizardSection())
             };
 
             return new MainViewModel(sections);

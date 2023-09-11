@@ -3,10 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
-             xmlns:selectPlugins="clr-namespace:AvaloniaSyncer.Sections.Synchronize.SelectPlugins"
+             xmlns:selectPlugins1="clr-namespace:AvaloniaSyncer.Sections.Synchronization.SelectPlugins"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Sections.Synchronize.SelectPlugins.SelectPluginsView"
-             x:DataType="selectPlugins:SelectPluginsViewModel">
+             x:Class="AvaloniaSyncer.Sections.Synchronization.SelectPlugins.SelectPluginsView"
+             x:DataType="selectPlugins1:SelectPluginsViewModel">
 
 	<UserControl.Styles>
         <Style Selector="HeaderedContentControl">

@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Sections.Synchronize.SelectPlugins
+namespace AvaloniaSyncer.Sections.Synchronization.SelectPlugins
 {
     public partial class SelectPluginsView : UserControl
     {
