@@ -5,7 +5,9 @@ using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
-using AvaloniaSyncer.ViewModels;
+using AvaloniaSyncer.Plugins.Local;
+using AvaloniaSyncer.Sections.Settings;
+using AvaloniaSyncer.Sections.Synchronization.Sync;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
@@ -19,11 +21,11 @@ public class ViewModelFactory
     public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control)
     {
         NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
-        DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, new Dictionary<Type, Type>(), configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
+        DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         Plugins = AvailablePlugins();
     }
 
-    public NotificationService NotificationService { get; set; }
+    public NotificationService NotificationService { get; }
 
     private IPlugin[] Plugins { get; }
 
@@ -31,8 +33,12 @@ public class ViewModelFactory
 
     public SyncSectionViewModel GetSyncViewModel()
     {
-        var notificationService = new NotificationDialog(DialogService);
-        return new SyncSectionViewModel(DialogService, notificationService, Plugins, Maybe.From(Log.Logger));
+        return new SyncSectionViewModel(DialogService, Plugins, NotificationService, Maybe.From(Log.Logger));
+    }
+
+    public SettingsSectionViewModel GetSettingsViewModel()
+    {
+        return new SettingsSectionViewModel(Plugins);
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)
@@ -46,14 +52,9 @@ public class ViewModelFactory
         var logger = Maybe.From(Log.Logger);
         return new IPlugin[]
         {
-            new Plugins.Local.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
+            new Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
             new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
             new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger)
         };
-    }
-
-    public SettingsViewModel GetSettingsViewModel()
-    {
-        return new SettingsViewModel(Plugins);
     }
 }

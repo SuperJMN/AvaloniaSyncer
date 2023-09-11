@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvaloniaSyncer.Settings;
+namespace AvaloniaSyncer.Sections.Settings;
 
 public interface IProfile
 {

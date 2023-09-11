@@ -1,5 +1,5 @@
 ﻿using System;
-using AvaloniaSyncer.Settings;
+using AvaloniaSyncer.Sections.Settings;
 using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.Plugins;

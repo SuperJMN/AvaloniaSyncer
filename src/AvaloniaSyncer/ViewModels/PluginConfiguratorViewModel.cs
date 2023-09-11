@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using AvaloniaSyncer.Plugins;
-using AvaloniaSyncer.Settings;
+using AvaloniaSyncer.Sections.Settings;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;

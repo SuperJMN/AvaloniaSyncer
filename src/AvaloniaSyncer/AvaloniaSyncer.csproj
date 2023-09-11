@@ -9,10 +9,6 @@
 		<AvaloniaResource Include="Assets\**" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Assets\seaweedfs.png" />
-		<None Remove="Assets\sftp.png" />
-	</ItemGroup>
-	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
 		<PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
@@ -28,44 +24,12 @@
 		<PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
 		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-		<PackageReference Include="Zafiro.Avalonia" Version="3.0.32" />
-		<PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.32" />
-		<PackageReference Include="Zafiro.Avalonia.FileExplorer.Pickers" Version="1.0.0" />
+		<PackageReference Include="Zafiro.Avalonia" Version="3.0.35" />
+		<PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.35" />
+		<PackageReference Include="Zafiro.Avalonia.FileExplorer.Pickers" Version="1.0.1" />
 		<PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.18" />
 		<PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.18" />
 		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.18" />
-		<PackageReference Include="Zafiro.UI" Version="4.0.7" />
-	</ItemGroup>
-	<ItemGroup>
-	  <Compile Update="Plugins\Local\SessionView.axaml.cs">
-	    <DependentUpon>SessionView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\Configuration\ConfigurationView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\SessionView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\Sftp\Settings\SettingsView.axaml.cs">
-	    <DependentUpon>SettingsView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\Configuration\ConfigurationView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\SessionView.axaml.cs">
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	  <Compile Update="Plugins\SeaweedFS\Settings\SettingsView.axaml.cs">
-	    <DependentUpon>SettingsView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\PluginConfiguratorView.axaml.cs">
-	    <DependentUpon>PluginConfiguratorView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\SynchronizationView.axaml.cs">
-	    <DependentUpon>SynchronizationView.axaml</DependentUpon>
-	  </Compile>
-	  <Compile Update="Views\SyncSectionView.axaml.cs">
-	    <DependentUpon>SyncSectionView.axaml</DependentUpon>
-	  </Compile>
+		<PackageReference Include="Zafiro.UI" Version="4.0.8" />
 	</ItemGroup>
 </Project>

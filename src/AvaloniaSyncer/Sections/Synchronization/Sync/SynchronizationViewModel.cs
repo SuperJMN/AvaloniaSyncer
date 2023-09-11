@@ -7,15 +7,18 @@ using System.Reactive.Subjects;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using ReactiveUI.Validation.Extensions;
+using ReactiveUI.Validation.Helpers;
 using Serilog;
+using Zafiro.Avalonia.Wizard.Interfaces;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.Mixins;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.ViewModels;
+namespace AvaloniaSyncer.Sections.Synchronization.Sync;
 
-public class SynchronizationViewModel : ViewModelBase
+public class SynchronizationViewModel : ReactiveValidationObject, IValidatable
 {
     public SynchronizationViewModel(string title, INotificationService notificationService, IZafiroDirectory origin, IZafiroDirectory dest, Maybe<ILogger> logger)
     {
@@ -45,7 +48,7 @@ public class SynchronizationViewModel : ViewModelBase
         GenerateSyncActions.IsExecuting.Subscribe(isAnalyzing);
 
         reactiveCommand.Successes()
-            .Select(list => list.Select(action => new SyncActionViewModel(action)).ToList())
+            .Select(list => list.Select(action => new SyncItemViewModel(action)).ToList())
             .BindTo(this, model => model.SyncActions);
 
         reactiveCommand.Failures()
@@ -67,12 +70,14 @@ public class SynchronizationViewModel : ViewModelBase
 
     public ReactiveCommand<Unit, Result> SyncAll { get; set; }
 
-    [Reactive] public List<SyncActionViewModel>? SyncActions { get; set; }
+    [Reactive] public List<SyncItemViewModel>? SyncActions { get; set; }
 
     public ReactiveCommand<Unit, Result<List<ISyncAction>>> GenerateSyncActions { get; }
 
     public string Title { get; }
     public IObservable<bool> IsBusy { get; }
+
+    public IObservable<bool> IsValid => this.IsValid();
 
     private IObservable<Result> OnSyncAll()
     {

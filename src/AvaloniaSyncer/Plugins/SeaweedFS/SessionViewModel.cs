@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using AvaloniaSyncer.Plugins.SeaweedFS.Configuration;
 using AvaloniaSyncer.Plugins.SeaweedFS.Settings;
-using AvaloniaSyncer.Settings;
+using AvaloniaSyncer.Sections.Settings;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
 using ReactiveUI;

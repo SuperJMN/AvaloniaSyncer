@@ -2,6 +2,7 @@
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -9,13 +10,13 @@ using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.ProgressReporting;
 
-namespace AvaloniaSyncer.ViewModels;
+namespace AvaloniaSyncer.Sections.Synchronization.Sync;
 
-public class SyncActionViewModel : ViewModelBase
+public class SyncItemViewModel : ViewModelBase
 {
     private readonly ISyncAction syncAction;
 
-    public SyncActionViewModel(ISyncAction syncAction)
+    public SyncItemViewModel(ISyncAction syncAction)
     {
         var isSyncing = new Subject<bool>();
         this.syncAction = syncAction;

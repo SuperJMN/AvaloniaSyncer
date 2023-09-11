@@ -31,7 +31,7 @@ public class App : Application
             var sections = new List<Section>
             {
                 new("Synchronize", vm.GetSyncViewModel()),
-                new("Settings", vm.GetSettingsViewModel())
+                new("Settings", vm.GetSettingsViewModel()),
             };
 
             return new MainViewModel(sections);
