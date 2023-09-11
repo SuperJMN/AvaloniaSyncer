@@ -54,8 +54,8 @@ public class ObjectStore<T> where T : class
             {
                 return Result.Try(() =>
                 {
-                    var isolatedStorageFileStream = new IsolatedStorageFileStream(path, FileMode.Open, store);
-                    return (Stream)isolatedStorageFileStream;
+                    var isolatedStorageFileStream = new IsolatedStorageFileStream(path, FileMode.Open, FileAccess.Read, store);
+                    return (Stream) isolatedStorageFileStream;
                 });
             });
     }
