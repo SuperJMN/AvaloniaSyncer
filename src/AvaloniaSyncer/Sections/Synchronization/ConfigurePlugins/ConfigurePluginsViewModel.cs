@@ -3,13 +3,12 @@ using AvaloniaSyncer.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
-using Zafiro.Avalonia.Misc;
 using Zafiro.Avalonia.Wizard.Interfaces;
 using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.Sections.Synchronization.ConfigurePlugins;
 
-public class ConfigurePluginsViewModel : ReactiveValidationObject, IValidatable, IViewModel
+public class ConfigurePluginsViewModel : ReactiveValidationObject, IValidatable
 {
     private readonly ObservableAsPropertyHelper<IZafiroDirectory> destinationDirectory;
     private readonly ObservableAsPropertyHelper<IZafiroDirectory> sourceDirectory;

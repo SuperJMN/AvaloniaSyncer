@@ -24,67 +24,64 @@ public class SynchronizationViewModel : ReactiveValidationObject, IValidatable
     {
         Title = title;
 
-        var isSyncing = new Subject<bool>();
         var isAnalyzing = new Subject<bool>();
-        Stop = ReactiveCommand.Create(() => { }, isSyncing);
+
         var canSync = this.WhenAnyValue(x => x.SyncActions).NotNull().CombineLatest(isAnalyzing, (containsActions, isSyncing) => containsActions && !isSyncing);
-        SyncAll = ReactiveCommand.CreateFromObservable(OnSyncAll, canSync);
-        SyncAll.IsExecuting.Subscribe(isSyncing);
+        SyncAll = Stoppable.Create(OnSyncAll, canSync);
 
-        var reactiveCommand = ReactiveCommand.CreateFromObservable(() =>
-        {
-            var observable = Observable
-                .FromAsync(() => new FileSystemComparer().Diff(origin, dest))
-                .Select(diffResult =>
-                {
-                    var syncer = new Syncer(logger) { SkipIdentical = SkipIdentical };
-                    return diffResult.Map(diffs => syncer.Sync(origin, dest, diffs).ToEnumerable().ToList());
-                });
+        Analyze = Stoppable.Create(() => OnAnalize(origin, dest, logger), SyncAll.IsExecuting.Not());
+        Analyze.IsExecuting.Subscribe(isAnalyzing);
 
-            return observable;
-        }, SyncAll.IsExecuting.Not());
-
-        GenerateSyncActions = reactiveCommand;
-        GenerateSyncActions.IsExecuting.Subscribe(isAnalyzing);
-
-        reactiveCommand.Successes()
+        Analyze.Results.Successes()
             .Select(list => list.Select(action => new SyncItemViewModel(action)).ToList())
             .BindTo(this, model => model.SyncActions);
 
-        reactiveCommand.Failures()
+        Analyze.Results.Failures().Merge(SyncAll.Results.Failures())
             .SelectMany(async message =>
             {
-                await notificationService.Show(message);
+                await notificationService.Show(message, "Something went wrong 😅");
                 return Unit.Default;
             }).Subscribe();
 
-        IsBusy = GenerateSyncActions.IsExecuting.Merge(SyncAll.IsExecuting);
-        IsSyncing = SyncAll.IsExecuting;
+        IsBusy = SyncAll.IsExecuting.Merge(SyncAll.IsExecuting);
     }
 
-    public IObservable<bool> IsSyncing { get; }
+    public StoppableCommand<Unit, Result<List<ISyncAction>>> Analyze { get; }
 
-    public ReactiveCommand<Unit, Unit> Stop { get; }
+    public StoppableCommand<Unit, Result> SyncAll { get; }
 
     [Reactive] public bool SkipIdentical { get; set; } = true;
-
-    public ReactiveCommand<Unit, Result> SyncAll { get; set; }
-
+    [Reactive] public bool DeleteNonExistent { get; set; } = false;
+    [Reactive] public bool CanOverwrite { get; set; } = false;
     [Reactive] public List<SyncItemViewModel>? SyncActions { get; set; }
-
-    public ReactiveCommand<Unit, Result<List<ISyncAction>>> GenerateSyncActions { get; }
 
     public string Title { get; }
     public IObservable<bool> IsBusy { get; }
-
     public IObservable<bool> IsValid => this.IsValid();
+
+    private IObservable<Result<List<ISyncAction>>> OnAnalize(IZafiroDirectory origin, IZafiroDirectory dest, Maybe<ILogger> logger)
+    {
+        var observable = Observable
+            .FromAsync(() => new FileSystemComparer().Diff(origin, dest))
+            .Select(diffResult =>
+            {
+                var syncer = new Syncer(logger)
+                {
+                    SkipIdentical = SkipIdentical,
+                    CanOverwrite = CanOverwrite,
+                    DeleteNonExistent = DeleteNonExistent
+                };
+                return diffResult.Map(diffs => syncer.Sync(origin, dest, diffs).ToEnumerable().ToList());
+            });
+
+        return observable;
+    }
 
     private IObservable<Result> OnSyncAll()
     {
         return SyncActions!
             .Where(x => !x.Synced)
             .Select(x => x.Sync.Execute())
-            .Merge(3)
-            .TakeUntil(Stop);
+            .Merge(3);
     }
 }

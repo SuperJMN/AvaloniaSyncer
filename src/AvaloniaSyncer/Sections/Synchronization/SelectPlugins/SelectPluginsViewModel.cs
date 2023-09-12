@@ -9,7 +9,7 @@ using Zafiro.Avalonia.Wizard.Interfaces;
 
 namespace AvaloniaSyncer.Sections.Synchronization.SelectPlugins;
 
-public class SelectPluginsViewModel : ReactiveValidationObject, IValidatable, IViewModel
+public class SelectPluginsViewModel : ReactiveValidationObject, IValidatable
 {
     public IEnumerable<IPlugin> Plugins { get; }
 

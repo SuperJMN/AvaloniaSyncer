@@ -3,6 +3,6 @@ using Zafiro.Avalonia.Misc;
 
 namespace AvaloniaSyncer.ViewModels;
 
-public class ViewModelBase : ReactiveObject, IViewModel
+public class ViewModelBase : ReactiveObject
 {
 }
