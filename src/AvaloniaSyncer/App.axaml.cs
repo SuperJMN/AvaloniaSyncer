@@ -22,14 +22,13 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-       
-
         this.Connect(() => new MainView(), view =>
         {
             var vm = new ViewModelFactory(ApplicationLifetime!, view);
 
             var sections = new List<Section>
             {
+                new("Explore", vm.GetExploreSection()),
                 new("Synchronize", vm.GetSyncViewModel()),
                 new("Settings", vm.GetSettingsViewModel()),
             };

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Android", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Desktop", "src\AvaloniaSyncer.Desktop\AvaloniaSyncer.Desktop.csproj", "{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaSyncer.Tests", "AvaloniaSyncer.Tests\AvaloniaSyncer.Tests.csproj", "{258C4207-A2C7-4BF3-9266-45365ECDEAB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
