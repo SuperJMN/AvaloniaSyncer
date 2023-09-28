@@ -8,6 +8,17 @@
              x:DataType="explorer:ExplorerViewModel">
 	<DockPanel>
         <Button Content="Load" Command="{Binding Load}" DockPanel.Dock="Top" />
-        <ListBox ItemsSource="{Binding Connections}" DisplayMemberBinding="{Binding Name}" />
-	</DockPanel>
+        <TabControl ItemsSource="{Binding Connections}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
+                    <ContentControl Content="{Binding Explorer}" />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+        </TabControl>
+    </DockPanel>
 </UserControl>
