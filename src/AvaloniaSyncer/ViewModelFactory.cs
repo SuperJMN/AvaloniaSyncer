@@ -17,10 +17,10 @@ using DynamicData;
 using Microsoft.Build.Utilities;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
+using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.Pickers;
+using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Notifications;
-using Zafiro.FileSystem.Local;
-using IFileSystemConnection = AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.IFileSystemConnection;
 
 namespace AvaloniaSyncer;
 
@@ -31,7 +31,11 @@ public class ViewModelFactory
         NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
         DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         Plugins = AvailablePlugins();
+        Clipboard = new ClipboardViewModel();
+        TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
     }
+
+    public IClipboard Clipboard { get; set; }
 
     public NotificationService NotificationService { get; }
 
@@ -60,15 +64,16 @@ public class ViewModelFactory
         var logger = Maybe.From(Log.Logger);
         return new IPlugin[]
         {
-            new Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
-            new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger),
-            new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService), logger)
+            new Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger),
+            new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger),
+            new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger)
         };
     }
 
-    public ExplorerViewModel GetExploreSection()
+    public ITransferManager TransferManager { get; }
+
+    public ExplorerSectionViewModel GetExploreSection()
     {
-        var connectionRepo = new FileSystemConnectionRepository(Enumerable.Empty<IFileSystemConnection>());
-        return new ExplorerViewModel();
+        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager);
     }
 }

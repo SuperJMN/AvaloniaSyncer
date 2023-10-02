@@ -3,12 +3,29 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:explorer="clr-namespace:AvaloniaSyncer.Sections.Explorer"
+             xmlns:transferManager="clr-namespace:Zafiro.Avalonia.FileExplorer.TransferManager;assembly=Zafiro.Avalonia.FileExplorer"
+             xmlns:explorer1="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer;assembly=Zafiro.Avalonia.FileExplorer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Explorer.FileSystemConnectionView"
              x:DataType="explorer:FileSystemConnectionViewModel">
     <DockPanel>
       <Button IsVisible="False" Content="Load" DockPanel.Dock="Top" Command="{Binding Load}" />
-      <ContentControl Content="{Binding Explorer}" />
+      <ContentControl Content="{Binding FileSystemExplorer}">
+          <ContentControl.ContentTemplate>
+              <DataTemplate DataType="explorer1:FileSystemExplorer">
+                  <Panel>
+                      <DockPanel>
+                          <ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
+                          <ContentControl Content="{Binding Address}" DockPanel.Dock="Top" />
+                          <ContentControl Content="{Binding Details^}" />
+                      </DockPanel>
+                      <transferManager:LightTransferManagerView Width="400" VerticalAlignment="Bottom"
+                                                                HorizontalAlignment="Right" Margin="20"
+                                                                DataContext="{Binding TransferManager}" />
+                  </Panel>
+              </DataTemplate>
+          </ContentControl.ContentTemplate>
+      </ContentControl>
       <Interaction.Behaviors>
           <RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
               <InvokeCommandAction Command="{Binding Load}" />

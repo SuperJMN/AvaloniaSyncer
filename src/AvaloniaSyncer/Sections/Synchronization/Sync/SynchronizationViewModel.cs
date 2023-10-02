@@ -27,9 +27,9 @@ public class SynchronizationViewModel : ReactiveValidationObject, IValidatable
         var isAnalyzing = new Subject<bool>();
 
         var canSync = this.WhenAnyValue(x => x.SyncActions).NotNull().CombineLatest(isAnalyzing, (containsActions, isSyncing) => containsActions && !isSyncing);
-        SyncAll = Stoppable.Create(OnSyncAll, canSync);
+        SyncAll = StoppableCommand.Create(OnSyncAll, canSync);
 
-        Analyze = Stoppable.Create(() => OnAnalize(origin, dest, logger), SyncAll.IsExecuting.Not());
+        Analyze = StoppableCommand.Create(() => OnAnalize(origin, dest, logger), SyncAll.IsExecuting.Not());
         Analyze.IsExecuting.Subscribe(isAnalyzing);
 
         Analyze.Results.Successes()
