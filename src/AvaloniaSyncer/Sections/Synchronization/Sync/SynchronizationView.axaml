@@ -4,7 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:sync="clr-namespace:AvaloniaSyncer.Sections.Synchronization.Sync"
-             xmlns:global="clr-namespace:"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Synchronization.Sync.SynchronizationView" x:DataType="sync:SynchronizationViewModel">
 
@@ -36,7 +35,7 @@
                             </StackPanel>
                             <ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
                                          Height="20" Margin="4" Maximum="1"
-                                         Value="{Binding Progress^.Proportion}" />
+                                         Value="{Binding Progress^.Value}" />
                             <StackPanel>
                                 <Button Content="Sync" IsVisible="{Binding !IsSyncing^}" Margin="4" Command="{Binding Sync}" />
                                 <Button Content="Stop" IsVisible="{Binding IsSyncing^}" ToolTip.Tip="Syncs pending items" Command="{Binding Stop}" />

@@ -6,9 +6,9 @@ using AvaloniaSyncer.ViewModels;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Zafiro.Actions;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
-using Zafiro.ProgressReporting;
 
 namespace AvaloniaSyncer.Sections.Synchronization.Sync;
 
@@ -37,7 +37,7 @@ public class SyncItemViewModel : ViewModelBase
 
     [Reactive] public string Error { get; private set; } = "";
 
-    public IObservable<RelativeProgress<long>> Progress { get; }
+    public IObservable<IProgress> Progress { get; }
 
     public string Source => syncAction switch
     {
