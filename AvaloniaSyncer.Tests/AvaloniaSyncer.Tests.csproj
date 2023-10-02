@@ -10,22 +10,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.0" />
-    <PackageReference Include="DynamicData" Version="7.14.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.2" />
+    <PackageReference Include="DynamicData" Version="8.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="xunit" Version="2.5.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="3.2.0">
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Zafiro.FileSystem" Version="4.0.20" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.20" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.20" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.20" />
+    <PackageReference Include="Zafiro.FileSystem" Version="4.0.23" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.23" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.23" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.23" />
   </ItemGroup>
 
   <ItemGroup>

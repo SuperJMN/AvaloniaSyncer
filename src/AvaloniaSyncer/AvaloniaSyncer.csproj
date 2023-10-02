@@ -1,76 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-  </PropertyGroup>
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="12.0.1" />
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
-    <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.3" />
-    <PackageReference Include="HttpClient.Extensions.LoggingHttpMessageHandler" Version="1.0.3" />
-    <PackageReference Include="Nuke.Common" Version="7.0.2" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
-    <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
-    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj" Version="3.0.38">
-      <Temp>Zafiro.Avalonia</Temp>
-      <Name>Zafiro.Avalonia</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj" Version="3.0.38">
-      <Temp>Zafiro.Avalonia.Dialogs</Temp>
-      <Name>Zafiro.Avalonia.Dialogs</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj" Version="1.0.5">
-      <Temp>Zafiro.Avalonia.FileExplorer</Temp>
-      <Name>Zafiro.Avalonia.FileExplorer</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer.Pickers\Zafiro.Avalonia.FileExplorer.Pickers.csproj" Version="1.0.5">
-      <Temp>Zafiro.Avalonia.FileExplorer.Pickers</Temp>
-      <Name>Zafiro.Avalonia.FileExplorer.Pickers</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj">
-      <Temp>Zafiro.FileSystem.SeaweedFS.Filer.Client</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj" Version="4.0.23">
-      <Temp>Zafiro.FileSystem.Local</Temp>
-      <Name>Zafiro.FileSystem.Local</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj" Version="4.0.23">
-      <Temp>Zafiro.FileSystem.SeaweedFS</Temp>
-      <Name>Zafiro.FileSystem.SeaweedFS</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj" Version="4.0.23">
-      <Temp>Zafiro.FileSystem.Sftp</Temp>
-      <Name>Zafiro.FileSystem.Sftp</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj" Version="4.0.10">
-      <Temp>Zafiro.UI</Temp>
-      <Name>Zafiro.UI</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj">
-      <Temp>Zafiro.FileSystem</Temp>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Sections\Explorer\ExplorerSectionView.axaml.cs">
-      <DependentUpon>ExplorerSectionView.axaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj">
-      <Temp>Zafiro</Temp>
-    </ProjectReference>
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	</PropertyGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
+		<PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+		<PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.3" />
+		<PackageReference Include="HttpClient.Extensions.LoggingHttpMessageHandler" Version="1.0.3" />
+		<PackageReference Include="Nuke.Common" Version="7.0.2" />
+		<PackageReference Include="ReactiveUI.Fody" Version="19.4.1" />
+		<PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
+		<PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+		<PackageReference Include="Zafiro.Avalonia" Version="3.0.38" />
+		<PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.38" />
+		<PackageReference Include="Zafiro.Avalonia.FileExplorer.Pickers" Version="1.0.7" />
+		<PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.23" />
+		<PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.23" />
+		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.23" />
+		<PackageReference Include="Zafiro.UI" Version="4.0.10" />
+	</ItemGroup>
 </Project>
