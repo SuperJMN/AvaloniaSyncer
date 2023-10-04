@@ -29,6 +29,7 @@ internal class SeaweedFileFileSystemConnection : Serialization.IFileSystemConnec
         var httpClient = new System.Net.Http.HttpClient(handler)
         {
             BaseAddress = uri, 
+            Timeout = TimeSpan.FromDays(1),
         };
 
         var seaweedFSClient = new SeaweedFSClient(httpClient);
