@@ -1,66 +1,35 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.2" />
-    <PackageReference Include="DynamicData" Version="8.0.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-    <PackageReference Include="xunit" Version="2.5.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="coverlet.collector" Version="6.0.0">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj">
-      <Temp>Zafiro.FileSystem.SeaweedFS.Filer.Client</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj" Version="4.0.24">
-      <Temp>Zafiro.FileSystem</Temp>
-      <Name>Zafiro.FileSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj" Version="4.0.24">
-      <Temp>Zafiro.FileSystem.Local</Temp>
-      <Name>Zafiro.FileSystem.Local</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj" Version="4.0.24">
-      <Temp>Zafiro.FileSystem.SeaweedFS</Temp>
-      <Name>Zafiro.FileSystem.SeaweedFS</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj" Version="4.0.24">
-      <Temp>Zafiro.FileSystem.Sftp</Temp>
-      <Name>Zafiro.FileSystem.Sftp</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj">
-      <Temp>Zafiro.UI</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN\AvaloniaSyncer\src\AvaloniaSyncer\AvaloniaSyncer.csproj">
-      <Temp>AvaloniaSyncer</Temp>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer.Pickers\Zafiro.Avalonia.FileExplorer.Pickers.csproj">
-      <Temp>Zafiro.Avalonia.FileExplorer.Pickers</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj">
-      <Temp>Zafiro.Avalonia.FileExplorer</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj">
-      <Temp>Zafiro.Avalonia.Dialogs</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj">
-      <Temp>Zafiro.Avalonia</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj">
-      <Temp>Zafiro</Temp>
-    </ProjectReference>
-  </ItemGroup>
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+
+		<IsPackable>false</IsPackable>
+		<IsTestProject>true</IsTestProject>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CSharpFunctionalExtensions" Version="2.40.2" />
+		<PackageReference Include="DynamicData" Version="8.0.2" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+		<PackageReference Include="xunit" Version="2.5.1" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="coverlet.collector" Version="6.0.0">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Zafiro.FileSystem" Version="4.0.25" />
+		<PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.25" />
+		<PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.25" />
+		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.25" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
+	</ItemGroup>
+
 </Project>
