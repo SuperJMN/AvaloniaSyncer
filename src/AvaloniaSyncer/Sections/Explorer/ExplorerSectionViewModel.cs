@@ -10,6 +10,7 @@ using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
+using Serilog;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.CSharpFunctionalExtensions;
@@ -20,10 +21,12 @@ namespace AvaloniaSyncer.Sections.Explorer;
 
 public class ExplorerSectionViewModel : ReactiveObject
 {
+    private readonly Maybe<ILogger> logger;
     private readonly ObservableAsPropertyHelper<IList<FileSystemConnectionViewModel>> connections;
 
-    public ExplorerSectionViewModel(INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager)
+    public ExplorerSectionViewModel(INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
+        this.logger = logger;
         Load = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => GetConnections())
             .Successes()
             .SelectMany(x => x)
@@ -41,7 +44,7 @@ public class ExplorerSectionViewModel : ReactiveObject
     {
         var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
         var configs = await Async.Await(() => store.Load())
-            .Map(enumerable => enumerable.Select(connection => Mapper.ToSystem(connection)))
+            .Map(enumerable => enumerable.Select(connection => Mapper.ToSystem(connection, logger)))
             .Map(enumerable => new FileSystemConnectionRepository(enumerable))
             .Map(r => r.Connections);
 

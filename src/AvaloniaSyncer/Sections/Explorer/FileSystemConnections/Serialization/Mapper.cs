@@ -1,5 +1,7 @@
 using System;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
+using CSharpFunctionalExtensions;
+using Serilog;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 
@@ -35,14 +37,14 @@ public static class Mapper
         };
     }
 
-    public static IFileSystemConnection ToSystem(Connection connection)
+    public static IFileSystemConnection ToSystem(Connection connection, Maybe<ILogger> logger)
     {
         switch (connection.Parameters)
         {
             case Local:
                 return new LocalFileSystemConnection(connection.Name);
             case SeaweedFS fs:
-                return new SeaweedFileFileSystemConnection(connection.Name, fs.Uri);
+                return new SeaweedFileFileSystemConnection(connection.Name, fs.Uri, logger);
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 return new SftpFileFileSystemConnection(connection.Name, info);

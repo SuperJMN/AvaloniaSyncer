@@ -3,6 +3,7 @@ using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
 using CSharpFunctionalExtensions;
+using Serilog;
 using File = System.IO.File;
 
 namespace AvaloniaSyncer.Tests;
@@ -14,7 +15,7 @@ public class UnitTest1
     {
         var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
         var repoResult = await store.Load()
-            .Map(list => new FileSystemConnectionRepository(list.Select(Mapper.ToSystem)))
+            .Map(list => new FileSystemConnectionRepository(list.Select(connection => Mapper.ToSystem(connection, Maybe<ILogger>.None))))
             .Check(repo =>
             {
                 var connections = repo.Connections.Select(Mapper.ToConfiguration);

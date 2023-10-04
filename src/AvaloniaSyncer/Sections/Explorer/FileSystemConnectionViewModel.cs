@@ -25,7 +25,7 @@ public class FileSystemConnectionViewModel : ReactiveObject
         Load = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(connection.FileSystem));
         explorer = Load
             .Successes()
-            .Select(system => new FileSystemExplorer(system, DirectoryListing.GetAll, notificationService, clipboardViewModel, transferManager))
+            .Select(system => new FileSystemExplorer(system, notificationService, clipboardViewModel, transferManager))
             .ToProperty(this, x => x.FileSystemExplorer);
     }
 
