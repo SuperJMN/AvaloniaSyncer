@@ -26,8 +26,11 @@ namespace AvaloniaSyncer;
 
 public class ViewModelFactory
 {
-    public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control)
+    private readonly Maybe<ILogger> logger;
+
+    public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control, Maybe<ILogger> logger)
     {
+        this.logger = logger;
         NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
         DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         Plugins = AvailablePlugins();
@@ -45,7 +48,7 @@ public class ViewModelFactory
 
     public SyncSectionViewModel GetSyncViewModel()
     {
-        return new SyncSectionViewModel(DialogService, Plugins, NotificationService, Maybe.From(Log.Logger));
+        return new SyncSectionViewModel(DialogService, Plugins, NotificationService, logger);
     }
 
     public SettingsSectionViewModel GetSettingsViewModel()
@@ -74,6 +77,6 @@ public class ViewModelFactory
 
     public ExplorerSectionViewModel GetExploreSection()
     {
-        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager);
+        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, logger);
     }
 }

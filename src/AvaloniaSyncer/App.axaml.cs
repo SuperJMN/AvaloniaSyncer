@@ -4,6 +4,7 @@ using Avalonia;
 using Avalonia.Markup.Xaml;
 using AvaloniaSyncer.ViewModels;
 using AvaloniaSyncer.Views;
+using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Mixins;
 
@@ -24,7 +25,7 @@ public class App : Application
     {
         this.Connect(() => new MainView(), view =>
         {
-            var vm = new ViewModelFactory(ApplicationLifetime!, view);
+            var vm = new ViewModelFactory(ApplicationLifetime!, view, Maybe<ILogger>.From(Log.Logger));
 
             var sections = new List<Section>
             {
