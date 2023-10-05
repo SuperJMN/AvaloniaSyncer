@@ -1,35 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-
-		<IsPackable>false</IsPackable>
-		<IsTestProject>true</IsTestProject>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<PackageReference Include="CSharpFunctionalExtensions" Version="2.40.2" />
-		<PackageReference Include="DynamicData" Version="8.0.2" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-		<PackageReference Include="xunit" Version="2.5.1" />
-		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="coverlet.collector" Version="6.0.0">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<PackageReference Include="Zafiro.FileSystem" Version="4.0.25" />
-		<PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.25" />
-		<PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.25" />
-		<PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.25" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
-	</ItemGroup>
-
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.40.2" />
+    <PackageReference Include="DynamicData" Version="8.0.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="xunit" Version="2.5.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Zafiro.FileSystem" Version="4.0.26" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.26" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.26" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.26" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
+  </ItemGroup>
 </Project>

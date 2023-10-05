@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Abstractions;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using AvaloniaSyncer.Sections.Settings;
@@ -12,6 +13,7 @@ using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Local;
 using Zafiro.UI;
+using IFileSystem = Zafiro.FileSystem.IFileSystem;
 
 namespace AvaloniaSyncer.Plugins.Local;
 
@@ -21,7 +23,7 @@ public class SessionViewModel : ReactiveValidationObject, ISession
     {
         this.ValidationRule(x => x.Path, s => !string.IsNullOrEmpty(s), "Invalid path");
         Configuration = Maybe<ISessionConfiguration>.None;
-        var fileSystem = new LocalFileSystem(logger);
+        var fileSystem = new LocalFileSystem(new FileSystem(), logger);
         var browseFolder = ReactiveCommand.CreateFromObservable(() => folderPicker(fileSystem).Pick("Select a folder"));
         browseFolder.Values().Select(x => x.Path.ToString()).BindTo(this, x => x.Path);
         BrowseFolder = browseFolder;
