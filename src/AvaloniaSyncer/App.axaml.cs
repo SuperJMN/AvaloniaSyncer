@@ -31,6 +31,7 @@ public class App : Application
             {
                 new("Explore", vm.GetExploreSection()),
                 new("Synchronize", vm.GetSyncViewModel()),
+                new("New Synchronize", vm.GetSynchronizationSection()),
                 new("Settings", vm.GetSettingsViewModel()),
             };
 

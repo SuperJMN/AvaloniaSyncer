@@ -12,6 +12,9 @@
         <DataTemplate DataType="interfaces:IWizard">
             <controls:WizardControl Wizard="{Binding}" />
         </DataTemplate>
+        <DataTemplate DataType="controls:ISuperWizard">
+            <controls:WizardControl Wizard="{Binding}" />
+        </DataTemplate>
     </Application.DataTemplates>
 
 	<Application.Styles>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
@@ -10,6 +11,8 @@ using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.Sections.Explorer;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
+using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
+using AvaloniaSyncer.Sections.NewSync;
 using AvaloniaSyncer.Sections.Settings;
 using AvaloniaSyncer.Sections.Synchronization.Sync;
 using CSharpFunctionalExtensions;
@@ -54,6 +57,13 @@ public class ViewModelFactory
     public SettingsSectionViewModel GetSettingsViewModel()
     {
         return new SettingsSectionViewModel(Plugins);
+    }
+
+    public SyncronizationSectionViewModel GetSynchronizationSection()
+    {
+        var collection = new[] { new FileSystemConnectionViewModel(new LocalFileSystemConnection("Local"), NotificationService, Clipboard, TransferManager) };
+        var connections = new ReadOnlyObservableCollection<FileSystemConnectionViewModel>(new ObservableCollection<FileSystemConnectionViewModel>(collection));
+        return new SyncronizationSectionViewModel(connections, DialogService);
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)

@@ -47,8 +47,13 @@ public class SyncSectionViewModel : ViewModelBase
 
             var wizardViewModel = new Wizard<ConfigurePluginsViewModel>(pages);
 
-            var showDialog = await dialogService.ShowDialog(wizardViewModel, "Create a synchronization session", wizard => Observable.FromAsync(() => wizard.Result));
-            return showDialog.Map(x => new SyncSession(x.SourceDirectory, x.DestinationDirectory));
+            // TODO: Fix me
+            throw new NotImplementedException();
+
+            //var showDialog = await dialogService.ShowDialog(wizardViewModel, "Create a synchronization session", wizard => Observable.FromAsync(() => wizard.Result));
+            //return showDialog.Map(x => new SyncSession(x.SourceDirectory, x.DestinationDirectory));
+
+            return new Maybe<SyncSession>();
         });
 
         SelectPlugins.Values().Do(session =>
