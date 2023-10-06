@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer;
+using AvaloniaSyncer.Sections.NewSync.Pages;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.Avalonia.Controls;
 using Zafiro.Avalonia.Dialogs;
-using Zafiro.Avalonia.Wizard;
-using Zafiro.Avalonia.Wizard.Interfaces;
 
 namespace AvaloniaSyncer.Sections.NewSync;
 
@@ -32,34 +29,17 @@ public class SyncronizationSectionViewModel : ReactiveObject
         return ShowWizard(wizard);
     }
 
-    private SuperWizard<Page1, Page2, Session> CreateWizard()
+    private SuperWizard<Page1ViewModel, Page2ViewModel, Session> CreateWizard()
     {
-        var pages = new List<IPage<IValidatable, IValidatable>>();
-        var wizard = new SuperWizard<Page1, Page2, Session>(() => new Page1(), page1 => new Page2(page1));
+        var wizard = new SuperWizard<Page1ViewModel, Page2ViewModel, Session>(
+            new SuperPage<Page1ViewModel>(new Page1ViewModel(), "Next"),
+            new SuperPage<Page2ViewModel>(new Page2ViewModel(), "Finish"), (p1, p2) => new Session());
         return wizard;
     }
 
-    private async Task<Maybe<Session>> ShowWizard(SuperWizard<Page1, Page2, Session> wizard)
+    private async Task<Maybe<Session>> ShowWizard(SuperWizard<Page1ViewModel, Page2ViewModel, Session> wizard)
     {
-        var showDialog = await dialogService.ShowDialog<SuperWizard<Page1, Page2, Session>, Session>(wizard, "Do something, boi", w => Observable.FromAsync(() => w.Result));
+        var showDialog = await dialogService.ShowDialog<SuperWizard<Page1ViewModel, Page2ViewModel, Session>, Session>(wizard, "Do something, boi", w => Observable.FromAsync(() => w.Result));
         return showDialog;
     }
-}
-
-internal class Page2 : ReactiveObject, IValidatable
-{
-    public Page2(Page1 page1)
-    {
-    }
-
-    public IObservable<bool> IsValid { get; }
-}
-
-internal class Page1 : ReactiveObject, IValidatable
-{
-    public IObservable<bool> IsValid { get; }
-}
-
-public class Session
-{
 }

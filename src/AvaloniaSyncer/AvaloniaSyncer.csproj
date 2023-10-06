@@ -68,4 +68,9 @@
       <Temp>Zafiro</Temp>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Sections\NewSync\Pages\Page1View.axaml.cs">
+      <DependentUpon>Page1View.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

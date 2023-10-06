@@ -13,7 +13,7 @@
             <controls:WizardControl Wizard="{Binding}" />
         </DataTemplate>
         <DataTemplate DataType="controls:ISuperWizard">
-            <controls:WizardControl Wizard="{Binding}" />
+            <controls:SuperWizardControl Wizard="{Binding}" />
         </DataTemplate>
     </Application.DataTemplates>
 
