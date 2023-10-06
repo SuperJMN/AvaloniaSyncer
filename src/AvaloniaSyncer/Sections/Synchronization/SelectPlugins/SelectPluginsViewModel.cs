@@ -5,7 +5,7 @@ using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Zafiro.Avalonia.Misc;
-using Zafiro.Avalonia.Wizard.Interfaces;
+using Zafiro.Avalonia.WizardOld.Interfaces;
 
 namespace AvaloniaSyncer.Sections.Synchronization.SelectPlugins;
 

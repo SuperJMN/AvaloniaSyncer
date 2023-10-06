@@ -16,7 +16,7 @@
                   <Panel>
                       <DockPanel>
                           <ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
-                          <ContentControl Content="{Binding AddressViewModel}" DockPanel.Dock="Top" />
+                          <ContentControl Content="{Binding Address}" DockPanel.Dock="Top" />
                           <ContentControl Content="{Binding Details^}" />
                       </DockPanel>
                       <transferManager:LightTransferManagerView Width="400" VerticalAlignment="Bottom"

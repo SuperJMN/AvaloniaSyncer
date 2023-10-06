@@ -1,6 +1,6 @@
 ﻿using System;
 using ReactiveUI;
-using Zafiro.Avalonia.Wizard.Interfaces;
+using Zafiro.Avalonia.WizardOld.Interfaces;
 
 namespace AvaloniaSyncer.Sections.NewSync.Pages;
 

@@ -3,7 +3,7 @@ using AvaloniaSyncer.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
-using Zafiro.Avalonia.Wizard.Interfaces;
+using Zafiro.Avalonia.WizardOld.Interfaces;
 using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.Sections.Synchronization.ConfigurePlugins;

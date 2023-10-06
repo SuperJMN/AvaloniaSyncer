@@ -12,8 +12,8 @@ using DynamicData;
 using ReactiveUI;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
-using Zafiro.Avalonia.Wizard;
-using Zafiro.Avalonia.Wizard.Interfaces;
+using Zafiro.Avalonia.WizardOld;
+using Zafiro.Avalonia.WizardOld.Interfaces;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 

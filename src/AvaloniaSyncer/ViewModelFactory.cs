@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -10,14 +7,11 @@ using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.Sections.Explorer;
-using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.NewSync;
 using AvaloniaSyncer.Sections.Settings;
 using AvaloniaSyncer.Sections.Synchronization.Sync;
 using CSharpFunctionalExtensions;
-using DynamicData;
-using Microsoft.Build.Utilities;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
@@ -49,6 +43,8 @@ public class ViewModelFactory
 
     private IDialogService DialogService { get; }
 
+    public ITransferManager TransferManager { get; }
+
     public SyncSectionViewModel GetSyncViewModel()
     {
         return new SyncSectionViewModel(DialogService, Plugins, NotificationService, logger);
@@ -61,9 +57,19 @@ public class ViewModelFactory
 
     public SyncronizationSectionViewModel GetSynchronizationSection()
     {
-        var collection = new[] { new FileSystemConnectionViewModel(new LocalFileSystemConnection("Local"), NotificationService, Clipboard, TransferManager) };
-        var connections = new ReadOnlyObservableCollection<FileSystemConnectionViewModel>(new ObservableCollection<FileSystemConnectionViewModel>(collection));
-        return new SyncronizationSectionViewModel(connections, DialogService);
+        var fsConn = new LocalFileSystemConnection("Local");
+        return new SyncronizationSectionViewModel(
+            new ReadOnlyObservableCollection<IFileSystemConnection>(
+                new ObservableCollection<IFileSystemConnection>(new[] { fsConn })), 
+            DialogService, 
+            NotificationService, 
+            Clipboard, 
+            TransferManager);
+    }
+
+    public ExplorerSectionViewModel GetExploreSection()
+    {
+        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, logger);
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)
@@ -81,12 +87,5 @@ public class ViewModelFactory
             new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger),
             new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger)
         };
-    }
-
-    public ITransferManager TransferManager { get; }
-
-    public ExplorerSectionViewModel GetExploreSection()
-    {
-        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, logger);
     }
 }
