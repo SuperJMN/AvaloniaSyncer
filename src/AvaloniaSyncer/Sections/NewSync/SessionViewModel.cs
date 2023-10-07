@@ -21,8 +21,8 @@ namespace AvaloniaSyncer.Sections.NewSync;
 
 public class SessionViewModel : ReactiveValidationObject, IValidatable
 {
-    private readonly IZafiroDirectory source;
     private readonly IZafiroDirectory destination;
+    private readonly IZafiroDirectory source;
 
     public SessionViewModel(INotificationService notificationService, IZafiroDirectory source, IZafiroDirectory destination, Maybe<ILogger> logger)
     {
@@ -57,11 +57,13 @@ public class SessionViewModel : ReactiveValidationObject, IValidatable
     public StoppableCommand<Unit, Result> SyncAll { get; }
 
     [Reactive] public bool SkipIdentical { get; set; } = true;
+
     [Reactive] public bool DeleteNonExistent { get; set; } = false;
+
     [Reactive] public bool CanOverwrite { get; set; } = false;
+
     [Reactive] public List<SyncItemViewModel>? SyncActions { get; set; }
 
-    public string Title { get; }
     public IObservable<bool> IsBusy { get; }
     public IObservable<bool> IsValid => this.IsValid();
 
