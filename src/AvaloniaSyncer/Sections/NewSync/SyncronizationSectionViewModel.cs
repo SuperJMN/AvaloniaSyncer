@@ -7,6 +7,7 @@ using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
+using Serilog;
 using Zafiro.Avalonia.Controls;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
@@ -24,9 +25,10 @@ public class SyncronizationSectionViewModel : ReactiveObject
     private readonly IDialogService dialogService;
     private readonly INotificationService notificationService;
     private readonly ITransferManager transferManager;
+    private readonly Maybe<ILogger> logger;
     private readonly ReadOnlyObservableCollection<SessionViewModel> sessionsCollection;
 
-    public SyncronizationSectionViewModel(ReadOnlyObservableCollection<IFileSystemConnection> connections, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager)
+    public SyncronizationSectionViewModel(ReadOnlyObservableCollection<IFileSystemConnection> connections, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
         var sessions = new SourceList<SessionViewModel>();
         this.connections = connections;
@@ -34,6 +36,7 @@ public class SyncronizationSectionViewModel : ReactiveObject
         this.notificationService = notificationService;
         this.clipboard = clipboard;
         this.transferManager = transferManager;
+        this.logger = logger;
         AddSession = ReactiveCommand.CreateFromTask(OnAddSession);
         AddSession.Values().Subscribe(session => sessions.Add(session));
         sessions.Connect().Bind(out sessionsCollection).Subscribe();
@@ -53,7 +56,7 @@ public class SyncronizationSectionViewModel : ReactiveObject
     {
         var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, SessionViewModel>(
             new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Next"),
-            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish"), (p1, p2) => new SessionViewModel(p1.CurrentDirectory, p2.CurrentDirectory));
+            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish"), (p1, p2) => new SessionViewModel(notificationService, p1.CurrentDirectory, p2.CurrentDirectory, logger));
         return wizard;
     }
 

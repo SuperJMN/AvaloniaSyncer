@@ -64,7 +64,7 @@ public class ViewModelFactory
             DialogService, 
             NotificationService, 
             Clipboard, 
-            TransferManager);
+            TransferManager, logger);
     }
 
     public ExplorerSectionViewModel GetExploreSection()
