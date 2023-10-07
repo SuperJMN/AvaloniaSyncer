@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:sync="clr-namespace:AvaloniaSyncer.Sections.Synchronization.Sync"
+             xmlns:newSync="clr-namespace:AvaloniaSyncer.Sections.NewSync"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Synchronization.Sync.SynchronizationView" x:DataType="sync:SynchronizationViewModel">
 
@@ -13,7 +14,7 @@
 
 	<Panel>
 		<DockPanel>
-			<sync:TopBar DockPanel.Dock="Top" />
+			<newSync:TopBar DockPanel.Dock="Top" />
 			<ListBox ItemsSource="{Binding SyncActions}">
                 <ListBox.ItemTemplate>
                     <DataTemplate x:DataType="sync:SyncItemViewModel">

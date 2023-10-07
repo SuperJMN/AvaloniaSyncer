@@ -7,6 +7,7 @@ using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.Sections.Explorer;
+using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.NewSync;
 using AvaloniaSyncer.Sections.Settings;
@@ -60,7 +61,11 @@ public class ViewModelFactory
         var fsConn = new LocalFileSystemConnection("Local");
         return new SyncronizationSectionViewModel(
             new ReadOnlyObservableCollection<IFileSystemConnection>(
-                new ObservableCollection<IFileSystemConnection>(new[] { fsConn })), 
+                new ObservableCollection<IFileSystemConnection>(new IFileSystemConnection[]
+                {
+                    fsConn, 
+                    new SeaweedFileFileSystemConnection("SeaweedFS", new Uri("http://192.168.1.31:8888"), logger)
+                })), 
             DialogService, 
             NotificationService, 
             Clipboard, 

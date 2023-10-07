@@ -47,7 +47,7 @@ public class SessionViewModel : ReactiveValidationObject, IValidatable
                 return Unit.Default;
             }).Subscribe();
 
-        IsBusy = SyncAll.IsExecuting.Merge(SyncAll.IsExecuting);
+        IsBusy = Analyze.IsExecuting.Merge(SyncAll.IsExecuting);
     }
 
     public string Description => $"{source} => {destination}";

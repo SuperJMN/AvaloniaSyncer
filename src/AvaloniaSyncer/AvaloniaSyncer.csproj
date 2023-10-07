@@ -72,5 +72,8 @@
     <Compile Update="Sections\NewSync\Pages\Page1View.axaml.cs">
       <DependentUpon>Page1View.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Sections\NewSync\TopBar.axaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>
