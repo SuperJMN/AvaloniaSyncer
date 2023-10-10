@@ -5,6 +5,8 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Zafiro.Actions;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
@@ -13,7 +15,7 @@ using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.NewSync;
 
-internal class LeftOnlyFileActionViewModel : IFileActionViewModel
+internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewModel
 {
     private readonly BehaviorSubject<LongProgress> progress = new(new LongProgress());
 
@@ -24,6 +26,7 @@ internal class LeftOnlyFileActionViewModel : IFileActionViewModel
         Destination = destination;
         Sync = StoppableCommand.Create(() => Observable.FromAsync(ct => OnSync(source, destination, ct)), Maybe<IObservable<bool>>.None);
         IsSyncing = Sync.IsExecuting;
+        Sync.Results.Successes().Do(_ => IsSynced = true).Subscribe();
     }
 
     public ZafiroPath Left { get; }
@@ -31,6 +34,11 @@ internal class LeftOnlyFileActionViewModel : IFileActionViewModel
     public IZafiroDirectory Destination { get; }
 
     public IObservable<bool> IsSyncing { get; }
+
+    public bool IsIgnored { get; } = false;
+
+    [Reactive]
+    public bool IsSynced { get; private set;  }
 
     public StoppableCommand<Unit, Result> Sync { get; }
 

@@ -2,13 +2,14 @@
 using System.Reactive;
 using System.Reactive.Linq;
 using CSharpFunctionalExtensions;
+using ReactiveUI;
 using Zafiro.Actions;
 using Zafiro.FileSystem.Comparer;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.NewSync;
 
-internal class SkipFileActionViewModel : IFileActionViewModel
+internal class SkipFileActionViewModel : ReactiveObject, IFileActionViewModel
 {
     public SkipFileActionViewModel(FileDiff fileDiff)
     {
@@ -20,6 +21,8 @@ internal class SkipFileActionViewModel : IFileActionViewModel
     public FileDiff FileDiff { get; }
 
     public IObservable<bool> IsSyncing { get; }
+    public bool IsIgnored { get; } = true;
+    public bool IsSynced { get; } = true;
     public string Description => $"Skip {FileDiff}";
     public IObservable<LongProgress> Progress => Observable.Never<LongProgress>();
     public StoppableCommand<Unit, Result> Sync { get; }

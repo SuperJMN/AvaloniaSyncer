@@ -8,18 +8,21 @@
              x:Class="AvaloniaSyncer.Sections.NewSync.GranularSessionView"
              x:DataType="newSync:GranularSessionViewModel">
 	<DockPanel>
-		<controls:StoppableControl Content="Analyze" Command="{Binding Analyze}" DockPanel.Dock="Top" />
-        <controls:StoppableControl Content="Sync All" Command="{Binding Analyze}" DockPanel.Dock="Top" />
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Actions}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate DataType="newSync:IFileActionViewModel">
-                        <DockPanel>
-                            <TextBlock Text="{Binding Description}" />
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <!--<CheckBox IsEnabled="False" IsChecked="{Binding Synced}" />-->
-                                <!--<PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />-->
-                                <!--<Button x:Name="ToggleButton" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <controls:StoppableControl Content="Analyze" Command="{Binding Analyze}" DockPanel.Dock="Top" />
+            <controls:StoppableControl Content="Sync All" Command="{Binding SyncAll}" DockPanel.Dock="Top" /></StackPanel>
+        <ProgressBar VerticalAlignment="Stretch" Height="20" DockPanel.Dock="Bottom" Margin="4" Maximum="{Binding Progress^.Total}"
+                     Value="{Binding Progress^.Current}" />
+		<ScrollViewer>
+			<ItemsControl ItemsSource="{Binding Actions}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="newSync:IFileActionViewModel">
+						<DockPanel>
+							<TextBlock Text="{Binding Description}" />
+							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+								<!--<CheckBox IsEnabled="False" IsChecked="{Binding Synced}" />-->
+								<!--<PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />-->
+								<!--<Button x:Name="ToggleButton" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
                                 <PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />
                                 <Button.Flyout>
                                     <Flyout>
@@ -27,14 +30,15 @@
                                     </Flyout>
                                 </Button.Flyout>
                             </Button>-->
-                            </StackPanel>
-                            <ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
+							</StackPanel>
+							<ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
                                          Height="20" Width="200" Margin="4" Maximum="{Binding Progress^.Total}"
                                          Value="{Binding Progress^.Current}" />
-                            <controls:StoppableControl Content="Sync" Command="{Binding Sync}" />
-                        </DockPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl></ScrollViewer>
+							<controls:StoppableControl Content="Sync" Command="{Binding Sync}" />
+						</DockPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</ScrollViewer>
 	</DockPanel>
 </UserControl>

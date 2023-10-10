@@ -5,12 +5,15 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Security.Cryptography;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using Serilog;
+using Zafiro.Actions;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Comparer;
+using Zafiro.Mixins;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.NewSync;
@@ -19,22 +22,41 @@ public class GranularSessionViewModel
 {
     public GranularSessionViewModel(IZafiroDirectory source, IZafiroDirectory destination, Maybe<ILogger> logger)
     {
-        var sourceList = new SourceList<IFileActionViewModel>();
         Source = source;
         Destination = destination;
 
-        ISubject<bool> canSync = new Subject<bool>();
-        Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer().Diff(source, destination)), Maybe.From(canSync.AsObservable()));
+        var sourceList = new SourceList<IFileActionViewModel>();
+        var sourceListChanges = sourceList
+            .Connect();
 
-        ItemsUpdater(sourceList).Subscribe();
+        sourceListChanges
+            .Bind(out var actions)
+            .Subscribe();
 
-        sourceList
-            .Connect()
-            .Bind(out var actions);
+        var pendingSync = sourceListChanges
+            .AutoRefresh()
+            .Filter(x => x is { IsIgnored: false, IsSynced: false });
 
+        var allToSync = sourceListChanges
+            .AutoRefresh()
+            .Filter(x => x is { IsIgnored: false });
+
+        var current = pendingSync.ToCollection().Count();
+        var total = allToSync.ToCollection().Count();
+        Progress = total.CombineLatest(current, (t, c) => new LongProgress(c, t));
+        Progress.Subscribe(progress => { });
+
+        ISubject<bool> canAnalyze = new Subject<bool>();
+        Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer().Diff(source, destination)), Maybe.From(canAnalyze.AsObservable()));
+        var canSync = pendingSync.ToCollection().Any();
         Actions = actions;
+        SyncAll = StoppableCommand.Create(() => Actions.Select(model => model.Sync.Start.Execute()).Merge(3), Maybe.From(canSync));
+        SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
+        ItemsUpdater(sourceList, Analyze.Results.Successes()).Subscribe();
     }
 
+    public IObservable<LongProgress> Progress { get; }
+    public StoppableCommand<Unit, Result> SyncAll { get; }
     public IZafiroDirectory Source { get; }
     public IZafiroDirectory Destination { get; }
 
@@ -43,9 +65,9 @@ public class GranularSessionViewModel
     public StoppableCommand<Unit, Result<IEnumerable<FileDiff>>> Analyze { get; }
     public string Description => $"{Source} => {Destination}";
 
-    private IObservable<IEnumerable<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> sourceList)
+    private IObservable<IEnumerable<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> sourceList, IObservable<IEnumerable<FileDiff>> observable)
     {
-        return Analyze.Results.Successes()
+        return observable
             .Select(GenerateActions)
             .Do(r => sourceList.Edit(list =>
             {
@@ -54,14 +76,9 @@ public class GranularSessionViewModel
             }));
     }
 
-    private IObservable<IEnumerable<IFileActionViewModel>> GenerateActions(IObservable<IEnumerable<FileDiff>> listsOfDiffs)
-    {
-        return listsOfDiffs.Select(diffs => diffs.Select(diff => GenerateAction(diff)));
-    }
-
     private IEnumerable<IFileActionViewModel> GenerateActions(IEnumerable<FileDiff> listsOfDiffs)
     {
-        return listsOfDiffs.Select(diff => GenerateAction(diff));
+        return listsOfDiffs.Select(GenerateAction);
     }
 
     private IFileActionViewModel GenerateAction(FileDiff fileDiff)
