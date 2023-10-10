@@ -9,8 +9,9 @@
              x:DataType="newSync:GranularSessionViewModel">
 	<DockPanel>
 		<controls:StoppableControl Content="Analyze" Command="{Binding Analyze}" DockPanel.Dock="Top" />
+        <controls:StoppableControl Content="Sync All" Command="{Binding Analyze}" DockPanel.Dock="Top" />
         <ScrollViewer>
-            <ItemsControl ItemsSource="{Binding Actions^}">
+            <ItemsControl ItemsSource="{Binding Actions}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="newSync:IFileActionViewModel">
                         <DockPanel>
