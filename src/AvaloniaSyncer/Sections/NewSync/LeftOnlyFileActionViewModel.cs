@@ -45,9 +45,11 @@ internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewMode
     public string Description => $"Copy {Left}";
     public IObservable<LongProgress> Progress => progress.AsObservable();
 
-    public async Task<Result> Execute(CancellationToken cancellationToken)
+    public Task<Result> Execute(CancellationToken cancellationToken)
     {
-        return await Sync.Start.Execute();
+        var taskCompletionSource = new TaskCompletionSource<Result>();
+        Sync.Start.Execute().Subscribe(result => taskCompletionSource.SetResult(result), cancellationToken);
+        return taskCompletionSource.Task;
     }
     
     public override string ToString()
