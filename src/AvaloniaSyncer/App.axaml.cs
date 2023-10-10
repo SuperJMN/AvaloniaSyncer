@@ -30,8 +30,7 @@ public class App : Application
             var sections = new List<Section>
             {
                 new("Explore", vm.GetExploreSection()),
-                new("Synchronize", vm.GetSyncViewModel()),
-                new("New Synchronize", vm.GetSynchronizationSection()),
+                new("Synchronize", vm.GetSynchronizationSection()),
                 new("Settings", vm.GetSettingsViewModel()),
             };
 

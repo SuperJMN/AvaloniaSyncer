@@ -1,0 +1,39 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
+             xmlns:newSync="clr-namespace:AvaloniaSyncer.Sections.NewSync"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Sections.NewSync.GranularSessionView"
+             x:DataType="newSync:GranularSessionViewModel">
+	<DockPanel>
+		<controls:StoppableControl Content="Analyze" Command="{Binding Analyze}" DockPanel.Dock="Top" />
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding Actions^}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="newSync:IFileActionViewModel">
+                        <DockPanel>
+                            <TextBlock Text="{Binding Description}" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <!--<CheckBox IsEnabled="False" IsChecked="{Binding Synced}" />-->
+                                <!--<PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />-->
+                                <!--<Button x:Name="ToggleButton" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                <PathIcon Foreground="{StaticResource SystemErrorTextColor}" IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}"  />
+                                <Button.Flyout>
+                                    <Flyout>
+                                        <TextBlock TextWrapping="Wrap" Text="{Binding Error}" />
+                                    </Flyout>
+                                </Button.Flyout>
+                            </Button>-->
+                            </StackPanel>
+                            <ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
+                                         Height="20" Width="200" Margin="4" Maximum="{Binding Progress^.Total}"
+                                         Value="{Binding Progress^.Current}" />
+                            <controls:StoppableControl Content="Sync" Command="{Binding Sync}" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl></ScrollViewer>
+	</DockPanel>
+</UserControl>

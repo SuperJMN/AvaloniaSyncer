@@ -8,7 +8,6 @@
              x:Class="AvaloniaSyncer.Sections.NewSync.TopBar"
              x:DataType="newSync:SessionViewModel">
   <StackPanel Spacing="6" Margin="6" Orientation="Horizontal" DockPanel.Dock="Top">
-	<controls:StoppableControl Content="Analyze" Command="{Binding Analyze}" />
     <controls:StoppableControl Content="Sync all" Command="{Binding SyncAll}" />
 	<CheckBox Content="Can overwrite" IsChecked="{Binding CanOverwrite}" />
     <CheckBox Content="Skip identical files" IsChecked="{Binding SkipIdentical}" />

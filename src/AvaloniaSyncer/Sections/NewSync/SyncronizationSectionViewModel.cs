@@ -8,7 +8,6 @@ using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
 using Serilog;
-using Zafiro.Avalonia.Controls;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
@@ -26,11 +25,11 @@ public class SyncronizationSectionViewModel : ReactiveObject
     private readonly INotificationService notificationService;
     private readonly ITransferManager transferManager;
     private readonly Maybe<ILogger> logger;
-    private readonly ReadOnlyObservableCollection<SessionViewModel> sessionsCollection;
+    private readonly ReadOnlyObservableCollection<GranularSessionViewModel> sessionsCollection;
 
     public SyncronizationSectionViewModel(ReadOnlyObservableCollection<IFileSystemConnection> connections, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
-        var sessions = new SourceList<SessionViewModel>();
+        var sessions = new SourceList<GranularSessionViewModel>();
         this.connections = connections;
         this.dialogService = dialogService;
         this.notificationService = notificationService;
@@ -42,27 +41,28 @@ public class SyncronizationSectionViewModel : ReactiveObject
         sessions.Connect().Bind(out sessionsCollection).Subscribe();
     }
 
-    public ReactiveCommand<Unit, Maybe<SessionViewModel>> AddSession { get; set; }
+    public ReactiveCommand<Unit, Maybe<GranularSessionViewModel>> AddSession { get; set; }
 
-    public ReadOnlyObservableCollection<SessionViewModel> Sessions => sessionsCollection;
+    public ReadOnlyObservableCollection<GranularSessionViewModel> Sessions => sessionsCollection;
 
-    public Task<Maybe<SessionViewModel>> OnAddSession()
+    public Task<Maybe<GranularSessionViewModel>> OnAddSession()
     {
         var wizard = CreateWizard();
         return ShowWizard(wizard);
     }
 
-    private Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, SessionViewModel> CreateWizard()
+    private Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel> CreateWizard()
     {
-        var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, SessionViewModel>(
+        var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>(
             new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Next"),
-            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish"), (p1, p2) => new SessionViewModel(notificationService, p1.CurrentDirectory, p2.CurrentDirectory, logger));
+            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish"), 
+            (p1, p2) => new GranularSessionViewModel(p1.CurrentDirectory, p2.CurrentDirectory, logger));
         return wizard;
     }
 
-    private async Task<Maybe<SessionViewModel>> ShowWizard(Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, SessionViewModel> wizard)
+    private async Task<Maybe<GranularSessionViewModel>> ShowWizard(Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel> wizard)
     {
-        var showDialog = await dialogService.ShowDialog<Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, SessionViewModel>, SessionViewModel>(wizard, "Do something, boi", w => Observable.FromAsync(() => w.Result));
+        var showDialog = await dialogService.ShowDialog<Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>, GranularSessionViewModel>(wizard, "Do something, boi", w => Observable.FromAsync(() => w.Result));
         return showDialog;
     }
 }

@@ -11,7 +11,6 @@ using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.NewSync;
 using AvaloniaSyncer.Sections.Settings;
-using AvaloniaSyncer.Sections.Synchronization.Sync;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
@@ -46,11 +45,6 @@ public class ViewModelFactory
 
     public ITransferManager TransferManager { get; }
 
-    public SyncSectionViewModel GetSyncViewModel()
-    {
-        return new SyncSectionViewModel(DialogService, Plugins, NotificationService, logger);
-    }
-
     public SettingsSectionViewModel GetSettingsViewModel()
     {
         return new SettingsSectionViewModel(Plugins);
@@ -64,7 +58,7 @@ public class ViewModelFactory
                 new ObservableCollection<IFileSystemConnection>(new IFileSystemConnection[]
                 {
                     fsConn, 
-                    new SeaweedFileFileSystemConnection("SeaweedFS", new Uri("http://192.168.1.31:8888"), logger)
+                    new SeaweedFileFileSystemConnection("SeaweedFS", new Uri("http://192.168.1.29:8888"), logger)
                 })), 
             DialogService, 
             NotificationService, 
