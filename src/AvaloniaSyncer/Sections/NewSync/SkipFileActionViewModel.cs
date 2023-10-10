@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.Actions;
@@ -25,5 +27,10 @@ internal class SkipFileActionViewModel : ReactiveObject, IFileActionViewModel
     public bool IsSynced { get; } = true;
     public string Description => $"Skip {FileDiff}";
     public IObservable<LongProgress> Progress => Observable.Never<LongProgress>();
+    public Task<Result> Execute(CancellationToken cancellationToken)
+    {
+        return Task.FromResult(Result.Success());
+    }
+
     public StoppableCommand<Unit, Result> Sync { get; }
 }

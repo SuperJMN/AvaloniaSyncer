@@ -14,12 +14,15 @@ using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Comparer;
 using Zafiro.Mixins;
+using Zafiro.ProgressReporting;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.NewSync;
 
 public class GranularSessionViewModel
 {
+    private Subject<LongProgress> progress = new Subject<LongProgress>();
+
     public GranularSessionViewModel(IZafiroDirectory source, IZafiroDirectory destination, Maybe<ILogger> logger)
     {
         Source = source;
@@ -37,25 +40,26 @@ public class GranularSessionViewModel
             .AutoRefresh()
             .Filter(x => x is { IsIgnored: false, IsSynced: false });
 
-        var allToSync = sourceListChanges
-            .AutoRefresh()
-            .Filter(x => x is { IsIgnored: false });
-
-        var current = pendingSync.ToCollection().Count();
-        var total = allToSync.ToCollection().Count();
-        Progress = total.CombineLatest(current, (t, c) => new LongProgress(c, t));
-        Progress.Subscribe(progress => { });
-
         ISubject<bool> canAnalyze = new Subject<bool>();
         Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer().Diff(source, destination)), Maybe.From(canAnalyze.AsObservable()));
         var canSync = pendingSync.ToCollection().Any();
         Actions = actions;
-        SyncAll = StoppableCommand.Create(() => Actions.Select(model => model.Sync.Start.Execute()).Merge(3), Maybe.From(canSync));
+        SyncAll = StoppableCommand.Create(() =>
+        {
+            return Observable.FromAsync(async ct =>
+            {
+                var compositeAction = new CompositeAction(Actions.Where(x => !x.IsIgnored).Cast<IAction<LongProgress>>().ToList());
+                using (compositeAction.Progress.Subscribe(progress))
+                {
+                    return await compositeAction.Execute(ct);
+                }
+            });
+        }, Maybe.From(canSync));
         SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
         ItemsUpdater(sourceList, Analyze.Results.Successes()).Subscribe();
     }
 
-    public IObservable<LongProgress> Progress { get; }
+    public IObservable<LongProgress> Progress => progress.AsObservable();
     public StoppableCommand<Unit, Result> SyncAll { get; }
     public IZafiroDirectory Source { get; }
     public IZafiroDirectory Destination { get; }
