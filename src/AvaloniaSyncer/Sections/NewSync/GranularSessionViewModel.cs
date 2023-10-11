@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Security.Cryptography;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using Serilog;
@@ -14,14 +14,13 @@ using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Comparer;
 using Zafiro.Mixins;
-using Zafiro.ProgressReporting;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.NewSync;
 
 public class GranularSessionViewModel
 {
-    private Subject<LongProgress> progress = new Subject<LongProgress>();
+    private readonly Subject<LongProgress> progress = new();
 
     public GranularSessionViewModel(IZafiroDirectory source, IZafiroDirectory destination, Maybe<ILogger> logger)
     {
@@ -55,7 +54,6 @@ public class GranularSessionViewModel
                 }
             });
         }, Maybe.From(canSync));
-        SyncAll.Start.ThrownExceptions.Subscribe(exception => { });
         SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
         ItemsUpdater(sourceList, Analyze.Results.Successes()).Subscribe();
     }
@@ -70,29 +68,35 @@ public class GranularSessionViewModel
     public StoppableCommand<Unit, Result<IEnumerable<FileDiff>>> Analyze { get; }
     public string Description => $"{Source} => {Destination}";
 
-    private IObservable<IEnumerable<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> sourceList, IObservable<IEnumerable<FileDiff>> observable)
+    private IObservable<IList<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> sourceList, IObservable<IEnumerable<FileDiff>> listsOfDiffs)
     {
-        return observable
-            .Select(GenerateActions)
-            .Do(r => sourceList.Edit(list =>
-            {
-                list.Clear();
-                list.AddRange(r);
-            }));
+        var observableOfLists = listsOfDiffs
+            .SelectMany(diffs =>
+                diffs
+                    .ToObservable()
+                    .Select(diff => Observable.FromAsync(() => GenerateAction(diff)))
+                    .Merge(3)
+                    .Successes().ToList());
+
+        return observableOfLists.Do(list => sourceList.Edit(models =>
+        {
+            models.Clear();
+            models.AddRange(list);
+        }));
     }
 
-    private IEnumerable<IFileActionViewModel> GenerateActions(IEnumerable<FileDiff> listsOfDiffs)
+    private IEnumerable<Task<Result<IFileActionViewModel>>> GenerateActions(IEnumerable<FileDiff> listsOfDiffs)
     {
         return listsOfDiffs.Select(GenerateAction);
     }
 
-    private IFileActionViewModel GenerateAction(FileDiff fileDiff)
+    private Task<Result<IFileActionViewModel>> GenerateAction(FileDiff fileDiff)
     {
         return fileDiff switch
         {
-            Both both => new SkipFileActionViewModel(both),
-            RightOnly rightOnly => new SkipFileActionViewModel(rightOnly),
-            LeftOnly leftOnly => new LeftOnlyFileActionViewModel(leftOnly.Left.Path, Source, Destination),
+            Both both => Task.FromResult(Result.Success(new SkipFileActionViewModel(both))).Cast(model => (IFileActionViewModel)model),
+            RightOnly rightOnly => Task.FromResult(Result.Success(new SkipFileActionViewModel(rightOnly))).Cast(model => (IFileActionViewModel)model),
+            LeftOnly leftOnly => LeftOnlyFileActionViewModel.Create(leftOnly.Left.Path, Source, Destination).Cast(model => (IFileActionViewModel)model),
             _ => throw new ArgumentOutOfRangeException(nameof(fileDiff))
         };
     }

@@ -34,7 +34,6 @@
 							<ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
                                          Height="20" Width="200" Margin="4" Maximum="{Binding Progress^.Total}"
                                          Value="{Binding Progress^.Current}" />
-							<controls:StoppableControl Content="Sync" Command="{Binding Sync}" />
 						</DockPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
