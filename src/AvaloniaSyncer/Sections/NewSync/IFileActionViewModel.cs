@@ -12,4 +12,5 @@ public interface IFileActionViewModel : INotifyPropertyChanged, IFileAction
     bool IsSynced { get; }
     IObservable<LongProgress> Progress { get; }
     public IObservable<bool> IsSyncing { get; }
+    public string? Error { get; }
 }

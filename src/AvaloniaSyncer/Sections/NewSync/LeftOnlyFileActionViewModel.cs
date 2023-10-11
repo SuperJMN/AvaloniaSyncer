@@ -44,8 +44,13 @@ internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewMode
         isSyncing.OnNext(true);
         var execute = await copyFileAction.Execute(cancellationToken);
         isSyncing.OnNext(false);
+        execute.TapError(e => Error = e);
+        execute.Tap(() => IsSynced = true);
         return execute;
     }
+
+    [Reactive]
+    public string? Error { get; private set; }
 
     public override string ToString()
     {

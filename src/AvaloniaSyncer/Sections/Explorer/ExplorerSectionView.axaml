@@ -16,7 +16,7 @@
             </TabControl.ItemTemplate>
             <TabControl.ContentTemplate>
                 <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
-                    <ContentControl Content="{Binding }" />
+                    <ContentControl Content="{Binding}" />
                 </DataTemplate>
             </TabControl.ContentTemplate>
         </TabControl>

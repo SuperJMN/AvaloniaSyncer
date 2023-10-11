@@ -10,13 +10,13 @@
              x:DataType="explorer:FileSystemConnectionViewModel">
     <DockPanel>
       <Button IsVisible="False" Content="Load" DockPanel.Dock="Top" Command="{Binding Load}" />
-      <ContentControl Content="{Binding FileSystemExplorer}">
+      <ContentControl Margin="0 12" Content="{Binding FileSystemExplorer}">
           <ContentControl.ContentTemplate>
               <DataTemplate DataType="explorer1:FileSystemExplorer">
                   <Panel>
                       <DockPanel>
                           <ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
-                          <ContentControl Content="{Binding Address}" DockPanel.Dock="Top" />
+                          <ContentControl Content="{Binding Address}" DockPanel.Dock="Top" Margin="0 4" />
                           <ContentControl Content="{Binding Details^}" />
                       </DockPanel>
                       <transferManager:LightTransferManagerView Width="400" VerticalAlignment="Bottom"

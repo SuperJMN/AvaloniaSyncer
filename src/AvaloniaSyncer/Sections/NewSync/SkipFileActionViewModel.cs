@@ -23,6 +23,7 @@ internal class SkipFileActionViewModel : ReactiveObject, IFileActionViewModel
     public FileDiff FileDiff { get; }
 
     public IObservable<bool> IsSyncing { get; }
+    public string Error { get; }
     public bool IsIgnored { get; } = true;
     public bool IsSynced { get; } = true;
     public string Description => $"Skip {FileDiff}";

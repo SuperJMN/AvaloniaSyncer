@@ -54,8 +54,8 @@ public class SyncronizationSectionViewModel : ReactiveObject
     private Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel> CreateWizard()
     {
         var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>(
-            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Next"),
-            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish"), 
+            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Next", "Choose the source directory"),
+            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish", "Choose the destination directory"), 
             (p1, p2) => new GranularSessionViewModel(p1.CurrentDirectory, p2.CurrentDirectory, logger));
         return wizard;
     }

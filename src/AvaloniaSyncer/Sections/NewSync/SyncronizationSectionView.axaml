@@ -7,7 +7,7 @@
              x:Class="AvaloniaSyncer.Sections.NewSync.SyncronizationSectionView"
              x:DataType="newSync:SyncronizationSectionViewModel">
 	<DockPanel>
-		<Button DockPanel.Dock="Top" Content="Add session" Command="{Binding AddSession}" />
+		<Button DockPanel.Dock="Top" Margin="8" Content="Add session…" Command="{Binding AddSession}" />
         <TabControl ItemsSource="{Binding Sessions}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
