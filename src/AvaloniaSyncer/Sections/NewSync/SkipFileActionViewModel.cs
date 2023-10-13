@@ -17,7 +17,7 @@ internal class SkipFileActionViewModel : ReactiveObject, IFileActionViewModel
     {
         FileDiff = fileDiff;
         Sync = StoppableCommand.Create(() => Observable.Return(Result.Success()), Maybe<IObservable<bool>>.None);
-        IsSyncing = Sync.IsExecuting;
+        IsSyncing = Observable.Return(false);
     }
 
     public FileDiff FileDiff { get; }

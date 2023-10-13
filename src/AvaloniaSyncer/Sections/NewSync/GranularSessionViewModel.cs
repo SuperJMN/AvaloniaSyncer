@@ -56,6 +56,8 @@ public class GranularSessionViewModel
         }, Maybe.From(canSync));
         SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
         ItemsUpdater(sourceList, Analyze.Results.Successes()).Subscribe();
+        IsSyncing = SyncAll.IsExecuting;
+
     }
 
     public IObservable<LongProgress> Progress => progress.AsObservable();
@@ -67,6 +69,7 @@ public class GranularSessionViewModel
 
     public StoppableCommand<Unit, Result<IEnumerable<FileDiff>>> Analyze { get; }
     public string Description => $"{Source} => {Destination}";
+    public IObservable<bool> IsSyncing { get; }
 
     private IObservable<IList<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> sourceList, IObservable<IEnumerable<FileDiff>> listsOfDiffs)
     {
