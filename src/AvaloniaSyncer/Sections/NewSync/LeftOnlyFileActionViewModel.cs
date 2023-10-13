@@ -3,6 +3,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
+using ByteSizeLib;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
@@ -10,6 +11,7 @@ using Zafiro.Actions;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Actions;
+using Zafiro.Mixins;
 
 namespace AvaloniaSyncer.Sections.NewSync;
 
@@ -51,6 +53,8 @@ internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewMode
 
     [Reactive]
     public string? Error { get; private set; }
+
+    public IObservable<ByteSize> Rate => Progress.Select(x => x.Current).Rate().Select(ByteSize.FromBytes);
 
     public override string ToString()
     {

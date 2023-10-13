@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using ByteSizeLib;
 using Zafiro.Actions;
 using Zafiro.FileSystem.Actions;
 
@@ -13,4 +14,5 @@ public interface IFileActionViewModel : INotifyPropertyChanged, IFileAction
     IObservable<LongProgress> Progress { get; }
     public IObservable<bool> IsSyncing { get; }
     public string? Error { get; }
+    public IObservable<ByteSize> Rate { get; }
 }

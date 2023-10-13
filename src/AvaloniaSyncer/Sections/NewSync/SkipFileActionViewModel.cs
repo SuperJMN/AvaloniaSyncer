@@ -3,6 +3,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ByteSizeLib;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.Actions;
@@ -24,6 +25,7 @@ internal class SkipFileActionViewModel : ReactiveObject, IFileActionViewModel
 
     public IObservable<bool> IsSyncing { get; }
     public string Error { get; }
+    public IObservable<ByteSize> Rate => Observable.Never<ByteSize>();
     public bool IsIgnored { get; } = true;
     public bool IsSynced { get; } = true;
     public string Description => $"Skip {FileDiff}";

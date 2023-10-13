@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              xmlns:newSync="clr-namespace:AvaloniaSyncer.Sections.NewSync"
+             xmlns:a="clr-namespace:AvaloniaSyncer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.NewSync.GranularSessionView"
              x:DataType="newSync:GranularSessionViewModel">
@@ -48,6 +49,7 @@
                             <ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
                                          Maximum="{Binding Progress^.Total}"
                                          Margin="4"
+                                         ToolTip.Tip="{Binding Rate^, Converter={x:Static a:ByteConverters.ByteRateConverter}}"
                                          Value="{Binding Progress^.Current}"
                                          ShowProgressText="True"
                                          />
@@ -56,31 +58,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <!--<ItemsControl ItemsSource="{Binding Actions}">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate DataType="newSync:IFileActionViewModel">
-						<DockPanel>
-							<TextBlock Text="{Binding Description}" />
-							<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-								<CheckBox IsEnabled="False" IsChecked="{Binding IsSynced}" />
-								<Button x:Name="ToggleButton"
-                                        IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-									<PathIcon Foreground="{StaticResource SystemErrorTextColor}"
-                                              IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                              Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}" />
-									<Button.Flyout>
-										<Flyout>
-											<TextBlock TextWrapping="Wrap" Text="{Binding Error}" />
-										</Flyout>
-									</Button.Flyout>
-								</Button>
-							</StackPanel>
-							<ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
-                                         Height="20" Width="200" Margin="4" Maximum="{Binding Progress^.Total}"
-                                         Value="{Binding Progress^.Current}" />
-						</DockPanel>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>-->
     </DockPanel>
 </UserControl>
