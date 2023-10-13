@@ -17,7 +17,7 @@
 			<controls:StoppableControl Content="Analyze" Command="{Binding Analyze}" DockPanel.Dock="Top" />
 			<controls:StoppableControl Content="Sync All" Command="{Binding SyncAll}" DockPanel.Dock="Top" />
 		</StackPanel>
-		<ProgressBar 
+		<ProgressBar ShowProgressText="True"
 			IsVisible="{Binding IsSyncing^}"
             VerticalAlignment="Stretch" Height="20" DockPanel.Dock="Bottom" Margin="4" Maximum="{Binding Progress^.Total}"
                      Value="{Binding Progress^.Current}" />
@@ -48,7 +48,9 @@
                             <ProgressBar VerticalAlignment="Stretch" IsVisible="{Binding IsSyncing^}"
                                          Maximum="{Binding Progress^.Total}"
                                          Margin="4"
-                                         Value="{Binding Progress^.Current}" />
+                                         Value="{Binding Progress^.Current}"
+                                         ShowProgressText="True"
+                                         />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
