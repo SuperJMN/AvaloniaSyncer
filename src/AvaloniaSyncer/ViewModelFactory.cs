@@ -6,6 +6,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Plugins;
 using AvaloniaSyncer.Plugins.Local;
+using AvaloniaSyncer.Sections.Connections;
 using AvaloniaSyncer.Sections.Explorer;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
@@ -18,6 +19,7 @@ using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.Pickers;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Notifications;
+using Zafiro.CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer;
 
@@ -86,5 +88,10 @@ public class ViewModelFactory
             new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger),
             new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger)
         };
+    }
+
+    public ConnectionsSectionViewModel GetSettingsViewModel2()
+    {
+        return new ConnectionsSectionViewModel(() => ConnectionsRepository.Create(logger).Cast(x => (IConnectionsRepository)x), NotificationService);
     }
 }

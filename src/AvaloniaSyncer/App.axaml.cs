@@ -32,6 +32,7 @@ public class App : Application
                 new("Explore", vm.GetExploreSection()),
                 new("Synchronize", vm.GetSynchronizationSection()),
                 new("Settings", vm.GetSettingsViewModel()),
+                new Section("Settings2", vm.GetSettingsViewModel2())
             };
 
             return new MainViewModel(sections);
