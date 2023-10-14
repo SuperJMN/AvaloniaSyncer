@@ -22,23 +22,22 @@ using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.Pickers;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Notifications;
-using Zafiro.CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer;
 
 public class ViewModelFactory
 {
-    private readonly Maybe<ILogger> logger;
-
     public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control, Maybe<ILogger> logger)
     {
-        this.logger = logger;
+        Logger = logger;
         NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
         DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         Plugins = AvailablePlugins();
         Clipboard = new ClipboardViewModel();
         TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
     }
+
+    public Maybe<ILogger> Logger { get; set; }
 
     public IClipboard Clipboard { get; set; }
 
@@ -63,17 +62,17 @@ public class ViewModelFactory
                 new ObservableCollection<IFileSystemConnection>(new IFileSystemConnection[]
                 {
                     fsConn, 
-                    new SeaweedFileFileSystemConnection("SeaweedFS", new Uri("http://192.168.1.29:8888"), logger)
+                    new SeaweedFileFileSystemConnection("SeaweedFS", new Uri("http://192.168.1.29:8888"), Logger)
                 })), 
             DialogService, 
             NotificationService, 
             Clipboard, 
-            TransferManager, logger);
+            TransferManager, Logger);
     }
 
     public ExplorerSectionViewModel GetExploreSection()
     {
-        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, logger);
+        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, Logger);
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)
@@ -98,11 +97,11 @@ public class ViewModelFactory
         return new ConnectionsSectionViewModel(await LoadFromFile(), NotificationService);
     }
 
-    private static async Task<IConnectionsRepository> LoadFromFile()
+    private async Task<IConnectionsRepository> LoadFromFile()
     {
         var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
         var loadResult = await store.Load();
-        var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, Maybe<ILogger>.None))));
-        return result.GetValueOrDefault(new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>()));
+        var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, Logger)), Logger));
+        return result.GetValueOrDefault(new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), Logger));
     }
 }

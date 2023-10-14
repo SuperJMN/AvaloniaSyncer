@@ -7,6 +7,10 @@
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
 
-    <ListBox ItemsSource="{Binding Connections}" DisplayMemberBinding="{Binding Name}" />
+	<DockPanel>
+		<ListBox SelectedValue="{Binding CurrentConfiguration}" DockPanel.Dock="Left" ItemsSource="{Binding Configurations}" DisplayMemberBinding="{Binding Name}" />
+        <Button Command="{Binding AddOrUpdate}" Content="Save" DockPanel.Dock="Bottom" />
+        <ContentControl Content="{Binding CurrentConfiguration}" />
+    </DockPanel>
 
 </UserControl>

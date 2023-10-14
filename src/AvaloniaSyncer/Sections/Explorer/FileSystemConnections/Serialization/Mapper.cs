@@ -1,4 +1,6 @@
 using System;
+using AvaloniaSyncer.Sections.Connections;
+using AvaloniaSyncer.Sections.Connections.Configuration;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
 using CSharpFunctionalExtensions;
 using Serilog;
@@ -19,7 +21,10 @@ public static class Mapper
             SeaweedFileFileSystemConnection seaweed => new Connection()
             {
                 Name = seaweed.Name,
-                Parameters = new Local(),
+                Parameters = new SeaweedFS()
+                {
+                    Uri = seaweed.Uri,
+                },
             },
             SftpFileFileSystemConnection sftp =>
                 new Connection()
@@ -57,45 +62,24 @@ public static class Mapper
     {
         return connection switch
         {
-            SeaweedFileFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfiguration(seaweedFileFileSystemConnection.Name),
-            LocalFileSystemConnection localFileSystemConnection => new LocalConfiguration(localFileSystemConnection.Name),
-            SftpFileFileSystemConnection sftpFileFileSystemConnection => new SftpConfiguration(sftpFileFileSystemConnection.Name),
+            SeaweedFileFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfigurationViewModel(seaweedFileFileSystemConnection.Name)
+            {
+                Address = seaweedFileFileSystemConnection.Uri.ToString()
+            },
+            LocalFileSystemConnection localFileSystemConnection => new LocalConfigurationViewModel(localFileSystemConnection.Name),
+            SftpFileFileSystemConnection sftpFileFileSystemConnection => new SftpConfigurationViewModel(sftpFileFileSystemConnection.Name),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };
     }
-}
 
-public class SftpConfiguration : IConfiguration
-{
-    public string Name { get; }
-
-    public SftpConfiguration(string name)
+    public static IFileSystemConnection ToConnection(IConfiguration currentConfiguration)
     {
-        Name = name;
+        return currentConfiguration switch
+        {
+            SeaweedConfigurationViewModel seaweedConfigurationViewModel => new SeaweedFileFileSystemConnection(seaweedConfigurationViewModel.Name, new Uri(seaweedConfigurationViewModel.Address), Maybe<ILogger>.None),
+            LocalConfigurationViewModel localConfigurationViewModel => throw new ArgumentOutOfRangeException(nameof(currentConfiguration)),
+            SftpConfigurationViewModel sftpConfigurationViewModel => throw new ArgumentOutOfRangeException(nameof(currentConfiguration)),
+            _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
+        };
     }
-}
-
-public class LocalConfiguration : IConfiguration
-{
-    public string Name { get; }
-
-    public LocalConfiguration(string name)
-    {
-        Name = name;
-    }
-}
-
-public class SeaweedConfiguration : IConfiguration
-{
-    public string Name { get; }
-
-    public SeaweedConfiguration(string name)
-    {
-        Name = name;
-    }
-}
-
-public interface IConfiguration
-{
-    public string Name { get; }
 }

@@ -12,12 +12,13 @@ namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 
 internal class SeaweedFileFileSystemConnection : Serialization.IFileSystemConnection
 {
-    private readonly Uri uri;
+    public Uri Uri { get; }
+
     private readonly Maybe<ILogger> logger;
 
     public SeaweedFileFileSystemConnection(string name, Uri uri, Maybe<ILogger> logger)
     {
-        this.uri = uri;
+        Uri = uri;
         this.logger = logger;
         Name = name;
     }
@@ -28,7 +29,7 @@ internal class SeaweedFileFileSystemConnection : Serialization.IFileSystemConnec
 
         var httpClient = new System.Net.Http.HttpClient(handler)
         {
-            BaseAddress = uri, 
+            BaseAddress = Uri, 
             Timeout = TimeSpan.FromDays(1),
         };
 
