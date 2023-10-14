@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -90,8 +93,16 @@ public class ViewModelFactory
         };
     }
 
-    public ConnectionsSectionViewModel GetSettingsViewModel2()
+    public async Task<ConnectionsSectionViewModel> GetSettingsViewModel2()
     {
-        return new ConnectionsSectionViewModel(() => ConnectionsRepository.Create(logger).Cast(x => (IConnectionsRepository)x), NotificationService);
+        return new ConnectionsSectionViewModel(await LoadFromFile(), NotificationService);
+    }
+
+    private static async Task<IConnectionsRepository> LoadFromFile()
+    {
+        var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
+        var loadResult = await store.Load();
+        var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, Maybe<ILogger>.None))));
+        return result.GetValueOrDefault(new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>()));
     }
 }

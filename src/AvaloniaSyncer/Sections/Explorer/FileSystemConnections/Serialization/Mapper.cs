@@ -52,4 +52,50 @@ public static class Mapper
                 throw new ArgumentOutOfRangeException();
         }
     }
+
+    public static IConfiguration ToEditable(IFileSystemConnection connection)
+    {
+        return connection switch
+        {
+            SeaweedFileFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfiguration(seaweedFileFileSystemConnection.Name),
+            LocalFileSystemConnection localFileSystemConnection => new LocalConfiguration(localFileSystemConnection.Name),
+            SftpFileFileSystemConnection sftpFileFileSystemConnection => new SftpConfiguration(sftpFileFileSystemConnection.Name),
+            _ => throw new ArgumentOutOfRangeException(nameof(connection))
+        };
+    }
+}
+
+public class SftpConfiguration : IConfiguration
+{
+    public string Name { get; }
+
+    public SftpConfiguration(string name)
+    {
+        Name = name;
+    }
+}
+
+public class LocalConfiguration : IConfiguration
+{
+    public string Name { get; }
+
+    public LocalConfiguration(string name)
+    {
+        Name = name;
+    }
+}
+
+public class SeaweedConfiguration : IConfiguration
+{
+    public string Name { get; }
+
+    public SeaweedConfiguration(string name)
+    {
+        Name = name;
+    }
+}
+
+public interface IConfiguration
+{
+    public string Name { get; }
 }

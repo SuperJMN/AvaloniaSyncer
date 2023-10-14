@@ -27,15 +27,20 @@ public class App : Application
         {
             var vm = new ViewModelFactory(ApplicationLifetime!, view, Maybe<ILogger>.From(Log.Logger));
 
-            var sections = new List<Section>
-            {
-                new("Explore", vm.GetExploreSection()),
-                new("Synchronize", vm.GetSynchronizationSection()),
-                new("Settings", vm.GetSettingsViewModel()),
-                new Section("Settings2", vm.GetSettingsViewModel2())
-            };
+           
 
-            return new MainViewModel(sections);
+            return new MainViewModel(async () =>
+            {
+                var sections = new List<Section>
+                {
+                    new("Explore", vm.GetExploreSection()),
+                    new("Synchronize", vm.GetSynchronizationSection()),
+                    new("Settings", vm.GetSettingsViewModel()),
+                    new Section("Settings2", await vm.GetSettingsViewModel2())
+                };
+
+                return sections;
+            });
         }, () => new MainWindow());
 
         base.OnFrameworkInitializationCompleted();

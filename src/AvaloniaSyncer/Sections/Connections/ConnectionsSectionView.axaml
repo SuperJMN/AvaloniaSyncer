@@ -7,12 +7,6 @@
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
 
-    <Interaction.Behaviors>
-        <RoutedEventTriggerBehavior  RoutedEvent="{x:Static Control.LoadedEvent}">
-            <InvokeCommandAction Command="{Binding LoadConnections}" />
-        </RoutedEventTriggerBehavior>
-    </Interaction.Behaviors>
-
     <ListBox ItemsSource="{Binding Connections}" DisplayMemberBinding="{Binding Name}" />
 
 </UserControl>
