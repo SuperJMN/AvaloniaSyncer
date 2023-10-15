@@ -9,8 +9,11 @@
 
 	<DockPanel>
 		<ListBox SelectedValue="{Binding CurrentConfiguration}" DockPanel.Dock="Left" ItemsSource="{Binding Configurations}" DisplayMemberBinding="{Binding Name}" />
-        <Button Command="{Binding AddOrUpdate}" Content="Save" DockPanel.Dock="Bottom" />
-        <ContentControl Content="{Binding CurrentConfiguration}" />
-    </DockPanel>
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+			<Button Command="{Binding AddOrUpdate}" Content="Save"  />
+            <Button Command="{Binding AddNew}" Content="Add"  />
+		</StackPanel>
+		<ContentControl Content="{Binding CurrentConfiguration}" />
+	</DockPanel>
 
 </UserControl>

@@ -94,7 +94,7 @@ public class ViewModelFactory
 
     public async Task<ConnectionsSectionViewModel> GetSettingsViewModel2()
     {
-        return new ConnectionsSectionViewModel(await LoadFromFile(), NotificationService);
+        return new ConnectionsSectionViewModel(await LoadFromFile(), NotificationService, DialogService);
     }
 
     private async Task<IConnectionsRepository> LoadFromFile()

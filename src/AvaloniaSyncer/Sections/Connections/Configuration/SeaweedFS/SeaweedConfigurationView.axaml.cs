@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Sections.Connections.Configuration
+namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS
 {
     public partial class SeaweedConfigurationView : UserControl
     {
