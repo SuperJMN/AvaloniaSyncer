@@ -1,4 +1,8 @@
 using System;
+using AvaloniaSyncer.Sections.Connections;
+using AvaloniaSyncer.Sections.Connections.Configuration.Local;
+using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
+using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
 using CSharpFunctionalExtensions;
 using Serilog;
@@ -11,27 +15,30 @@ public static class Mapper
     {
         return fileSystemConnection switch
         {
-            LocalFileSystemConnection local => new Connection()
+            LocalFileSystemConnection local => new Connection
             {
                 Name = local.Name,
-                Parameters = new Local(),
+                Parameters = new Local()
             },
-            SeaweedFileFileSystemConnection seaweed => new Connection()
+            SeaweedFileSystemConnection seaweed => new Connection
             {
                 Name = seaweed.Name,
-                Parameters = new Local(),
+                Parameters = new SeaweedFS
+                {
+                    Uri = seaweed.Uri
+                }
             },
-            SftpFileFileSystemConnection sftp =>
-                new Connection()
+            SftpFileSystemConnection sftp =>
+                new Connection
                 {
                     Name = sftp.Name,
-                    Parameters = new Sftp()
+                    Parameters = new Sftp
                     {
                         Host = sftp.Parameters.Host,
                         Port = sftp.Parameters.Port,
                         Username = sftp.Parameters.Username,
-                        Password = sftp.Parameters.Password,
-                    },
+                        Password = sftp.Parameters.Password
+                    }
                 },
             _ => throw new ArgumentOutOfRangeException(nameof(fileSystemConnection))
         };
@@ -44,12 +51,47 @@ public static class Mapper
             case Local:
                 return new LocalFileSystemConnection(connection.Name);
             case SeaweedFS fs:
-                return new SeaweedFileFileSystemConnection(connection.Name, fs.Uri, logger);
+                return new SeaweedFileSystemConnection(connection.Name, fs.Uri, logger);
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
-                return new SftpFileFileSystemConnection(connection.Name, info);
+                return new SftpFileSystemConnection(connection.Name, info);
             default:
                 throw new ArgumentOutOfRangeException();
         }
+    }
+
+    public static IConfiguration ToEditable(IFileSystemConnection connection)
+    {
+        return connection switch
+        {
+            SeaweedFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfigurationViewModel(seaweedFileFileSystemConnection.Name)
+            {
+                Address = seaweedFileFileSystemConnection.Uri.ToString()
+            },
+            LocalFileSystemConnection localFileSystemConnection => new LocalConfigurationViewModel(localFileSystemConnection.Name),
+            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Name)
+            {
+                Host = sftp.Parameters.Host,
+                Port = sftp.Parameters.Port,
+                Username = sftp.Parameters.Username,
+                Password = sftp.Parameters.Password,
+            },
+            _ => throw new ArgumentOutOfRangeException(nameof(connection))
+        };
+    }
+
+    public static IFileSystemConnection ToConnection(IConfiguration currentConfiguration)
+    {
+        return currentConfiguration switch
+        {
+            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Name, new Uri(swfs.Address), Maybe<ILogger>.None),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Name),
+            SftpConfigurationViewModel sftp => new SftpFileSystemConnection(
+                sftp.Name,
+                new SftpConnectionParameters(sftp.Host,
+                    sftp.Port, sftp.Username,
+                    sftp.Password)),
+            _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
+        };
     }
 }

@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:synchronization="clr-namespace:AvaloniaSyncer.Sections.Synchronization"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Sections.Synchronization.SyncronizationSectionView"
+             x:DataType="synchronization:SyncronizationSectionViewModel">
+	<DockPanel>
+		<Button DockPanel.Dock="Top" Margin="8" Content="Add session…" Command="{Binding AddSession}" />
+        <TabControl ItemsSource="{Binding Sessions}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Description}" />
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
+    </DockPanel>
+</UserControl>

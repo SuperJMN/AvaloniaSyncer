@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
+﻿namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
 
 public class Connection
 {

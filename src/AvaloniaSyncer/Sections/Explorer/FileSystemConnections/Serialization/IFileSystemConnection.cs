@@ -7,5 +7,5 @@ namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 public interface IFileSystemConnection
 {
     Task<Result<IFileSystem>> FileSystem();
-    public string Name { get; }
+    string Name { get; }
 }

@@ -21,4 +21,10 @@
         </controls:MasterDetailsView.DetailsTemplate>
     </controls:MasterDetailsView>
 
+    <Interaction.Behaviors>
+        <RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
+            <InvokeCommandAction Command="{Binding LoadSections}" />
+        </RoutedEventTriggerBehavior>
+    </Interaction.Behaviors>
+
 </UserControl>

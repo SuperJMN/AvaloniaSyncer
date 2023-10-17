@@ -1,0 +1,19 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
+             x:DataType="connections:ConnectionsSectionViewModel">
+
+	<DockPanel>
+		<ListBox SelectedValue="{Binding CurrentConfiguration}" DockPanel.Dock="Left" ItemsSource="{Binding Configurations}" DisplayMemberBinding="{Binding Name}" />
+		<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
+			<Button Command="{Binding AddOrUpdate}" Content="Save"  />
+            <Button Command="{Binding AddNew}" Content="Add"  />
+		</StackPanel>
+		<ContentControl Content="{Binding CurrentConfiguration}" />
+	</DockPanel>
+
+</UserControl>
