@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Sections.Syncronization
+namespace AvaloniaSyncer.Sections.Synchronization
 {
     public partial class SyncronizationSectionView : UserControl
     {

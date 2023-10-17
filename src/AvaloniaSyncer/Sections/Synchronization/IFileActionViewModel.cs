@@ -4,7 +4,7 @@ using ByteSizeLib;
 using Zafiro.Actions;
 using Zafiro.FileSystem.Actions;
 
-namespace AvaloniaSyncer.Sections.Syncronization;
+namespace AvaloniaSyncer.Sections.Synchronization;
 
 public interface IFileActionViewModel : INotifyPropertyChanged, IFileAction
 {

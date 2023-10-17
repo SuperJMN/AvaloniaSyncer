@@ -73,10 +73,10 @@
     <Compile Update="Sections\Connections\Configuration\Sftp\SftpConfigurationView.axaml.cs">
       <DependentUpon>SftpConfigurationView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Sections\Syncronization\Pages\Page1View.axaml.cs">
+    <Compile Update="Sections\Synchronization\Pages\Page1View.axaml.cs">
       <DependentUpon>Page1View.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Sections\Syncronization\TopBar.axaml.cs">
+    <Compile Update="Sections\Synchronization\TopBar.axaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
   </ItemGroup>

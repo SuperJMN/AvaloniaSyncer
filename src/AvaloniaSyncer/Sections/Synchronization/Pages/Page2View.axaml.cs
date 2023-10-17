@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Sections.Syncronization.Pages
+namespace AvaloniaSyncer.Sections.Synchronization.Pages
 {
     public partial class Page2View : UserControl
     {

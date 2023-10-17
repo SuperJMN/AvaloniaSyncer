@@ -13,7 +13,7 @@ using Zafiro.FileSystem;
 using Zafiro.FileSystem.Synchronizer;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.Sections.Syncronization;
+namespace AvaloniaSyncer.Sections.Synchronization;
 
 public class SessionViewModel : ReactiveValidationObject, IValidatable
 {

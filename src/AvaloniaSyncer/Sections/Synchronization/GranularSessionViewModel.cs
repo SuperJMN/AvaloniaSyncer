@@ -16,7 +16,7 @@ using Zafiro.FileSystem.Comparer;
 using Zafiro.Mixins;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.Sections.Syncronization;
+namespace AvaloniaSyncer.Sections.Synchronization;
 
 public class GranularSessionViewModel
 {

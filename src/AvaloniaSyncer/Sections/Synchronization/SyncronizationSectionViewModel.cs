@@ -16,7 +16,7 @@ using Zafiro.Avalonia.Wizard;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.Sections.Syncronization;
+namespace AvaloniaSyncer.Sections.Synchronization;
 
 public class SyncronizationSectionViewModel : ReactiveObject
 {
