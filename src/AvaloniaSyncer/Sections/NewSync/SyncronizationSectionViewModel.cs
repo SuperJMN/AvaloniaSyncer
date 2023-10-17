@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Connections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using DynamicData;
@@ -27,10 +28,10 @@ public class SyncronizationSectionViewModel : ReactiveObject
     private readonly Maybe<ILogger> logger;
     private readonly ReadOnlyObservableCollection<GranularSessionViewModel> sessionsCollection;
 
-    public SyncronizationSectionViewModel(ReadOnlyObservableCollection<IFileSystemConnection> connections, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
+    public SyncronizationSectionViewModel(IConnectionsRepository connectionsRepository, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
         var sessions = new SourceList<GranularSessionViewModel>();
-        this.connections = connections;
+        connections = connectionsRepository.Connections;
         this.dialogService = dialogService;
         this.notificationService = notificationService;
         this.clipboard = clipboard;

@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Controls.Notifications;
-using AvaloniaSyncer.Plugins;
-using AvaloniaSyncer.Plugins.Local;
 using AvaloniaSyncer.Sections.Connections;
 using AvaloniaSyncer.Sections.Explorer;
-using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.NewSync;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
-using Zafiro.Avalonia.FileExplorer.Pickers;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Notifications;
 
@@ -31,36 +27,30 @@ public class ViewModelFactory
         Logger = logger;
         NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
         DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
-        Plugins = AvailablePlugins();
         Clipboard = new ClipboardViewModel();
         TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
+        ConnectionsRepository = GetConnectionsRepository(Logger).Publish().RefCount();
     }
 
-    public Maybe<ILogger> Logger { get; }
+    private IObservable<IConnectionsRepository> ConnectionsRepository { get; }
 
-    public IClipboard Clipboard { get; }
+    private Maybe<ILogger> Logger { get; }
 
-    public NotificationService NotificationService { get; }
+    private IClipboard Clipboard { get; }
 
-    private IPlugin[] Plugins { get; }
+    private NotificationService NotificationService { get; }
 
     private IDialogService DialogService { get; }
 
-    public ITransferManager TransferManager { get; }
+    private ITransferManager TransferManager { get; }
 
-    public SyncronizationSectionViewModel GetSynchronizationSection()
+    public async Task<SyncronizationSectionViewModel> GetSynchronizationSection()
     {
-        var fsConn = new LocalFileSystemConnection("Local");
         return new SyncronizationSectionViewModel(
-            new ReadOnlyObservableCollection<IFileSystemConnection>(
-                new ObservableCollection<IFileSystemConnection>(new IFileSystemConnection[]
-                {
-                    fsConn, 
-                    new SeaweedFileFileSystemConnection("SeaweedFS", new Uri("http://192.168.1.29:8888"), Logger)
-                })), 
-            DialogService, 
-            NotificationService, 
-            Clipboard, 
+            await ConnectionsRepository.FirstAsync(),
+            DialogService,
+            NotificationService,
+            Clipboard,
             TransferManager, Logger);
     }
 
@@ -69,33 +59,28 @@ public class ViewModelFactory
         return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, Logger);
     }
 
+    public async Task<ConnectionsSectionViewModel> GetConnectionsViewModel()
+    {
+        var connectionsRepository = await ConnectionsRepository.FirstAsync();
+        return new ConnectionsSectionViewModel(connectionsRepository, NotificationService, DialogService);
+    }
+
     private static void ConfigureWindow(ConfigureWindowContext context)
     {
         context.ToConfigure.Width = context.Parent.Bounds.Width / 1.5;
         context.ToConfigure.Height = context.Parent.Bounds.Height / 1.5;
     }
 
-    private IPlugin[] AvailablePlugins()
-    {
-        var logger = Maybe.From(Log.Logger);
-        return new IPlugin[]
-        {
-            new Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger),
-            new Plugins.SeaweedFS.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger),
-            new Plugins.Sftp.Plugin(fs => new FolderPicker(DialogService, fs, NotificationService, Clipboard, TransferManager), logger)
-        };
-    }
-
-    public async Task<ConnectionsSectionViewModel> GetConnectionsViewModel()
-    {
-        return new ConnectionsSectionViewModel(await LoadFromFile(), NotificationService, DialogService);
-    }
-
-    private async Task<IConnectionsRepository> LoadFromFile()
+    private static async Task<IConnectionsRepository> GetConnectionRepository(Maybe<ILogger> logger)
     {
         var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
         var loadResult = await store.Load();
-        var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, Logger)), Logger));
-        return result.GetValueOrDefault(new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), Logger));
+        var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, logger)), logger));
+        return result.GetValueOrDefault(() => new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), logger));
+    }
+
+    private IObservable<IConnectionsRepository> GetConnectionsRepository(Maybe<ILogger> logger)
+    {
+        return Observable.FromAsync(() => GetConnectionRepository(logger));
     }
 }

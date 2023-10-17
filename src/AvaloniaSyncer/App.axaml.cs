@@ -27,14 +27,12 @@ public class App : Application
         {
             var vm = new ViewModelFactory(ApplicationLifetime!, view, Maybe<ILogger>.From(Log.Logger));
 
-           
-
             return new MainViewModel(async () =>
             {
                 var sections = new List<Section>
                 {
                     new("Explore", vm.GetExploreSection()),
-                    new("Synchronize", vm.GetSynchronizationSection()),
+                    new("Synchronize", await vm.GetSynchronizationSection()),
                     new("Settings", await vm.GetConnectionsViewModel())
                 };
 

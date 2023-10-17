@@ -13,6 +13,7 @@ public class MainViewModel : ReactiveObject
     public MainViewModel(Func<Task<IEnumerable<Section>>> sectionsFactory)
     {
         LoadSections = ReactiveCommand.CreateFromTask(sectionsFactory);
+        LoadSections.ThrownExceptions.Subscribe(exception => { });
         sectionsHelper = LoadSections.ToProperty(this, x => x.Sections);
     }
 
