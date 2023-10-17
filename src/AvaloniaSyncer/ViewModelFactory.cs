@@ -12,7 +12,9 @@ using AvaloniaSyncer.Sections.Explorer;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.NewSync;
 using CSharpFunctionalExtensions;
+using ReactiveUI;
 using Serilog;
+using Zafiro;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
@@ -29,7 +31,7 @@ public class ViewModelFactory
         DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         Clipboard = new ClipboardViewModel();
         TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
-        ConnectionsRepository = GetConnectionsRepository(Logger).Publish().RefCount();
+        ConnectionsRepository = GetConnectionsRepository(Logger);
     }
 
     private IObservable<IConnectionsRepository> ConnectionsRepository { get; }
@@ -47,7 +49,7 @@ public class ViewModelFactory
     public async Task<SyncronizationSectionViewModel> GetSynchronizationSection()
     {
         return new SyncronizationSectionViewModel(
-            await ConnectionsRepository.FirstAsync(),
+            await ConnectionsRepository,
             DialogService,
             NotificationService,
             Clipboard,
@@ -61,8 +63,16 @@ public class ViewModelFactory
 
     public async Task<ConnectionsSectionViewModel> GetConnectionsViewModel()
     {
-        var connectionsRepository = await ConnectionsRepository.FirstAsync();
-        return new ConnectionsSectionViewModel(connectionsRepository, NotificationService, DialogService);
+        try
+        {
+            var connectionsRepository = await ConnectionsRepository;
+            return new ConnectionsSectionViewModel(connectionsRepository, NotificationService, DialogService);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
     }
 
     private static void ConfigureWindow(ConfigureWindowContext context)
@@ -71,16 +81,16 @@ public class ViewModelFactory
         context.ToConfigure.Height = context.Parent.Bounds.Height / 1.5;
     }
 
-    private static async Task<IConnectionsRepository> GetConnectionRepository(Maybe<ILogger> logger)
-    {
-        var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
-        var loadResult = await store.Load();
-        var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, logger)), logger));
-        return result.GetValueOrDefault(() => new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), logger));
-    }
-
     private IObservable<IConnectionsRepository> GetConnectionsRepository(Maybe<ILogger> logger)
     {
-        return Observable.FromAsync(() => GetConnectionRepository(logger));
+        return Observable.FromAsync(async () =>
+            {
+                var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
+                var loadResult = await store.Load();
+                var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, logger)), logger));
+                var repo = result.GetValueOrDefault(() => new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), logger));
+                return repo;
+            }).Replay()
+            .RefCount();
     }
 }
