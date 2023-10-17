@@ -8,7 +8,7 @@ using ReactiveUI.Fody.Helpers;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.Explorer;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
-using Zafiro.Avalonia.WizardOld.Interfaces;
+using Zafiro.Avalonia.Model;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.UI;

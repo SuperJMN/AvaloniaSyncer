@@ -19,48 +19,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj">
-      <Temp>Zafiro.FileSystem.SeaweedFS.Filer.Client</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj" Version="4.0.26">
-      <Temp>Zafiro.FileSystem</Temp>
-      <Name>Zafiro.FileSystem</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj" Version="4.0.26">
-      <Temp>Zafiro.FileSystem.Local</Temp>
-      <Name>Zafiro.FileSystem.Local</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj" Version="4.0.26">
-      <Temp>Zafiro.FileSystem.SeaweedFS</Temp>
-      <Name>Zafiro.FileSystem.SeaweedFS</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj" Version="4.0.26">
-      <Temp>Zafiro.FileSystem.Sftp</Temp>
-      <Name>Zafiro.FileSystem.Sftp</Name>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj">
-      <Temp>Zafiro.UI</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN\AvaloniaSyncer\src\AvaloniaSyncer\AvaloniaSyncer.csproj">
-      <Temp>AvaloniaSyncer</Temp>
-    </ProjectReference>
+    <PackageReference Include="Zafiro.FileSystem" Version="4.0.27" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.27" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.27" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.27" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer.Pickers\Zafiro.Avalonia.FileExplorer.Pickers.csproj">
-      <Temp>Zafiro.Avalonia.FileExplorer.Pickers</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj">
-      <Temp>Zafiro.Avalonia.FileExplorer</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj">
-      <Temp>Zafiro.Avalonia.Dialogs</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj">
-      <Temp>Zafiro.Avalonia</Temp>
-    </ProjectReference>
-    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj">
-      <Temp>Zafiro</Temp>
-    </ProjectReference>
   </ItemGroup>
 </Project>

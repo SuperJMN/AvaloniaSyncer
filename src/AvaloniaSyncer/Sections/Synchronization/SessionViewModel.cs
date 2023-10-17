@@ -7,7 +7,7 @@ using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Serilog;
-using Zafiro.Avalonia.WizardOld.Interfaces;
+using Zafiro.Avalonia.Model;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Synchronizer;
