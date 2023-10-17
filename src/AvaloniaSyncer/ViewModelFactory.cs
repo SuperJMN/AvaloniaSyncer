@@ -14,7 +14,6 @@ using AvaloniaSyncer.Sections.Explorer;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.NewSync;
-using AvaloniaSyncer.Sections.Settings;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
@@ -37,9 +36,9 @@ public class ViewModelFactory
         TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
     }
 
-    public Maybe<ILogger> Logger { get; set; }
+    public Maybe<ILogger> Logger { get; }
 
-    public IClipboard Clipboard { get; set; }
+    public IClipboard Clipboard { get; }
 
     public NotificationService NotificationService { get; }
 
@@ -48,11 +47,6 @@ public class ViewModelFactory
     private IDialogService DialogService { get; }
 
     public ITransferManager TransferManager { get; }
-
-    public SettingsSectionViewModel GetSettingsViewModel()
-    {
-        return new SettingsSectionViewModel(Plugins);
-    }
 
     public SyncronizationSectionViewModel GetSynchronizationSection()
     {
@@ -92,7 +86,7 @@ public class ViewModelFactory
         };
     }
 
-    public async Task<ConnectionsSectionViewModel> GetSettingsViewModel2()
+    public async Task<ConnectionsSectionViewModel> GetConnectionsViewModel()
     {
         return new ConnectionsSectionViewModel(await LoadFromFile(), NotificationService, DialogService);
     }

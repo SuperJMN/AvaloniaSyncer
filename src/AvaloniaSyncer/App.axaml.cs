@@ -35,7 +35,7 @@ public class App : Application
                 {
                     new("Explore", vm.GetExploreSection()),
                     new("Synchronize", vm.GetSynchronizationSection()),
-                    new("Settings", await vm.GetSettingsViewModel2())
+                    new("Settings", await vm.GetConnectionsViewModel())
                 };
 
                 return sections;
