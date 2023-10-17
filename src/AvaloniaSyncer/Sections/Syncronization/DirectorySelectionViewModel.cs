@@ -13,7 +13,7 @@ using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.Sections.NewSync;
+namespace AvaloniaSyncer.Sections.Syncronization;
 
 public class DirectorySelectionViewModel : ReactiveObject, IValidatable
 {

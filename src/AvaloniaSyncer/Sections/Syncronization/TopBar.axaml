@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              xmlns:newSync="clr-namespace:AvaloniaSyncer.Sections.NewSync"
+             xmlns:syncronization="clr-namespace:AvaloniaSyncer.Sections.Syncronization"
              mc:Ignorable="d" d:DesignWidth="800"
-             x:Class="AvaloniaSyncer.Sections.NewSync.TopBar"
-             x:DataType="newSync:SessionViewModel">
+             x:Class="AvaloniaSyncer.Sections.Syncronization.TopBar"
+             x:DataType="syncronization:SessionViewModel">
   <StackPanel Spacing="6" Margin="6" Orientation="Horizontal" DockPanel.Dock="Top">
     <controls:StoppableControl Content="Sync all" Command="{Binding SyncAll}" />
 	<CheckBox Content="Can overwrite" IsChecked="{Binding CanOverwrite}" />

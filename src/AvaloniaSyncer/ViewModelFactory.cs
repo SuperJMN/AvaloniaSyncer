@@ -10,7 +10,7 @@ using Avalonia.Controls.Notifications;
 using AvaloniaSyncer.Sections.Connections;
 using AvaloniaSyncer.Sections.Explorer;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
-using AvaloniaSyncer.Sections.NewSync;
+using AvaloniaSyncer.Sections.Syncronization;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Serilog;

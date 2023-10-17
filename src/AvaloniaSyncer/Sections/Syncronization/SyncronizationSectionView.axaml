@@ -3,9 +3,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:newSync="clr-namespace:AvaloniaSyncer.Sections.NewSync"
+             xmlns:syncronization="clr-namespace:AvaloniaSyncer.Sections.Syncronization"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Sections.NewSync.SyncronizationSectionView"
-             x:DataType="newSync:SyncronizationSectionViewModel">
+             x:Class="AvaloniaSyncer.Sections.Syncronization.SyncronizationSectionView"
+             x:DataType="syncronization:SyncronizationSectionViewModel">
 	<DockPanel>
 		<Button DockPanel.Dock="Top" Margin="8" Content="Add session…" Command="{Binding AddSession}" />
         <TabControl ItemsSource="{Binding Sessions}">

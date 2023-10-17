@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using CSharpFunctionalExtensions;
-using Microsoft.VisualBasic;
-using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
@@ -13,10 +11,9 @@ using Zafiro.Avalonia.WizardOld.Interfaces;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Synchronizer;
-using Zafiro.IO;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.Sections.NewSync;
+namespace AvaloniaSyncer.Sections.Syncronization;
 
 public class SessionViewModel : ReactiveValidationObject, IValidatable
 {

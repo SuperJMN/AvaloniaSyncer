@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace AvaloniaSyncer.Sections.NewSync
+namespace AvaloniaSyncer.Sections.Syncronization
 {
     public partial class DirectorySelectionView : UserControl
     {

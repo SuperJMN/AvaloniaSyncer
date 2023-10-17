@@ -1,8 +1,8 @@
-﻿using ReactiveUI;
-using System;
+﻿using System;
+using ReactiveUI;
 using Zafiro.Avalonia.WizardOld.Interfaces;
 
-namespace AvaloniaSyncer.Sections.NewSync.Pages;
+namespace AvaloniaSyncer.Sections.Syncronization.Pages;
 
 
 internal class Page2ViewModel : ReactiveObject, IValidatable

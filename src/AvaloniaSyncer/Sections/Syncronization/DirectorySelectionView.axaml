@@ -5,9 +5,10 @@
              xmlns:newSync="clr-namespace:AvaloniaSyncer.Sections.NewSync"
              xmlns:explorer="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer;assembly=Zafiro.Avalonia.FileExplorer"
              xmlns:address="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer.Address;assembly=Zafiro.Avalonia.FileExplorer"
+             xmlns:syncronization="clr-namespace:AvaloniaSyncer.Sections.Syncronization"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Sections.NewSync.DirectorySelectionView"
-             x:DataType="newSync:DirectorySelectionViewModel">
+             x:Class="AvaloniaSyncer.Sections.Syncronization.DirectorySelectionView"
+             x:DataType="syncronization:DirectorySelectionViewModel">
 	<DockPanel>
 		<HeaderedContentControl Margin="0 8" Header="Connection" DockPanel.Dock="Top" >
 			<ComboBox SelectedItem="{Binding SelectedConnection}" Width="200"

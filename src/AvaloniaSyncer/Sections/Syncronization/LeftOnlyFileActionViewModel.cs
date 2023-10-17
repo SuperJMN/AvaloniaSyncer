@@ -13,7 +13,7 @@ using Zafiro.FileSystem;
 using Zafiro.FileSystem.Actions;
 using Zafiro.Mixins;
 
-namespace AvaloniaSyncer.Sections.NewSync;
+namespace AvaloniaSyncer.Sections.Syncronization;
 
 internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewModel
 {

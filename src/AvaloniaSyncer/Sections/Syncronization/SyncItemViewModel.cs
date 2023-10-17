@@ -10,7 +10,7 @@ using Zafiro.Actions;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 
-namespace AvaloniaSyncer.Sections.NewSync;
+namespace AvaloniaSyncer.Sections.Syncronization;
 
 public class SyncItemViewModel : ViewModelBase
 {
