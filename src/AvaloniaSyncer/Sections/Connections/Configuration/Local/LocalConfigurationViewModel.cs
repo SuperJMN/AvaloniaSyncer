@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive.Linq;
 
-namespace AvaloniaSyncer.Sections.Connections;
+namespace AvaloniaSyncer.Sections.Connections.Configuration.Local;
 
 public class LocalConfigurationViewModel : IConfiguration
 {

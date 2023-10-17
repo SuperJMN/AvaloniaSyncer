@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using ReactiveUI;
@@ -40,53 +41,17 @@ public class CreateNewConnectionDialogViewModel : ReactiveValidationObject, IRes
 
     [Reactive] public string Name { get; set; }
     public IList<INewPlugin> Plugins { get; }
-    [Reactive] public INewPlugin SelectedPlugin { get; set; }
+    [Reactive] public INewPlugin? SelectedPlugin { get; set; }
 
     public Task<IConfiguration> Result => tcs.Task;
 
     private void OnCreate()
     {
-        tcs.SetResult(SelectedPlugin.CreateConfig(Name));
+        tcs.SetResult(SelectedPlugin!.CreateConfig(Name));
     }
 
     private bool IsTaken(string? name)
     {
         return existingConfigurationNames.ToList().Contains(name, comparer: StringComparer.InvariantCultureIgnoreCase);
     }
-}
-
-public class LocalPlugin : INewPlugin
-{
-    public string Name => "Local";
-
-    public IConfiguration CreateConfig(string name)
-    {
-        return new LocalConfigurationViewModel(name);
-    }
-}
-
-public class SeaweedFSPlugin : INewPlugin
-{
-    public string Name => "SeaweedFS";
-
-    public IConfiguration CreateConfig(string name)
-    {
-        return new SeaweedConfigurationViewModel(name);
-    }
-}
-
-public class SftpPlugin : INewPlugin
-{
-    public string Name => "SFTP";
-
-    public IConfiguration CreateConfig(string name)
-    {
-        return new SftpConfigurationViewModel(name);
-    }
-}
-
-public interface INewPlugin
-{
-    string Name { get; }
-    IConfiguration CreateConfig(string name);
 }

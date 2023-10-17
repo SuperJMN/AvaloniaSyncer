@@ -6,11 +6,11 @@ using Zafiro.FileSystem.Sftp;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 
-internal class SftpFileFileSystemConnection : Serialization.IFileSystemConnection
+internal class SftpFileSystemConnection : Serialization.IFileSystemConnection
 {
     public SftpConnectionParameters Parameters { get; }
 
-    public SftpFileFileSystemConnection(string name, SftpConnectionParameters parameters)
+    public SftpFileSystemConnection(string name, SftpConnectionParameters parameters)
     {
         Parameters = parameters;
         Name = name;

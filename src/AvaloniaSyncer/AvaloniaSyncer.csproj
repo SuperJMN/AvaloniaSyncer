@@ -80,7 +80,4 @@
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Sections\Connections\Configuration\Local\" />
-  </ItemGroup>
 </Project>

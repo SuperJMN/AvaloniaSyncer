@@ -10,13 +10,13 @@ using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 
-internal class SeaweedFileFileSystemConnection : Serialization.IFileSystemConnection
+internal class SeaweedFileSystemConnection : Serialization.IFileSystemConnection
 {
     public Uri Uri { get; }
 
     private readonly Maybe<ILogger> logger;
 
-    public SeaweedFileFileSystemConnection(string name, Uri uri, Maybe<ILogger> logger)
+    public SeaweedFileSystemConnection(string name, Uri uri, Maybe<ILogger> logger)
     {
         Uri = uri;
         this.logger = logger;

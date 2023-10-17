@@ -1,5 +1,6 @@
 using System;
 using AvaloniaSyncer.Sections.Connections;
+using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
@@ -19,7 +20,7 @@ public static class Mapper
                 Name = local.Name,
                 Parameters = new Local()
             },
-            SeaweedFileFileSystemConnection seaweed => new Connection
+            SeaweedFileSystemConnection seaweed => new Connection
             {
                 Name = seaweed.Name,
                 Parameters = new SeaweedFS
@@ -27,7 +28,7 @@ public static class Mapper
                     Uri = seaweed.Uri
                 }
             },
-            SftpFileFileSystemConnection sftp =>
+            SftpFileSystemConnection sftp =>
                 new Connection
                 {
                     Name = sftp.Name,
@@ -50,10 +51,10 @@ public static class Mapper
             case Local:
                 return new LocalFileSystemConnection(connection.Name);
             case SeaweedFS fs:
-                return new SeaweedFileFileSystemConnection(connection.Name, fs.Uri, logger);
+                return new SeaweedFileSystemConnection(connection.Name, fs.Uri, logger);
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
-                return new SftpFileFileSystemConnection(connection.Name, info);
+                return new SftpFileSystemConnection(connection.Name, info);
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -63,12 +64,12 @@ public static class Mapper
     {
         return connection switch
         {
-            SeaweedFileFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfigurationViewModel(seaweedFileFileSystemConnection.Name)
+            SeaweedFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfigurationViewModel(seaweedFileFileSystemConnection.Name)
             {
                 Address = seaweedFileFileSystemConnection.Uri.ToString()
             },
             LocalFileSystemConnection localFileSystemConnection => new LocalConfigurationViewModel(localFileSystemConnection.Name),
-            SftpFileFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Name)
+            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Name)
             {
                 Host = sftp.Parameters.Host,
                 Port = sftp.Parameters.Port,
@@ -83,9 +84,9 @@ public static class Mapper
     {
         return currentConfiguration switch
         {
-            SeaweedConfigurationViewModel swfs => new SeaweedFileFileSystemConnection(swfs.Name, new Uri(swfs.Address), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => throw new ArgumentOutOfRangeException(nameof(currentConfiguration)),
-            SftpConfigurationViewModel sftp => new SftpFileFileSystemConnection(
+            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Name, new Uri(swfs.Address), Maybe<ILogger>.None),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Name),
+            SftpConfigurationViewModel sftp => new SftpFileSystemConnection(
                 sftp.Name,
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
