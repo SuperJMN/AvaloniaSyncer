@@ -21,7 +21,7 @@ internal class ConnectionsRepository : IConnectionsRepository
     private ConnectionsRepository(Maybe<ILogger> logger)
     {
         this.logger = logger;
-        store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.Open("Connections.json", FileMode.Truncate, FileAccess.Write));
+        store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.Open("Connections.json", FileMode.Create, FileAccess.Write));
     }
 
     public ConnectionsRepository(IEnumerable<IFileSystemConnection> connections, Maybe<ILogger> logger) : this(logger)
