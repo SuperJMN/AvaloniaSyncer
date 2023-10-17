@@ -3,16 +3,12 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
-using CSharpFunctionalExtensions;
 using DynamicData;
-using Microsoft.CodeAnalysis.Text;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.CSharpFunctionalExtensions;
-using Zafiro.Mixins;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Connections;

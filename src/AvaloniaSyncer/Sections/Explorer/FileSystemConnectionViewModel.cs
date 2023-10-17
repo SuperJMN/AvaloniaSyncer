@@ -5,7 +5,6 @@ using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.Explorer;
-using Zafiro.Avalonia.FileExplorer.Model;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
