@@ -3,21 +3,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:explorer="clr-namespace:AvaloniaSyncer.Sections.Explorer"
+             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Explorer.ExplorerSectionView"
-             x:DataType="explorer:ExplorerSectionViewModel">
+             x:DataType="explorer:IExplorerSectionViewModel">
 
-    <TabControl ItemsSource="{Binding Connections}">
-        <TabControl.ItemTemplate>
-            <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
-                <TextBlock Text="{Binding Name}" />
-            </DataTemplate>
-        </TabControl.ItemTemplate>
-        <TabControl.ContentTemplate>
-            <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
-                <ContentControl Content="{Binding}" />
-            </DataTemplate>
-        </TabControl.ContentTemplate>
-    </TabControl>
+	<Design.DataContext>
+		<avaloniaSyncer:ExplorerSectionViewModelDesign />
+	</Design.DataContext>
+
+	<UserControl.Resources>
+		<SolidColorBrush x:Key="BorderBrush" Opacity="0.4" Color="{StaticResource SystemChromeAltLowColor}"></SolidColorBrush>
+    </UserControl.Resources>
+
+	<UserControl.Styles>
+		<Style Selector="TabItem">
+			<Setter Property="MinHeight" Value="27" />
+			<Setter Property="TextElement.FontSize" Value="16" />
+			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+            <Setter Property="BorderThickness" Value="1 1 1 1" />
+           
+		</Style>
+	</UserControl.Styles>
+
+	<TabControl Padding="0" ItemsSource="{Binding Connections}" TabStripPlacement="Top">
+		<TabControl.ItemTemplate>
+			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
+				<TextBlock Text="{Binding Name}" />
+			</DataTemplate>
+		</TabControl.ItemTemplate>
+		<TabControl.ContentTemplate>
+			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
+				<ContentControl Padding="8" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush}" Content="{Binding}" />
+			</DataTemplate>
+		</TabControl.ContentTemplate>
+	</TabControl>
 
 </UserControl>

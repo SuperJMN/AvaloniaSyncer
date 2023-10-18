@@ -12,18 +12,23 @@ using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Explorer;
 
-public class ExplorerSectionViewModel : ReactiveObject
+public interface IExplorerSectionViewModel
 {
-    private readonly ReadOnlyObservableCollection<FileSystemConnectionViewModel> connections;
+    ReadOnlyObservableCollection<IFileSystemConnectionViewModel> Connections { get; }
+}
+
+public class ExplorerSectionViewModel : ReactiveObject, IExplorerSectionViewModel
+{
+    private readonly ReadOnlyObservableCollection<IFileSystemConnectionViewModel> connections;
 
     public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
         repository.Connections
             .ToObservableChangeSet(x => x.Name)
-            .Transform(connection => new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
+            .Transform(connection => (IFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
             .Bind(out connections)
             .Subscribe();
     }
     
-    public ReadOnlyObservableCollection<FileSystemConnectionViewModel> Connections => connections;
+    public ReadOnlyObservableCollection<IFileSystemConnectionViewModel> Connections => connections;
 }

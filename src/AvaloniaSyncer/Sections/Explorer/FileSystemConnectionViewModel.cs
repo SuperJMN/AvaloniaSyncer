@@ -12,7 +12,13 @@ using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Explorer;
 
-public class FileSystemConnectionViewModel : ReactiveObject
+public interface IFileSystemConnectionViewModel
+{
+    ReactiveCommand<Unit, Result<IFileSystem>> Load { get; set; }
+    string Name { get; }
+}
+
+public class FileSystemConnectionViewModel : ReactiveObject, IFileSystemConnectionViewModel
 {
     private readonly IFileSystemConnection connection;
     private readonly ObservableAsPropertyHelper<IFileSystemExplorer> explorer;
