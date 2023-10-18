@@ -6,26 +6,18 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Explorer.ExplorerSectionView"
              x:DataType="explorer:ExplorerSectionViewModel">
-	<DockPanel>
-        <Button IsVisible="False" Content="Load" Command="{Binding Load}" DockPanel.Dock="Top" />
-        <TabControl ItemsSource="{Binding Connections}">
-            <TabControl.ItemTemplate>
-                <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
-                    <TextBlock Text="{Binding Name}" />
-                </DataTemplate>
-            </TabControl.ItemTemplate>
-            <TabControl.ContentTemplate>
-                <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
-                    <ContentControl Content="{Binding}" />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
-        </TabControl>
-    </DockPanel>
 
-    <Interaction.Behaviors>
-        <RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
-            <InvokeCommandAction Command="{Binding Load}" />
-        </RoutedEventTriggerBehavior>
-    </Interaction.Behaviors>
+    <TabControl ItemsSource="{Binding Connections}">
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+            <DataTemplate DataType="explorer:FileSystemConnectionViewModel">
+                <ContentControl Content="{Binding}" />
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+    </TabControl>
 
 </UserControl>

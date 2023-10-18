@@ -31,7 +31,7 @@ public class App : Application
             {
                 var sections = new List<Section>
                 {
-                    new("Explore", vm.GetExploreSection()),
+                    new("Explore", await vm.GetExploreSection()),
                     new("Synchronize", await vm.GetSynchronizationSection()),
                     new("Settings", await vm.GetConnectionsViewModel())
                 };

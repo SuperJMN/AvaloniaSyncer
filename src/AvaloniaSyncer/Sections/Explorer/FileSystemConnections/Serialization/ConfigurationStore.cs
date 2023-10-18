@@ -11,10 +11,10 @@ namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 
 public class ConfigurationStore
 {
-    private readonly Func<Stream> read;
-    private readonly Func<Stream> write;
+    private readonly Func<Result<Stream>> read;
+    private readonly Func<Result<Stream>> write;
 
-    public ConfigurationStore(Func<Stream> read, Func<Stream> write)
+    public ConfigurationStore(Func<Result<Stream>> read, Func<Result<Stream>> write)
     {
         this.read = read;
         this.write = write;
@@ -22,13 +22,16 @@ public class ConfigurationStore
 
     public Task<Result<IEnumerable<Connection>>> Load()
     {
-        return Result
-            .Try(async () =>
+        return read()
+            .Bind(stream =>
             {
-                using (var utf8Json = read())
+                return Result.Try(async () =>
                 {
-                    return await JsonSerializer.DeserializeAsync<IEnumerable<Connection>>(utf8Json);
-                }
+                    using (stream)
+                    {
+                        return await JsonSerializer.DeserializeAsync<IEnumerable<Connection>>(stream);
+                    }
+                });
             })
             .OnFailureCompensate(() => Task.FromResult(Result.Success(Enumerable.Empty<Connection>())))
             .Bind(list =>
@@ -44,12 +47,16 @@ public class ConfigurationStore
 
     public Task<Result> Save(IEnumerable<Connection> connections)
     {
-        return Result.Try(async () =>
-        {
-            await using (var utf8Json = write())
+        return write()
+            .Bind(stream =>
             {
-                await JsonSerializer.SerializeAsync(utf8Json, connections);
-            }
-        });
+                return Result.Try(async () =>
+                {
+                    using (stream)
+                    {
+                        await JsonSerializer.SerializeAsync(stream, connections);
+                    }
+                });
+            });
     }
 }

@@ -1,53 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
-using System.Threading.Tasks;
-using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
-using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
+using AvaloniaSyncer.Sections.Connections;
 using CSharpFunctionalExtensions;
+using DynamicData;
+using DynamicData.Binding;
 using ReactiveUI;
 using Serilog;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
-using Zafiro.CSharpFunctionalExtensions;
-using Zafiro.FileSystem;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Explorer;
 
 public class ExplorerSectionViewModel : ReactiveObject
 {
-    private readonly Maybe<ILogger> logger;
-    private readonly ObservableAsPropertyHelper<IList<FileSystemConnectionViewModel>> connections;
+    private readonly ReadOnlyObservableCollection<FileSystemConnectionViewModel> connections;
 
-    public ExplorerSectionViewModel(INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
+    public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
-        this.logger = logger;
-        Load = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => GetConnections())
-            .Successes()
-            .SelectMany(x => x)
-            .Select(connection => new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager)).ToList());
-        Load.Subscribe(model => { });
-
-        connections = Load.ToProperty(this, x => x.Connections);
+        repository.Connections
+            .ToObservableChangeSet(x => x.Name)
+            .Transform(connection => new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
+            .Bind(out connections)
+            .Subscribe();
     }
-
-    public ReactiveCommand<Unit, IList<FileSystemConnectionViewModel>> Load { get; }
-
-    public IList<FileSystemConnectionViewModel> Connections => connections.Value;
-
-    private async Task<Result<ReadOnlyObservableCollection<IFileSystemConnection>>> GetConnections()
-    {
-        var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
-        var configs = await Async.Await(() => store.Load())
-            .Map(enumerable => enumerable.Select(connection => Mapper.ToSystem(connection, logger)))
-            .Map(enumerable => new FileSystemConnectionRepository(enumerable))
-            .Map(r => r.Connections);
-
-        return configs;
-    }
+    
+    public ReadOnlyObservableCollection<FileSystemConnectionViewModel> Connections => connections;
 }

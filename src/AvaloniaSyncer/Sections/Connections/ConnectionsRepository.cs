@@ -18,14 +18,11 @@ internal class ConnectionsRepository : IConnectionsRepository
     private readonly SourceCache<IFileSystemConnection, string> connectionsSource = new(x => x.Name);
     private readonly ConfigurationStore store;
 
-    private ConnectionsRepository(Maybe<ILogger> logger)
+   
+    public ConnectionsRepository(IEnumerable<IFileSystemConnection> connections, Maybe<ILogger> logger, ConfigurationStore store)
     {
+        this.store = store;
         this.logger = logger;
-        store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.Open("Connections.json", FileMode.Create, FileAccess.Write));
-    }
-
-    public ConnectionsRepository(IEnumerable<IFileSystemConnection> connections, Maybe<ILogger> logger) : this(logger)
-    {
         connectionsSource.AddOrUpdate(connections);
         connectionsSource.Connect().Bind(out this.connections).Subscribe();
     }

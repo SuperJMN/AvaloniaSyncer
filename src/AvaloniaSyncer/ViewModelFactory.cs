@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Notifications;
+using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer;
 
@@ -54,9 +56,9 @@ public class ViewModelFactory
             TransferManager, Logger);
     }
 
-    public ExplorerSectionViewModel GetExploreSection()
+    public async Task<ExplorerSectionViewModel> GetExploreSection()
     {
-        return new ExplorerSectionViewModel(NotificationService, Clipboard, TransferManager, Logger);
+        return new ExplorerSectionViewModel(await ConnectionsRepository, NotificationService, Clipboard, TransferManager, Logger);
     }
 
     public async Task<ConnectionsSectionViewModel> GetConnectionsViewModel()
@@ -83,10 +85,10 @@ public class ViewModelFactory
     {
         return Observable.FromAsync(async () =>
             {
-                var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
+                var store = new ConfigurationStore(() => ApplicationStorage.OpenRead("Connections"), () => ApplicationStorage.OpenWrite("Connections"));
                 var loadResult = await store.Load();
-                var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, logger)), logger));
-                var repo = result.GetValueOrDefault(() => new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), logger));
+                var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, logger)), logger, store));
+                var repo = result.GetValueOrDefault(() => new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), logger, store));
                 return repo;
             }).Replay()
             .RefCount();
