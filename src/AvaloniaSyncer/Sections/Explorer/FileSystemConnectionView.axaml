@@ -13,16 +13,16 @@
       <ContentControl Margin="0" Content="{Binding FileSystemExplorer}">
           <ContentControl.ContentTemplate>
               <DataTemplate DataType="explorer1:FileSystemExplorer">
-                  <Panel>
-                      <DockPanel>
+                  <Grid ColumnDefinitions="* *">
+                      <DockPanel Grid.ColumnSpan="2">
                           <ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
                           <ContentControl Content="{Binding Address}" DockPanel.Dock="Top" Margin="0 4" />
                           <ContentControl Content="{Binding Details^}" />
                       </DockPanel>
-                      <transferManager:LightTransferManagerView Width="400" VerticalAlignment="Bottom"
-                                                                HorizontalAlignment="Right" Margin="20"
+                      <transferManager:LightTransferManagerView Grid.Column="1" VerticalAlignment="Bottom"
+                                                                HorizontalAlignment="Right" Margin="15"
                                                                 DataContext="{Binding TransferManager}" />
-                  </Panel>
+                  </Grid>
               </DataTemplate>
           </ContentControl.ContentTemplate>
       </ContentControl>
