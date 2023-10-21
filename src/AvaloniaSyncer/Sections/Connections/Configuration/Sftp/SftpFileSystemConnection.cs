@@ -1,12 +1,13 @@
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Sftp;
 
-namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
+namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
-internal class SftpFileSystemConnection : Serialization.IFileSystemConnection
+internal class SftpFileSystemConnection : IFileSystemConnection
 {
     public SftpConnectionParameters Parameters { get; }
 

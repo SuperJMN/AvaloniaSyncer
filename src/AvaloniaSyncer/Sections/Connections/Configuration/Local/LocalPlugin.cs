@@ -1,6 +1,6 @@
 ﻿namespace AvaloniaSyncer.Sections.Connections.Configuration.Local;
 
-public class LocalPlugin : INewPlugin
+public class LocalPlugin : IPlugin
 {
     public string Name => "Local";
 

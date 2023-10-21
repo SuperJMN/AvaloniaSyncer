@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
 using Serilog;
@@ -8,9 +9,9 @@ using Zafiro.FileSystem;
 using Zafiro.FileSystem.SeaweedFS;
 using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
-namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
+namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
-internal class SeaweedFileSystemConnection : Serialization.IFileSystemConnection
+internal class SeaweedFileSystemConnection : IFileSystemConnection
 {
     public Uri Uri { get; }
 
@@ -29,7 +30,7 @@ internal class SeaweedFileSystemConnection : Serialization.IFileSystemConnection
 
         var httpClient = new System.Net.Http.HttpClient(handler)
         {
-            BaseAddress = Uri, 
+            BaseAddress = Uri,
             Timeout = TimeSpan.FromDays(1),
         };
 

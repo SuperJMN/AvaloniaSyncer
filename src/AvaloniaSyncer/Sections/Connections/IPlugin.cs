@@ -1,6 +1,6 @@
 ﻿namespace AvaloniaSyncer.Sections.Connections;
 
-public interface INewPlugin
+public interface IPlugin
 {
     string Name { get; }
     IConfiguration CreateConfig(string name);
