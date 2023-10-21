@@ -19,10 +19,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Zafiro.FileSystem" Version="4.0.30" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.30" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.30" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.30" />
+    <PackageReference Include="Zafiro.FileSystem" Version="4.0.31" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.31" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.31" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.31" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
