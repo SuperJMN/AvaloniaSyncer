@@ -56,12 +56,14 @@ public static class Mapper
         switch (connection.Parameters)
         {
             case Local:
-                return new AndroidFileSystemConnection(connection.Name);
+                return new LocalFileSystemConnection(connection.Name);
             case SeaweedFS fs:
                 return new SeaweedFileSystemConnection(connection.Name, fs.Uri, logger);
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 return new SftpFileSystemConnection(connection.Name, info);
+            case Android:
+                return new AndroidFileSystemConnection(connection.Name);
             default:
                 throw new ArgumentOutOfRangeException();
         }
