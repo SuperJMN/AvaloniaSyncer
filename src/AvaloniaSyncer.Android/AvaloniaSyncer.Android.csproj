@@ -5,8 +5,6 @@
     <SupportedOSPlatformVersion>30</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <ApplicationId>com.SuperJMN.AvaloniaSyncer</ApplicationId>
-    <ApplicationVersion>1</ApplicationVersion>
-    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <AndroidPackageFormat>apk</AndroidPackageFormat>
     <AndroidEnableProfiledAot>False</AndroidEnableProfiledAot>
   </PropertyGroup>
