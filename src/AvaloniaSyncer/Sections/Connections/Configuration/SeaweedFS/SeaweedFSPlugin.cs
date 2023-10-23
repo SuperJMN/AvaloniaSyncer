@@ -1,6 +1,6 @@
 ﻿namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
-public class SeaweedFSPlugin : INewPlugin
+public class SeaweedFSPlugin : IPlugin
 {
     public string Name => "SeaweedFS";
 

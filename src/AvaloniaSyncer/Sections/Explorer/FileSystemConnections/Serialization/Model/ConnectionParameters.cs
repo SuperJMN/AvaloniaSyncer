@@ -5,6 +5,7 @@ namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.M
 [JsonDerivedType(typeof(Local), nameof(Local))]
 [JsonDerivedType(typeof(SeaweedFS), nameof(SeaweedFS))]
 [JsonDerivedType(typeof(Sftp), nameof(Sftp))]
+[JsonDerivedType(typeof(Android), nameof(Android))]
 public abstract class ConnectionParameters
 {
 }

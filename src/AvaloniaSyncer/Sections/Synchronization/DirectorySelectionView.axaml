@@ -5,18 +5,18 @@
              xmlns:explorer="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer;assembly=Zafiro.Avalonia.FileExplorer"
              xmlns:address="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer.Address;assembly=Zafiro.Avalonia.FileExplorer"
              xmlns:synchronization="clr-namespace:AvaloniaSyncer.Sections.Synchronization"
+             xmlns:model="clr-namespace:Zafiro.Avalonia.FileExplorer.Model;assembly=Zafiro.Avalonia.FileExplorer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Synchronization.DirectorySelectionView"
              x:DataType="synchronization:DirectorySelectionViewModel">
 	<DockPanel>
 		<HeaderedContentControl Margin="0 8" Header="Connection" DockPanel.Dock="Top" >
-			<ComboBox SelectedItem="{Binding SelectedConnection}" Width="200"
-                      DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Connections}"
-                      />
+			<ComboBox SelectedItem="{Binding SelectedConnection}" HorizontalAlignment="Stretch"
+                      DisplayMemberBinding="{Binding Name}" ItemsSource="{Binding Connections}" />
 		</HeaderedContentControl>
 		<ContentControl Content="{Binding Explorer^}" Margin="0 8 0 16">
 			<ContentControl.ContentTemplate>
-				<DataTemplate DataType="explorer:IFileSystemExplorer">
+				<DataTemplate DataType="model:IFileSystemExplorer">
 					<DockPanel>
 						<address:AddressView DockPanel.Dock="Top" DataContext="{Binding Address}" />
                         <explorer:DetailsView DataContext="{Binding Details^}" />

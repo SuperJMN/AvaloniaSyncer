@@ -3,6 +3,7 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -77,6 +78,8 @@ public class ViewModelFactory
 
     private static void ConfigureWindow(ConfigureWindowContext context)
     {
+        context.ToConfigure.MinWidth = 650;
+        context.ToConfigure.MinHeight = 400;
         context.ToConfigure.Width = context.Parent.Bounds.Width / 1.5;
         context.ToConfigure.Height = context.Parent.Bounds.Height / 1.5;
     }

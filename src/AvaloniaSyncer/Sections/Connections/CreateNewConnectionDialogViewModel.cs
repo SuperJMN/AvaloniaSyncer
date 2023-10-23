@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Connections.Configuration.Android;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
@@ -29,19 +30,23 @@ public class CreateNewConnectionDialogViewModel : ReactiveValidationObject, IRes
         this.ValidationRule(x => x.SelectedPlugin, s => s is not null, "Required");
 
         Create = ReactiveCommand.Create(OnCreate, this.IsValid());
-        Plugins = new INewPlugin[]
+        Plugins = new IPlugin[]
         {
-            new LocalPlugin(),
+#if ANDROID
+            new AndroidPlugin(),
+#else
+            new LocalPlugin(),       
+#endif
             new SeaweedFSPlugin(),
-            new SftpPlugin()
+            new SftpPlugin(),
         };
     }
 
     public ReactiveCommand<Unit, Unit> Create { get; set; }
 
     [Reactive] public string Name { get; set; }
-    public IList<INewPlugin> Plugins { get; }
-    [Reactive] public INewPlugin? SelectedPlugin { get; set; }
+    public IList<IPlugin> Plugins { get; }
+    [Reactive] public IPlugin? SelectedPlugin { get; set; }
 
     public Task<IConfiguration> Result => tcs.Task;
 

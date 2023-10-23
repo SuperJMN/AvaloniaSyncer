@@ -1,6 +1,6 @@
 ﻿namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
-public class SftpPlugin : INewPlugin
+public class SftpPlugin : IPlugin
 {
     public string Name => "SFTP";
 

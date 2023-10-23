@@ -1,5 +1,6 @@
 using System;
 using AvaloniaSyncer.Sections.Connections;
+using AvaloniaSyncer.Sections.Connections.Configuration.Android;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
@@ -40,6 +41,12 @@ public static class Mapper
                         Password = sftp.Parameters.Password
                     }
                 },
+            AndroidFileSystemConnection android =>
+                new Connection()
+                {
+                    Name = android.Name,
+                    Parameters = new Android(),
+                },
             _ => throw new ArgumentOutOfRangeException(nameof(fileSystemConnection))
         };
     }
@@ -55,6 +62,8 @@ public static class Mapper
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 return new SftpFileSystemConnection(connection.Name, info);
+            case Android:
+                return new AndroidFileSystemConnection(connection.Name);
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -68,7 +77,7 @@ public static class Mapper
             {
                 Address = seaweedFileFileSystemConnection.Uri.ToString()
             },
-            LocalFileSystemConnection localFileSystemConnection => new LocalConfigurationViewModel(localFileSystemConnection.Name),
+            AndroidFileSystemConnection localFileSystemConnection => new LocalConfigurationViewModel(localFileSystemConnection.Name),
             SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Name)
             {
                 Host = sftp.Parameters.Host,
@@ -85,12 +94,13 @@ public static class Mapper
         return currentConfiguration switch
         {
             SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Name, new Uri(swfs.Address), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Name),
+            LocalConfigurationViewModel local => new AndroidFileSystemConnection(local.Name),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(
                 sftp.Name,
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),
+            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Name),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

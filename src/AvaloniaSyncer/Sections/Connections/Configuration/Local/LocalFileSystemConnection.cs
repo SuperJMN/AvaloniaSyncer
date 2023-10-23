@@ -1,10 +1,11 @@
 using System.IO.Abstractions;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using Serilog;
 using IFileSystem = Zafiro.FileSystem.IFileSystem;
 
-namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
+namespace AvaloniaSyncer.Sections.Connections.Configuration.Local;
 
 public class LocalFileSystemConnection : IFileSystemConnection
 {

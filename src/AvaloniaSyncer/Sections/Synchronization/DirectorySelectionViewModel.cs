@@ -31,20 +31,15 @@ public class DirectorySelectionViewModel : ReactiveObject, IValidatable
             .Publish()  // This is to force subscribers share a single subscription (they will share instances of the FileSystemExplorer, this way)
             .RefCount();
 
-        var currentDirectory = Explorer
-            .Select(x => x.Address.WhenAnyValue(a => a.CurrentDirectory))
-            .Merge()
-            .Select(Maybe.From);
-
+        var currentDirectory = Explorer.Select(x => x.CurrentDirectory).Switch();
         currentDirectoryWrapper = currentDirectory.Values().ToProperty(this, x => x.CurrentDirectory);
-
         IsValid = currentDirectory.Select(x => x.HasValue);
     }
 
     public IZafiroDirectory CurrentDirectory => currentDirectoryWrapper.Value;
 
     public ReadOnlyCollection<IFileSystemConnection> Connections { get; set; }
-    [Reactive] public IFileSystemConnection SelectedConnection { get; set; }
+    [Reactive] public IFileSystemConnection? SelectedConnection { get; set; }
     public IObservable<FileSystemExplorer> Explorer { get; }
     public IObservable<bool> IsValid { get; }
 }
