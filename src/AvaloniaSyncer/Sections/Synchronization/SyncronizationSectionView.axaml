@@ -8,7 +8,7 @@
              x:DataType="synchronization:SyncronizationSectionViewModel">
 	<DockPanel>
 		<Button DockPanel.Dock="Top" Margin="8" Content="Add session…" Command="{Binding AddSession}" />
-        <TabControl ItemsSource="{Binding Sessions}">
+        <TabControl ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Description}" />

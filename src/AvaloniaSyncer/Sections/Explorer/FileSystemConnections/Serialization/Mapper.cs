@@ -73,11 +73,12 @@ public static class Mapper
     {
         return connection switch
         {
+            LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Name),
             SeaweedFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfigurationViewModel(seaweedFileFileSystemConnection.Name)
             {
                 Address = seaweedFileFileSystemConnection.Uri.ToString()
             },
-            AndroidFileSystemConnection localFileSystemConnection => new LocalConfigurationViewModel(localFileSystemConnection.Name),
+            AndroidFileSystemConnection localFileSystemConnection => new AndroidConfigurationViewModel(localFileSystemConnection.Name),
             SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Name)
             {
                 Host = sftp.Parameters.Host,
@@ -94,7 +95,7 @@ public static class Mapper
         return currentConfiguration switch
         {
             SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Name, new Uri(swfs.Address), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => new AndroidFileSystemConnection(local.Name),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Name),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(
                 sftp.Name,
                 new SftpConnectionParameters(sftp.Host,

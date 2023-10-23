@@ -18,7 +18,6 @@ internal class ConnectionsRepository : IConnectionsRepository
     private readonly SourceCache<IFileSystemConnection, string> connectionsSource = new(x => x.Name);
     private readonly ConfigurationStore store;
 
-   
     public ConnectionsRepository(IEnumerable<IFileSystemConnection> connections, Maybe<ILogger> logger, ConfigurationStore store)
     {
         this.store = store;

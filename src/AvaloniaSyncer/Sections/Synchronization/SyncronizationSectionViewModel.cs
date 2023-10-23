@@ -8,6 +8,7 @@ using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
@@ -38,9 +39,16 @@ public class SyncronizationSectionViewModel : ReactiveObject
         this.transferManager = transferManager;
         this.logger = logger;
         AddSession = ReactiveCommand.CreateFromTask(OnAddSession);
-        AddSession.Values().Subscribe(session => sessions.Add(session));
+        AddSession.Values().Subscribe(session =>
+        {
+            sessions.Add(session);
+            SelectedSession = session;
+        });
         sessions.Connect().Bind(out sessionsCollection).Subscribe();
     }
+
+    [Reactive]
+    public GranularSessionViewModel SelectedSession { get; set; }
 
     public ReactiveCommand<Unit, Maybe<GranularSessionViewModel>> AddSession { get; set; }
 
