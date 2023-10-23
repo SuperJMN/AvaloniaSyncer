@@ -12,20 +12,6 @@
 		<avaloniaSyncer:ExplorerSectionViewModelDesign />
 	</Design.DataContext>
 
-	<UserControl.Resources>
-		<SolidColorBrush x:Key="BorderBrush" Opacity="0.4" Color="{StaticResource SystemChromeAltLowColor}"></SolidColorBrush>
-    </UserControl.Resources>
-
-	<UserControl.Styles>
-		<Style Selector="TabItem">
-			<Setter Property="MinHeight" Value="27" />
-			<Setter Property="TextElement.FontSize" Value="16" />
-			<Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-            <Setter Property="BorderThickness" Value="1 1 1 1" />
-           
-		</Style>
-	</UserControl.Styles>
-
 	<TabControl Padding="0" ItemsSource="{Binding Connections}" TabStripPlacement="Top">
 		<TabControl.ItemTemplate>
 			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">

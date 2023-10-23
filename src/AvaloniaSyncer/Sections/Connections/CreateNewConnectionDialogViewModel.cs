@@ -33,9 +33,9 @@ public class CreateNewConnectionDialogViewModel : ReactiveValidationObject, IRes
         Plugins = new IPlugin[]
         {
 #if ANDROID
-            new LocalPlugin(),       
-#else
             new AndroidPlugin(),
+#else
+            new LocalPlugin(),       
 #endif
             new SeaweedFSPlugin(),
             new SftpPlugin(),

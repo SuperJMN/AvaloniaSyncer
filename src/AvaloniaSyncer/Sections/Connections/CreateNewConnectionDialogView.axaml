@@ -6,9 +6,9 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.CreateNewConnectionDialogView"
              x:DataType="connections:CreateNewConnectionDialogViewModel">
-    <StackPanel>
-        <TextBox Watermark="Name" Text="{Binding Name}" DockPanel.Dock="Bottom" />
-        <ComboBox ItemsSource="{Binding Plugins}" SelectedItem="{Binding SelectedPlugin}" DisplayMemberBinding="{Binding Name}" />
-        <Button Command="{Binding Create}" Content="Create" DockPanel.Dock="Bottom" />
+    <StackPanel Spacing="8">
+        <TextBox HorizontalContentAlignment="Stretch" Watermark="Name" Text="{Binding Name}" DockPanel.Dock="Bottom" />
+        <ComboBox ItemsSource="{Binding Plugins}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedPlugin}" DisplayMemberBinding="{Binding Name}" />
+        <Button Command="{Binding Create}" Content="Add" DockPanel.Dock="Bottom" />
     </StackPanel>
 </UserControl>

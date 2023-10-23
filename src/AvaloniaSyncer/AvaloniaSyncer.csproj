@@ -25,13 +25,13 @@
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Zafiro.Avalonia" Version="3.0.42" />
-    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.42" />
+    <PackageReference Include="Zafiro.Avalonia" Version="3.0.43" />
+    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.43" />
     <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.17" />
-    <PackageReference Include="Zafiro.FileSystem.Android" Version="4.0.31" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.31" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.31" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.31" />
+    <PackageReference Include="Zafiro.FileSystem.Android" Version="4.0.32" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.32" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.32" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.32" />
     <PackageReference Include="Zafiro.UI" Version="4.0.11" />
   </ItemGroup>
   <ItemGroup>

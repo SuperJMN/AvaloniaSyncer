@@ -17,6 +17,7 @@ public class ExplorerSectionViewModelDesign : IExplorerSectionViewModel
         {
             (IFileSystemConnectionViewModel)new FileSystemConnectionDesign("Test1"),
             (IFileSystemConnectionViewModel)new FileSystemConnectionDesign("Test2"),
+            (IFileSystemConnectionViewModel)new FileSystemConnectionDesign("Long title for this tab item"),
         }));
     }
 

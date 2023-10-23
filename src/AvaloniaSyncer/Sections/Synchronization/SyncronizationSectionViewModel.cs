@@ -63,7 +63,7 @@ public class SyncronizationSectionViewModel : ReactiveObject
 
     private async Task<Maybe<GranularSessionViewModel>> ShowWizard(Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel> wizard)
     {
-        var showDialog = await dialogService.ShowDialog<Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>, GranularSessionViewModel>(wizard, "Do something, boi", w => Observable.FromAsync(() => w.Result));
+        var showDialog = await dialogService.ShowDialog<Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>, GranularSessionViewModel>(wizard, "Synchronize folder", w => Observable.FromAsync(() => w.Result));
         return showDialog;
     }
 }
