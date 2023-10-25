@@ -32,11 +32,7 @@ public class CreateNewConnectionDialogViewModel : ReactiveValidationObject, IRes
         Create = ReactiveCommand.Create(OnCreate, this.IsValid());
         Plugins = new IPlugin[]
         {
-#if ANDROID
-            new AndroidPlugin(),
-#else
-            new LocalPlugin(),       
-#endif
+            OperatingSystem.IsAndroid() ? new AndroidPlugin() : new LocalPlugin(),       
             new SeaweedFSPlugin(),
             new SftpPlugin(),
         };
