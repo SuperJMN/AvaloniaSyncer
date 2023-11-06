@@ -56,29 +56,37 @@ class Build : NukeBuild
             StartShell($"dotnet workload restore \"{Solution.Path}\"").AssertZeroExitCode();
         });
 
+    Target PackDebian => _ => _
+        .DependsOn(Clean)
+        .DependsOn(RestoreWorkloads)
+        .Executes(() =>
+        {
+            
+        });
+
     Target PublishDesktop => _ => _
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
         .Executes(() =>
-    {
-        var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
-        var runtimes = new[] { "win-x64", "linux-x64", "linux-arm64" };
-
-        DotNetPublish(settings => settings
-            .SetConfiguration(Configuration)
-            .SetProject(desktopProject)
-            .CombineWith(runtimes, (c, runtime) =>
-                c.SetRuntime(runtime)
-                    .SetOutput(PublishDirectory / runtime)));
-            
-        runtimes.ForEach(rt =>
         {
-            var src = PublishDirectory / rt;
-            var dest = PackagesDirectory / rt + ".zip";
-            Log.Information("Zipping {Input} to {Output}", src, dest);
-            src.ZipTo(dest);
+            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
+            var runtimes = new[] { "win-x64", "linux-x64", "linux-arm64" };
+
+            DotNetPublish(settings => settings
+                .SetConfiguration(Configuration)
+                .SetProject(desktopProject)
+                .CombineWith(runtimes, (c, runtime) =>
+                    c.SetRuntime(runtime)
+                        .SetOutput(PublishDirectory / runtime)));
+
+            runtimes.ForEach(rt =>
+            {
+                var src = PublishDirectory / rt;
+                var dest = PackagesDirectory / rt + ".zip";
+                Log.Information("Zipping {Input} to {Output}", src, dest);
+                src.ZipTo(dest);
+            });
         });
-    });
 
     Target PublishAndroid => _ => _
         .DependsOn(Clean)
