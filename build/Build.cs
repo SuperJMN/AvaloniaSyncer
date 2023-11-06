@@ -17,7 +17,7 @@ using static Nuke.GitHub.GitHubTasks;
 [AzurePipelines(AzurePipelinesImage.WindowsLatest, ImportSecrets = new[]{ nameof(GitHubAuthenticationToken)}, AutoGenerate = false)]
 class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.Publish);
+    //public static int Main() => Execute<Build>(x => x.Publish);
 
     public AbsolutePath OutputDirectory = RootDirectory / "output";
     public AbsolutePath PublishDirectory => OutputDirectory / "publish";
