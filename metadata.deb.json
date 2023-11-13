@@ -1,33 +1,38 @@
 {
-    "Executables": {
-      "TestDebpackage.Desktop": {
-        "CommandName": "vinaytest",
-        "DesktopEntry": {
-          "Icons": {
-            "32": "C:\\Users\\JMN\\Desktop\\Testing\\icon.png",
-            "64": "C:\\Users\\JMN\\Desktop\\Testing\\icon.png"
-          },
-          "Name": "Sample application",
-          "StartupWmClass": "Sample",
-          "Keywords": [
-            "Sample "
-          ],
-          "Comment": "This is a test",
-          "Categories": [
-            "Financial"
-          ]
-        }
+  "Executables": {
+    "AvaloniaSyncer.Desktop": {
+      "CommandName": "avaloniasyncer",
+      "DesktopEntry": {
+        "Icons": {
+          "32": "../../../icon.png",
+          "64": "../../../icon.png"
+        },
+        "Name": "AvaloniaSyncer",
+        "StartupWmClass": "AvaloniaSyncer",
+        "Keywords": [
+          "file manager",
+          "SeaweedFS",
+          "SFTP"
+        ],
+        "Comment": "This is a test",
+        "Categories": [
+          "FileManager",
+          "Filesystem",
+          "Utility",
+          "FileTransfer",
+          "Archiving"
+        ]
       }
-    },
-    "PackageMetadata": {
-      "Maintainer": "SuperJMN",
-      "PackageName": "SamplePackage",
-      "ApplicationName": "Sample",
-      "Architecture": "amd64",
-      "Homepage": "https://www.sample.com",
-      "License": "MIT",
-      "Description": "Sample",
-      "Version": "1.0.0"
     }
+  },
+  "PackageMetadata": {
+    "Maintainer": "SuperJMN",
+    "PackageName": "AvaloniaSyncer",
+    "ApplicationName": "Avalonia Syncer",
+    "Architecture": "any",
+    "Homepage": "https://github.com/SuperJMN/avaloniaSyncer",
+    "License": "MIT",
+    "Description": "Best file explorer you'll ever find",
+    "Version": "any"
   }
-  
+}

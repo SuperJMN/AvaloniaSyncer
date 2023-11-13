@@ -16,7 +16,7 @@ using static Nuke.Common.Tooling.ProcessTasks;
 
 class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.Publish);
+    public static int Main() => Execute<Build>(x => x.PackDebian);
 
     public AbsolutePath OutputDirectory = RootDirectory / "output";
     public AbsolutePath PublishDirectory => OutputDirectory / "publish";

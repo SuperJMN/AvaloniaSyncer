@@ -9,9 +9,9 @@
     <NukeTelemetryVersion>1</NukeTelemetryVersion>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="DotnetPackaging" Version="1.0.10" />
     <PackageReference Include="Nuke.Common" Version="7.0.2" />
     <PackageReference Include="Nuke.GitHub" Version="5.0.0" />
-    <PackageReference Include="DotnetPackaging" Version="1.0.9" />
   </ItemGroup>
   <ItemGroup>
     <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />

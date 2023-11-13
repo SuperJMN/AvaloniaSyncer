@@ -44,7 +44,7 @@ class DebPackages
                 return result
                     .Finally(r =>
                     {
-                        Log.Information("{Package} {Result}", packageName, r.Match(() => "Succeeded", error => $"Failed: {error}"));
+                        Log.Information("{Package} {Result}", packageName, r.Match(() => $"{packageName} created successfully!", error => $"{packageName} creation failed: {error}"));
                         return r;
                     });
             }))
