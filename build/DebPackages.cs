@@ -22,8 +22,8 @@ class DebPackages
         var desktopProject = solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
         var runtimes = new[] { "linux-x64", "linux-arm64" };
 
-        DotNetTasks.DotNetPublish(settings => DotNetPublishSettingsExtensions
-            .SetConfiguration(settings, configuration)
+        DotNetTasks.DotNetPublish(settings => settings
+            .SetConfiguration(configuration)
             .SetProject(desktopProject)
             .CombineWith(runtimes, (c, runtime) =>
                 c.SetRuntime(runtime)
@@ -37,7 +37,15 @@ class DebPackages
 
                 string packageName = $"{projectName!.Replace(" ", "").ToLower()}_{version}_{architecture}.deb";
 
-                var packageDefinition = await new FileInfo(solution.Directory / "metadata.deb.json").ToPackageDefinition();
+                var fromFile = await new FileInfo(solution.Directory / "metadata.deb.json").ToPackageDefinition();
+                var packageDefinition = fromFile with
+                {
+                    Metadata = fromFile.Metadata with
+                    {
+                        Version = version,
+                        Architecture = GetArchitecture(architecture)
+                    }
+                };
                 
                 Log.Information("Creating {Package}", packageName);
                 var result = await DotnetPackaging.Create.Deb(packageDefinition, publishDirectory / runtime, outputDirectory / packageName);
@@ -55,5 +63,15 @@ class DebPackages
         {
             throw new Exception(".deb creation failed");
         }
+    }
+
+    static string GetArchitecture(string architecture)
+    {
+        return architecture switch
+        {
+            "x64" => "amd64",
+            "arm64" => "arm64",
+            _ => throw new NotSupportedException($"Invalid architecture {architecture}"),
+        };
     }
 }
