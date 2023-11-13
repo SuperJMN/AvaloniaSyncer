@@ -1,43 +1,34 @@
 using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using static Nuke.Common.Tooling.ProcessTasks;
+using Nuke.Common.Git;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
+
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
+using static Nuke.Common.Tooling.ProcessTasks;
 
-[AzurePipelines(AzurePipelinesImage.WindowsLatest, ImportSecrets = new[]{ nameof(GitHubAuthenticationToken)}, AutoGenerate = false)]
 class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.Publish);
+    public static int Main() => Execute<Build>(x => x.PackDebian);
 
     public AbsolutePath OutputDirectory = RootDirectory / "output";
     public AbsolutePath PublishDirectory => OutputDirectory / "publish";
     public AbsolutePath PackagesDirectory => OutputDirectory / "packages";
 
-    [Parameter("authtoken")] [Secret] readonly string GitHubAuthenticationToken;
-    
-    [GitRepository] readonly GitRepository Repository;
-    
-    [GitVersion] readonly GitVersion GitVersion;
-
     [Solution] Solution Solution;
-
-    [Parameter("publish-framework")] public string PublishFramework { get; set; }
-
-    [Parameter("publish-runtime")] public string PublishRuntime { get; set; }
-
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")] readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
+    [GitVersion] readonly GitVersion GitVersion;
+    [GitRepository] readonly GitRepository Repository;
+    [Parameter("authtoken")] [Secret] readonly string GitHubAuthenticationToken;
 
-    Target Clean => _ => _
+    Target Clean => td => td
         .Executes(() =>
         {
             OutputDirectory.CreateOrCleanDirectory();
@@ -46,56 +37,63 @@ class Build : NukeBuild
             absolutePaths.DeleteDirectories();
         });
 
-    Target Publish => _ => _
-        .DependsOn(PublishAndroid)
-        .DependsOn(PublishDesktop);
-
-    Target RestoreWorkloads => _ => _
+    Target RestoreWorkloads => td => td
         .Executes(() =>
         {
-            StartShell($"dotnet workload restore \"{Solution.Path}\"").AssertZeroExitCode();
+            StartShell(@$"dotnet workload restore {Solution.Path}").AssertZeroExitCode();
         });
 
-    Target PublishDesktop => _ => _
+    Target PackDebian => td => td
+        .DependsOn(Clean)
+        .DependsOn(RestoreWorkloads)
+        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
+
+    Target PackWindows => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
         .Executes(() =>
-    {
-        var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
-        var runtimes = new[] { "win-x64", "linux-x64", "linux-arm64" };
-
-        DotNetPublish(settings => settings
-            .SetConfiguration(Configuration)
-            .SetProject(desktopProject)
-            .CombineWith(runtimes, (c, runtime) =>
-                c.SetRuntime(runtime)
-                    .SetOutput(PublishDirectory / runtime)));
-            
-        runtimes.ForEach(rt =>
         {
-            var src = PublishDirectory / rt;
-            var dest = PackagesDirectory / rt + ".zip";
-            Log.Information("Zipping {Input} to {Output}", src, dest);
-            src.ZipTo(dest);
-        });
-    });
+            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
+            var runtimes = new[] { "win-x64", };
 
-    Target PublishAndroid => _ => _
+            DotNetPublish(settings => settings
+                .SetConfiguration(Configuration)
+                .SetProject(desktopProject)
+                .CombineWith(runtimes, (c, runtime) =>
+                    c.SetRuntime(runtime)
+                        .SetOutput(PublishDirectory / runtime)));
+
+            runtimes.ForEach(rt =>
+            {
+                var src = PublishDirectory / rt;
+                var dest = PackagesDirectory / rt + ".zip";
+                Log.Information("Zipping {Input} to {Output}", src, dest);
+                src.ZipTo(dest);
+            });
+        });
+
+    Target PackAndroid => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
         .Executes(() =>
-    {
-        var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
+        {
+            var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
         
-        DotNetPublish(settings => settings
-            .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
-            .SetProperty("ApplicationDisplayVersion", GitVersion.MajorMinorPatch)
-            .SetConfiguration(Configuration)
-            .SetProject(androidProject)
-            .SetOutput(PackagesDirectory));
-    });
+            DotNetPublish(settings => settings
+                .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
+                .SetProperty("ApplicationDisplayVersion", GitVersion.MajorMinorPatch)
+                .SetConfiguration(Configuration)
+                .SetProject(androidProject)
+                .SetOutput(PackagesDirectory));
+        });
 
-    Target PublishGitHubRelease => _ => _
+
+    Target Publish => td => td
+        .DependsOn(PackDebian)
+        .DependsOn(PackWindows)
+        .DependsOn(PackAndroid);
+
+    Target PublishGitHubRelease => td => td
         .OnlyWhenStatic(() => GitVersion.BranchName.Equals("master") || GitVersion.BranchName.Equals("origin/master"))
         .DependsOn(Publish)
         .Requires(() => GitHubAuthenticationToken)

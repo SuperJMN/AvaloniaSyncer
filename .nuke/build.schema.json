@@ -67,14 +67,6 @@
             "type": "string"
           }
         },
-        "PublishFramework": {
-          "type": "string",
-          "description": "publish-framework"
-        },
-        "PublishRuntime": {
-          "type": "string",
-          "description": "publish-runtime"
-        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
@@ -86,9 +78,10 @@
             "type": "string",
             "enum": [
               "Clean",
+              "PackAndroid",
+              "PackDebian",
+              "PackWindows",
               "Publish",
-              "PublishAndroid",
-              "PublishDesktop",
               "PublishGitHubRelease",
               "RestoreWorkloads"
             ]
@@ -105,9 +98,10 @@
             "type": "string",
             "enum": [
               "Clean",
+              "PackAndroid",
+              "PackDebian",
+              "PackWindows",
               "Publish",
-              "PublishAndroid",
-              "PublishDesktop",
               "PublishGitHubRelease",
               "RestoreWorkloads"
             ]
