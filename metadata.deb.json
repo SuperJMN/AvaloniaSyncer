@@ -4,8 +4,8 @@
       "CommandName": "avaloniasyncer",
       "DesktopEntry": {
         "Icons": {
-          "32": "../../../icon.png",
-          "64": "../../../icon.png"
+          "32": "../../icon.png",
+          "64": "../../icon.png"
         },
         "Name": "AvaloniaSyncer",
         "StartupWmClass": "AvaloniaSyncer",
