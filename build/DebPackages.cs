@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DotnetPackaging.Common;
@@ -29,36 +29,37 @@ class DebPackages
                 c.SetRuntime(runtime)
                     .SetOutput(publishDirectory / runtime)));
 
-        var results = await runtimes
-            .Select(runtime => Observable.FromAsync(async () =>
+        var results = new List<Result>();
+
+        foreach (var runtime in runtimes)
+        {
+            string projectName = solution.Name;
+            string architecture = runtime.Split("-")[1];
+
+            string packageName = $"{projectName!.Replace(" ", "").ToLower()}_{version}_{architecture}.deb";
+
+            var fromFile = await new FileInfo(solution.Directory / "metadata.deb.json").ToPackageDefinition();
+            var packageDefinition = fromFile with
             {
-                string projectName = solution.Name;
-                string architecture = runtime.Split("-")[1];
-
-                string packageName = $"{projectName!.Replace(" ", "").ToLower()}_{version}_{architecture}.deb";
-
-                var fromFile = await new FileInfo(solution.Directory / "metadata.deb.json").ToPackageDefinition();
-                var packageDefinition = fromFile with
+                Metadata = fromFile.Metadata with
                 {
-                    Metadata = fromFile.Metadata with
-                    {
-                        Version = version,
-                        Architecture = GetArchitecture(architecture)
-                    }
-                };
+                    Version = version,
+                    Architecture = GetArchitecture(architecture)
+                }
+            };
                 
-                Log.Information("Creating {Package}", packageName);
-                var result = await DotnetPackaging.Create.Deb(packageDefinition, publishDirectory / runtime, outputDirectory / packageName);
-                return result
-                    .Finally(r =>
-                    {
-                        Log.Information("{Package} {Result}", packageName, r.Match(() => $"{packageName} created successfully!", error => $"{packageName} creation failed: {error}"));
-                        return r;
-                    });
-            }))
-            .Merge(1)
-            .ToList();
+            Log.Information("Creating {Package}", packageName);
+            var result = await DotnetPackaging.Create.Deb(packageDefinition, publishDirectory / runtime, outputDirectory / packageName);
+            result
+                .Finally(r =>
+                {
+                    Log.Information("{Package} {Result}", packageName, r.Match(() => $"{packageName} created successfully!", error => $"{packageName} creation failed: {error}"));
+                    return r;
+                });
 
+            results.Add(result);
+        }
+        
         if (results.Combine().IsFailure)
         {
             throw new Exception(".deb creation failed");
