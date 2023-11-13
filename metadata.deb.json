@@ -1,0 +1,33 @@
+{
+    "Executables": {
+      "TestDebpackage.Desktop": {
+        "CommandName": "vinaytest",
+        "DesktopEntry": {
+          "Icons": {
+            "32": "C:\\Users\\JMN\\Desktop\\Testing\\icon.png",
+            "64": "C:\\Users\\JMN\\Desktop\\Testing\\icon.png"
+          },
+          "Name": "Sample application",
+          "StartupWmClass": "Sample",
+          "Keywords": [
+            "Sample "
+          ],
+          "Comment": "This is a test",
+          "Categories": [
+            "Financial"
+          ]
+        }
+      }
+    },
+    "PackageMetadata": {
+      "Maintainer": "SuperJMN",
+      "PackageName": "SamplePackage",
+      "ApplicationName": "Sample",
+      "Architecture": "amd64",
+      "Homepage": "https://www.sample.com",
+      "License": "MIT",
+      "Description": "Sample",
+      "Version": "1.0.0"
+    }
+  }
+  

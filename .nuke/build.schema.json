@@ -18,6 +18,11 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
+        "GitHubAuthenticationToken": {
+          "type": "string",
+          "description": "authtoken",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -73,7 +78,11 @@
             "type": "string",
             "enum": [
               "Clean",
+              "PackAndroid",
               "PackDebian",
+              "PackWindows",
+              "Publish",
+              "PublishGitHubRelease",
               "RestoreWorkloads"
             ]
           }
@@ -89,7 +98,11 @@
             "type": "string",
             "enum": [
               "Clean",
+              "PackAndroid",
               "PackDebian",
+              "PackWindows",
+              "Publish",
+              "PublishGitHubRelease",
               "RestoreWorkloads"
             ]
           }
