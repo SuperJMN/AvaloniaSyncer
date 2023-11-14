@@ -1,3 +1,4 @@
+using System;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
@@ -9,10 +10,13 @@ namespace AvaloniaSyncer.Sections.Connections.Configuration.Local;
 
 public class LocalFileSystemConnection : IFileSystemConnection
 {
-    public LocalFileSystemConnection(string name)
+    public LocalFileSystemConnection(Guid id, string name)
     {
         Name = name;
+        Id = id;
     }
+
+    public Guid Id { get; set; }
 
     public Task<Result<IFileSystem>> FileSystem()
     {

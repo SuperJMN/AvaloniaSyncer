@@ -1,11 +1,13 @@
-﻿namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
+﻿using System;
+
+namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
 public class SeaweedFSPlugin : IPlugin
 {
     public string Name => "SeaweedFS";
 
-    public IConfiguration CreateConfig(string name)
+    public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository)
     {
-        return new SeaweedConfigurationViewModel(name);
+        return new SeaweedConfigurationViewModel(Guid.NewGuid(), "SeaweedFS", connectionsRepository);
     }
 }

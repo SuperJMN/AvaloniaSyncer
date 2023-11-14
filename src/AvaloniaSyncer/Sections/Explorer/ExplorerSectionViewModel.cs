@@ -24,7 +24,7 @@ public class ExplorerSectionViewModel : ReactiveObject, IExplorerSectionViewMode
     public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
         repository.Connections
-            .ToObservableChangeSet(x => x.Name)
+            .ToObservableChangeSet(x => x.Id)
             .Transform(connection => (IFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
             .Bind(out connections)
             .Subscribe();

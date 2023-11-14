@@ -1,9 +1,11 @@
 ﻿using System;
+using AvaloniaSyncer.Controls;
 
 namespace AvaloniaSyncer.Sections.Connections;
 
 public interface IConfiguration
 {
-    public string Name { get; }
+    public Guid Id { get; }
     IObservable<bool> IsValid { get; }
+    public StringProperty Name { get; }
 }

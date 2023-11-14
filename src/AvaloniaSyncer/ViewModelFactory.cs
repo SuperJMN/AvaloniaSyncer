@@ -93,7 +93,8 @@ public class ViewModelFactory
                 var result = loadResult.Map(enumerable => new ConnectionsRepository(enumerable.Select(x => Mapper.ToSystem(x, logger)), logger, store));
                 var repo = result.GetValueOrDefault(() => new ConnectionsRepository(Enumerable.Empty<IFileSystemConnection>(), logger, store));
                 return repo;
-            }).Replay()
+            })
+            .Replay()
             .RefCount();
     }
 }

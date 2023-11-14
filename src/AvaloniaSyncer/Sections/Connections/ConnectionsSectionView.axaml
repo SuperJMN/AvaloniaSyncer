@@ -3,15 +3,35 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
+             xmlns:controls="clr-namespace:AvaloniaSyncer.Controls"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
 
 	<DockPanel>
-		<ListBox SelectedValue="{Binding CurrentConfiguration}" DockPanel.Dock="Left" ItemsSource="{Binding Configurations}" DisplayMemberBinding="{Binding Name}" />
+		<ListBox SelectedValue="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
+                 ItemsSource="{Binding Configurations}" Width="250">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<controls:StringEditor StringProperty="{Binding Name}" />
+                </DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 		<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-			<Button Command="{Binding AddOrUpdate}" Content="Save"  />
-            <Button Command="{Binding AddNew}" Content="Add"  />
+			<Button Command="{Binding AddOrUpdate}" Content="Save" />
+			<Button Content="Add">
+				<Button.Flyout>
+					<MenuFlyout ItemsSource="{Binding Plugins}">
+						<MenuFlyout.ItemContainerTheme>
+							<ControlTheme TargetType="MenuItem" x:DataType="connections:PluginViewModel"
+                                          BasedOn="{StaticResource {x:Type MenuItem}}">
+								<Setter Property="Header" Value="{Binding Name}" />
+								<Setter Property="Command" Value="{Binding Add}" />
+							</ControlTheme>
+						</MenuFlyout.ItemContainerTheme>
+					</MenuFlyout>
+				</Button.Flyout>
+			</Button>
 		</StackPanel>
 		<ContentControl Content="{Binding CurrentConfiguration}" />
 	</DockPanel>

@@ -18,11 +18,13 @@ public static class Mapper
         {
             LocalFileSystemConnection local => new Connection
             {
+                Id = local.Id,
                 Name = local.Name,
                 Parameters = new Local()
             },
             SeaweedFileSystemConnection seaweed => new Connection
             {
+                Id = seaweed.Id,
                 Name = seaweed.Name,
                 Parameters = new SeaweedFS
                 {
@@ -32,6 +34,7 @@ public static class Mapper
             SftpFileSystemConnection sftp =>
                 new Connection
                 {
+                    Id = sftp.Id,
                     Name = sftp.Name,
                     Parameters = new Sftp
                     {
@@ -44,6 +47,7 @@ public static class Mapper
             AndroidFileSystemConnection android =>
                 new Connection()
                 {
+                    Id = android.Id,
                     Name = android.Name,
                     Parameters = new Android(),
                 },
@@ -56,30 +60,30 @@ public static class Mapper
         switch (connection.Parameters)
         {
             case Local:
-                return new LocalFileSystemConnection(connection.Name);
+                return new LocalFileSystemConnection(connection.Id, connection.Name);
             case SeaweedFS fs:
-                return new SeaweedFileSystemConnection(connection.Name, fs.Uri, logger);
+                return new SeaweedFileSystemConnection(connection.Id, connection.Name, fs.Uri, logger);
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
-                return new SftpFileSystemConnection(connection.Name, info);
+                return new SftpFileSystemConnection(connection.Id, connection.Name, info);
             case Android:
-                return new AndroidFileSystemConnection(connection.Name);
+                return new AndroidFileSystemConnection(connection.Id, connection.Name);
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    public static IConfiguration ToEditable(IFileSystemConnection connection)
+    public static IConfiguration ToEditable(IFileSystemConnection connection, IConnectionsRepository repo)
     {
         return connection switch
         {
-            LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Name),
-            SeaweedFileSystemConnection seaweedFileFileSystemConnection => new SeaweedConfigurationViewModel(seaweedFileFileSystemConnection.Name)
+            LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Id, local.Name, repo),
+            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, repo)
             {
-                Address = seaweedFileFileSystemConnection.Uri.ToString()
+                Address = seaweed.Uri.ToString(),
             },
-            AndroidFileSystemConnection localFileSystemConnection => new AndroidConfigurationViewModel(localFileSystemConnection.Name),
-            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Name)
+            AndroidFileSystemConnection android => new AndroidConfigurationViewModel(android.Id, repo),
+            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id)
             {
                 Host = sftp.Parameters.Host,
                 Port = sftp.Parameters.Port,
@@ -94,14 +98,14 @@ public static class Mapper
     {
         return currentConfiguration switch
         {
-            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Name, new Uri(swfs.Address), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Name),
-            SftpConfigurationViewModel sftp => new SftpFileSystemConnection(
-                sftp.Name,
+            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.Value, new Uri(swfs.Address), Maybe<ILogger>.None),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.Value),
+            SftpConfigurationViewModel sftp => new SftpFileSystemConnection(sftp.Id,
+                sftp.Name.Value,
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),
-            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Name),
+            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.Value),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

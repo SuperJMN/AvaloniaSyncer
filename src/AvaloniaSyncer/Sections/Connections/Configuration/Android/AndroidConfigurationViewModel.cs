@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Reactive.Linq;
+using AvaloniaSyncer.Controls;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.Android;
 
 public class AndroidConfigurationViewModel : IConfiguration
 {
-    public string Name { get; }
     public IObservable<bool> IsValid => Observable.Return(true);
+    public StringProperty Name { get; }
+    public Guid Id { get; set; }
 
-    public AndroidConfigurationViewModel(string name)
+    public AndroidConfigurationViewModel(Guid id, IConnectionsRepository connectionsRepository)
     {
-        Name = name;
+        Id = id;
+        Name = new StringProperty("Saludos");
     }
 }
