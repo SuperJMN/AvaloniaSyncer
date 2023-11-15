@@ -10,33 +10,33 @@
              x:DataType="connections:ConnectionsSectionViewModel">
 
 	<DockPanel>
-		<ListBox SelectedItem="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
-                 ItemsSource="{Binding Configurations}" Width="250">
-			<ListBox.ItemTemplate>
-				<DataTemplate>
-					<controls:StringEditor StringProperty="{Binding Name}" />
-                </DataTemplate>
-			</ListBox.ItemTemplate>
-			<Interaction.Behaviors>
-				<avaloniaSyncer:SelectNewItemBehavior />
-            </Interaction.Behaviors>
-		</ListBox>
-		<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-			<Button Command="{Binding CurrentConfiguration.Save}" Content="Save" />
-			<Button Content="Add">
-				<Button.Flyout>
-					<MenuFlyout ItemsSource="{Binding Plugins}">
-						<MenuFlyout.ItemContainerTheme>
-							<ControlTheme TargetType="MenuItem" x:DataType="connections:PluginViewModel"
+		<Panel>
+			<ListBox SelectedItem="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
+                     ItemsSource="{Binding Configurations}" Width="250">
+				<ListBox.ItemTemplate>
+					<DataTemplate>
+						<controls:StringEditor IsEditVisible="{Binding $parent[ListBoxItem].IsSelected}" StringProperty="{Binding Name}" />
+					</DataTemplate>
+				</ListBox.ItemTemplate>
+				<Interaction.Behaviors>
+					<avaloniaSyncer:SelectNewItemBehavior />
+				</Interaction.Behaviors>
+			</ListBox>
+            <Button Content="+" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+                <Button.Flyout>
+                    <MenuFlyout ItemsSource="{Binding Plugins}">
+                        <MenuFlyout.ItemContainerTheme>
+                            <ControlTheme TargetType="MenuItem" x:DataType="connections:PluginViewModel"
                                           BasedOn="{StaticResource {x:Type MenuItem}}">
-								<Setter Property="Header" Value="{Binding Name}" />
-								<Setter Property="Command" Value="{Binding Add}" />
-							</ControlTheme>
-						</MenuFlyout.ItemContainerTheme>
-					</MenuFlyout>
-				</Button.Flyout>
-			</Button>
-		</StackPanel>
+                                <Setter Property="Header" Value="{Binding Name}" />
+                                <Setter Property="Command" Value="{Binding Add}" />
+                            </ControlTheme>
+                        </MenuFlyout.ItemContainerTheme>
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+		</Panel>
+		<Button DockPanel.Dock="Bottom" Command="{Binding CurrentConfiguration.Save}" Margin="10" HorizontalAlignment="Right" Content="Save" />
 		<ContentControl Content="{Binding CurrentConfiguration}" />
 	</DockPanel>
 
