@@ -19,6 +19,7 @@ public class SelectNewItemBehavior : Behavior<SelectingItemsControl>
             return; 
         }
 
+        
         var lastAddedItem = AssociatedObject
             .WhenAnyValue(x => x.ItemsView)
             .Select(view => view as INotifyCollectionChanged)
@@ -26,7 +27,7 @@ public class SelectNewItemBehavior : Behavior<SelectingItemsControl>
                 .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                     handler => changed.CollectionChanged += handler,
                     handler => changed.CollectionChanged -= handler)
-                .Where(x => x.EventArgs.Action == NotifyCollectionChangedAction.Add)
+                .Where(x => x.EventArgs.NewItems.Count != AssociatedObject.ItemsView.Count && x.EventArgs.Action == NotifyCollectionChangedAction.Add)
                 .Select(x => x.EventArgs.NewItems!.Cast<object>().Last()))
             .Switch();
 

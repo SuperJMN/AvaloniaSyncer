@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Reactive;
 using AvaloniaSyncer.Sections.Connections.Configuration.Android;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
@@ -27,7 +26,7 @@ public class ConnectionsSectionViewModel : ReactiveObject
     {
         configs.AddOrUpdate(repo.Connections.ToList().Select(connection => Mapper.ToConfiguration(connection, repo)));
         configs.Connect().Bind(out configurations).Subscribe();
-        AddOrUpdate = ReactiveCommand.Create(() =>
+        ReactiveCommand.Create(() =>
         {
             var connection = Mapper.ToConnection(CurrentConfiguration);
             repo.AddOrUpdate(connection);
@@ -43,12 +42,10 @@ public class ConnectionsSectionViewModel : ReactiveObject
             .ToList();
     }
 
-    public ReactiveCommand<Unit, Unit> AddOrUpdate { get; }
-
     public ReadOnlyObservableCollection<IConfiguration> Configurations => configurations;
 
     [Reactive]
-    public IConfiguration CurrentConfiguration { get; set; }
+    public IConfiguration? CurrentConfiguration { get; set; }
 
     public IEnumerable<PluginViewModel> Plugins { get; }
 }
