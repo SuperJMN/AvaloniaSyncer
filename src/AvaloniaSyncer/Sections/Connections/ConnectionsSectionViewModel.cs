@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using AvaloniaSyncer.Sections.Connections.Configuration.Android;
@@ -23,10 +25,8 @@ public class ConnectionsSectionViewModel : ReactiveObject
 
     public ConnectionsSectionViewModel(IConnectionsRepository repo, INotificationService notificationService, IDialogService dialogService)
     {
-        configs.AddOrUpdate(repo.Connections.ToList().Select(connection => Mapper.ToEditable(connection, repo)));
-
+        configs.AddOrUpdate(repo.Connections.ToList().Select(connection => Mapper.ToConfiguration(connection, repo)));
         configs.Connect().Bind(out configurations).Subscribe();
-
         AddOrUpdate = ReactiveCommand.Create(() =>
         {
             var connection = Mapper.ToConnection(CurrentConfiguration);

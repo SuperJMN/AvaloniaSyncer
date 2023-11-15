@@ -73,7 +73,7 @@ public static class Mapper
         }
     }
 
-    public static IConfiguration ToEditable(IFileSystemConnection connection, IConnectionsRepository repo)
+    public static IConfiguration ToConfiguration(IFileSystemConnection connection, IConnectionsRepository repo)
     {
         return connection switch
         {
@@ -82,8 +82,8 @@ public static class Mapper
             {
                 Address = seaweed.Uri.ToString(),
             },
-            AndroidFileSystemConnection android => new AndroidConfigurationViewModel(android.Id, repo),
-            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id)
+            AndroidFileSystemConnection android => new AndroidConfigurationViewModel(android.Id, android.Name, repo),
+            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, repo)
             {
                 Host = sftp.Parameters.Host,
                 Port = sftp.Parameters.Port,

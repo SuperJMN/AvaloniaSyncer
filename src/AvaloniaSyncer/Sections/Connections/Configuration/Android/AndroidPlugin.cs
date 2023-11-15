@@ -8,6 +8,6 @@ public class AndroidPlugin : IPlugin
 
     public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository)
     {
-        return new AndroidConfigurationViewModel(Guid.NewGuid(), connectionsRepository);
+        return new AndroidConfigurationViewModel(Guid.NewGuid(), "Android local", connectionsRepository);
     }
 }

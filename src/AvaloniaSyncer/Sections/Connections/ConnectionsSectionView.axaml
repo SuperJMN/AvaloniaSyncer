@@ -4,21 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
              xmlns:controls="clr-namespace:AvaloniaSyncer.Controls"
+             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
 
 	<DockPanel>
-		<ListBox SelectedValue="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
+		<ListBox SelectedItem="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
                  ItemsSource="{Binding Configurations}" Width="250">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<controls:StringEditor StringProperty="{Binding Name}" />
                 </DataTemplate>
 			</ListBox.ItemTemplate>
+			<Interaction.Behaviors>
+				<avaloniaSyncer:SelectNewItemBehavior />
+            </Interaction.Behaviors>
 		</ListBox>
 		<StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
-			<Button Command="{Binding AddOrUpdate}" Content="Save" />
+			<Button Command="{Binding CurrentConfiguration.Save}" Content="Save" />
 			<Button Content="Add">
 				<Button.Flyout>
 					<MenuFlyout ItemsSource="{Binding Plugins}">
