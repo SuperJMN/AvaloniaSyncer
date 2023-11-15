@@ -1,3 +1,4 @@
+using System;
 using System.IO.Abstractions;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
@@ -10,10 +11,13 @@ namespace AvaloniaSyncer.Sections.Connections.Configuration.Android;
 
 public class AndroidFileSystemConnection : IFileSystemConnection
 {
-    public AndroidFileSystemConnection(string name)
+    public AndroidFileSystemConnection(Guid id, string name)
     {
         Name = name;
+        Id = id;
     }
+
+    public Guid Id { get; set; }
 
     public Task<Result<IFileSystem>> FileSystem()
     {

@@ -3,5 +3,5 @@
 public interface IPlugin
 {
     string Name { get; }
-    IConfiguration CreateConfig(string name);
+    IConfiguration CreateConfig(IConnectionsRepository connectionsRepository);
 }

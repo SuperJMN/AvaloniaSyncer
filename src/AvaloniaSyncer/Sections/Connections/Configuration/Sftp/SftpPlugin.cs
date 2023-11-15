@@ -1,11 +1,13 @@
-﻿namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
+﻿using System;
+
+namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
 public class SftpPlugin : IPlugin
 {
     public string Name => "SFTP";
 
-    public IConfiguration CreateConfig(string name)
+    public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository)
     {
-        return new SftpConfigurationViewModel(name);
+        return new SftpConfigurationViewModel(Guid.NewGuid(), "SFTP", connectionsRepository);
     }
 }

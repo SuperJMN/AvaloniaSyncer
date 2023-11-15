@@ -17,12 +17,15 @@ internal class SeaweedFileSystemConnection : IFileSystemConnection
 
     private readonly Maybe<ILogger> logger;
 
-    public SeaweedFileSystemConnection(string name, Uri uri, Maybe<ILogger> logger)
+    public SeaweedFileSystemConnection(Guid id, string name, Uri uri, Maybe<ILogger> logger)
     {
+        Id = id;
+        Name = name;
         Uri = uri;
         this.logger = logger;
-        Name = name;
     }
+
+    public Guid Id { get; set; }
 
     public Task<Result<IFileSystem>> FileSystem()
     {
@@ -49,5 +52,5 @@ internal class SeaweedFileSystemConnection : IFileSystemConnection
         }, () => new HttpClientHandler());
     }
 
-    public string Name { get; set; }
+    public string Name { get; }
 }
