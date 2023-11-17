@@ -83,13 +83,7 @@ public static class Mapper
                 Address = seaweed.Uri.ToString(),
             },
             AndroidFileSystemConnection android => new AndroidConfigurationViewModel(android.Id, android.Name, repo),
-            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, repo)
-            {
-                Host = sftp.Parameters.Host,
-                Port = sftp.Parameters.Port,
-                Username = sftp.Parameters.Username,
-                Password = sftp.Parameters.Password,
-            },
+            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };
     }
@@ -98,14 +92,14 @@ public static class Mapper
     {
         return currentConfiguration switch
         {
-            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.Value, new Uri(swfs.Address), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.Value),
+            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.InstanceOfType.Text, new Uri(swfs.Address), Maybe<ILogger>.None),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.InstanceOfType.Text),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(sftp.Id,
-                sftp.Name.Value,
+                sftp.Name.InstanceOfType.Text,
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),
-            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.Value),
+            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.InstanceOfType.Text),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

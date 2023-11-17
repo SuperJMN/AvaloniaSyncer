@@ -12,5 +12,5 @@ public class SeaweedConfigurationViewModel : ConfigurationViewModelBase
         this.ValidationRule(x => x.Address, s => Uri.TryCreate(s, UriKind.Absolute, out _), "Invalid address");
     }
 
-    [Reactive] public string Address { get; set; } = "";
+    [Reactive] public string Address { get; init; } = "";
 }
