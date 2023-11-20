@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
              xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
-             xmlns:stringEditor="clr-namespace:Zafiro.Avalonia.Controls.StringEditor;assembly=Zafiro.Avalonia"
+             xmlns:s="clr-namespace:Zafiro.Avalonia.Controls.StringEditor;assembly=Zafiro.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
@@ -15,7 +15,7 @@
                      ItemsSource="{Binding Configurations}" Width="250">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-                        <stringEditor:StringEditorControl Wrapper="{Binding Name}" />
+                        <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" Wrapper="{Binding Name}" />
                     </DataTemplate>
 				</ListBox.ItemTemplate>
 				<Interaction.Behaviors>
