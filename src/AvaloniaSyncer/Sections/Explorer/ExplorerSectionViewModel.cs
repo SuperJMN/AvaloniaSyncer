@@ -26,6 +26,7 @@ public class ExplorerSectionViewModel : ReactiveObject, IExplorerSectionViewMode
         repository.Connections
             .ToObservableChangeSet(x => x.Id)
             .Transform(connection => (IFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
+            .Sort(SortExpressionComparer<IFileSystemConnectionViewModel>.Ascending(x => x.Name))
             .Bind(out connections)
             .Subscribe();
     }

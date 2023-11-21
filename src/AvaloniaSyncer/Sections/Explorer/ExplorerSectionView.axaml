@@ -12,11 +12,52 @@
 		<avaloniaSyncer:ExplorerSectionViewModelDesign />
 	</Design.DataContext>
 
+	<UserControl.Resources>
+		  <DrawingGroup x:Key="refresh_xaml">
+        <DrawingGroup.ClipGeometry>
+            <RectangleGeometry Rect="-0.5,0.0,25.0,25.0"/>
+        </DrawingGroup.ClipGeometry>
+        <GeometryDrawing>
+            <GeometryDrawing.Pen>
+                <Pen Brush="#ff000000" LineJoin="Round" Thickness="1.5" LineCap="Round"/>
+            </GeometryDrawing.Pen>
+            <GeometryDrawing.Geometry>
+                <PathGeometry Figures="M 7.1998 10.8799 L 3.9998 14.0799 L 0.799805 10.8799" FillRule="NonZero"/>
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+            <GeometryDrawing.Pen>
+                <Pen Brush="#ff000000" LineJoin="Round" Thickness="1.5" LineCap="Round"/>
+            </GeometryDrawing.Pen>
+            <GeometryDrawing.Geometry>
+                <PathGeometry Figures="M 17.72 6.77007 C 16.6086 5.63347 15.1839 4.85371 13.6275 4.53032 C 12.0711 4.20693 10.4536 4.35459 8.98145 4.95439 C 7.5093 5.5542 6.24924 6.57899 5.362 7.898 C 4.47476 9.21701 4.0006 10.7703 4 12.3599 V 14.0901" FillRule="NonZero"/>
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+            <GeometryDrawing.Pen>
+                <Pen Brush="#ff000000" LineJoin="Round" Thickness="1.5" LineCap="Round"/>
+            </GeometryDrawing.Pen>
+            <GeometryDrawing.Geometry>
+                <PathGeometry Figures="M 16.7998 13.96 L 19.9998 10.75 L 23.1998 13.96" FillRule="NonZero"/>
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+        <GeometryDrawing>
+            <GeometryDrawing.Pen>
+                <Pen Brush="#ff000000" LineJoin="Round" Thickness="1.5" LineCap="Round"/>
+            </GeometryDrawing.Pen>
+            <GeometryDrawing.Geometry>
+                <PathGeometry Figures="M 6.28027 18.0801 C 7.39163 19.2167 8.8164 19.9962 10.3728 20.3196 C 11.9292 20.643 13.5467 20.4956 15.0188 19.8958 C 16.491 19.2959 17.751 18.2712 18.6383 16.9521 C 19.5255 15.6331 19.9997 14.0796 20.0003 12.49 V 10.76" FillRule="NonZero"/>
+            </GeometryDrawing.Geometry>
+        </GeometryDrawing>
+    </DrawingGroup>
+    <DrawingImage Drawing="{StaticResource refresh_xaml}" x:Key="di_refresh_xaml"/>
+    </UserControl.Resources>
+
 	<TabControl Padding="0" ItemsSource="{Binding Connections}" TabStripPlacement="Top">
 		<TabControl.ItemTemplate>
 			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
-				<TextBlock Text="{Binding Name}" />
-			</DataTemplate>
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
 		</TabControl.ItemTemplate>
 		<TabControl.ContentTemplate>
 			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">

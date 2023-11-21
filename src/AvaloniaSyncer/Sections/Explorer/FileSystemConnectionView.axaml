@@ -8,28 +8,32 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Explorer.FileSystemConnectionView"
              x:DataType="explorer:FileSystemConnectionViewModel">
-    <DockPanel>
-      <Button IsVisible="False" Content="Load" DockPanel.Dock="Top" Command="{Binding Load}" />
-      <ContentControl Margin="0" Content="{Binding FileSystemExplorer}">
-          <ContentControl.ContentTemplate>
-              <DataTemplate DataType="explorer1:FileSystemExplorer">
-                  <Grid ColumnDefinitions="* *">
-                      <DockPanel Grid.ColumnSpan="2">
-                          <ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
-                          <ContentControl Content="{Binding Address}" DockPanel.Dock="Top" Margin="0 4" />
-                          <ContentControl Content="{Binding Details^}" />
-                      </DockPanel>
-                      <transferManager:LightTransferManagerView Grid.Column="1" VerticalAlignment="Bottom"
-                                                                HorizontalAlignment="Right" Margin="15"
-                                                                DataContext="{Binding TransferManager}" />
-                  </Grid>
-              </DataTemplate>
-          </ContentControl.ContentTemplate>
-      </ContentControl>
-      <Interaction.Behaviors>
-          <RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
-              <InvokeCommandAction Command="{Binding Load}" />
-          </RoutedEventTriggerBehavior>
-      </Interaction.Behaviors>
-  </DockPanel>
+	<Panel>
+		<Menu FlowDirection="RightToLeft" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Right">
+			<MenuItem Header="...">
+				<MenuItem Header="Reconnect" FlowDirection="LeftToRight" Command="{Binding Refresh}" />
+			</MenuItem>
+		</Menu>
+		<ContentControl Margin="0" Content="{Binding FileSystemExplorer}">
+			<ContentControl.ContentTemplate>
+				<DataTemplate DataType="explorer1:FileSystemExplorer">
+					<Grid ColumnDefinitions="* *">
+						<DockPanel Grid.ColumnSpan="2">
+							<ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
+							<ContentControl Content="{Binding Address}" DockPanel.Dock="Top" Margin="0 4" />
+							<ContentControl Content="{Binding Details^}" />
+						</DockPanel>
+						<transferManager:LightTransferManagerView Grid.Column="1" VerticalAlignment="Bottom"
+																  HorizontalAlignment="Right" Margin="15"
+																  DataContext="{Binding TransferManager}" />
+					</Grid>
+				</DataTemplate>
+			</ContentControl.ContentTemplate>
+		</ContentControl>
+		<Interaction.Behaviors>
+			<RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
+				<InvokeCommandAction Command="{Binding Load}" />
+			</RoutedEventTriggerBehavior>
+		</Interaction.Behaviors>
+	</Panel>
 </UserControl>
