@@ -56,15 +56,8 @@
 	<TabControl Padding="0" ItemsSource="{Binding Connections}" TabStripPlacement="Top">
 		<TabControl.ItemTemplate>
 			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
-				<DockPanel>
-                    <Button Height="16" DockPanel.Dock="Right" Margin="4" Padding="0" Theme="{StaticResource Transparent}" Command="{Binding Refresh}">
-                        <Button.Content>
-                            <Image Source="{StaticResource di_refresh_xaml}" />
-                        </Button.Content>
-                    </Button>
-                    <TextBlock Text="{Binding Name}" />
-                </DockPanel>
-			</DataTemplate>
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
 		</TabControl.ItemTemplate>
 		<TabControl.ContentTemplate>
 			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
