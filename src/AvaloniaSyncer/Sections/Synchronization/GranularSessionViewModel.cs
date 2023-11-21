@@ -8,6 +8,7 @@ using System.Reactive.Subjects;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DynamicData;
+using ReactiveUI;
 using Serilog;
 using Zafiro.Actions;
 using Zafiro.CSharpFunctionalExtensions;
@@ -57,7 +58,6 @@ public class GranularSessionViewModel
         SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
         ItemsUpdater(sourceList, Analyze.Results.Successes()).Subscribe();
         IsSyncing = SyncAll.IsExecuting;
-
     }
 
     public IObservable<LongProgress> Progress => progress.AsObservable();
@@ -81,16 +81,12 @@ public class GranularSessionViewModel
                     .Merge(3)
                     .Successes().ToList());
 
-        return observableOfLists.Do(list => sourceList.Edit(models =>
+        return observableOfLists
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Do(list =>
         {
-            models.Clear();
-            models.AddRange(list);
-        }));
-    }
-
-    private IEnumerable<Task<Result<IFileActionViewModel>>> GenerateActions(IEnumerable<FileDiff> listsOfDiffs)
-    {
-        return listsOfDiffs.Select(GenerateAction);
+            sourceList.EditDiff(list);
+        });
     }
 
     private Task<Result<IFileActionViewModel>> GenerateAction(FileDiff fileDiff)
