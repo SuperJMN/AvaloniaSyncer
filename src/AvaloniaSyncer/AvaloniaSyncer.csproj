@@ -29,9 +29,9 @@
     <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.49" />
     <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.19" />
     <PackageReference Include="Zafiro.FileSystem.Android" Version="4.0.38" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.38" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.38" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.38" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="4.0.39" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="4.0.39" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="4.0.39" />
     <PackageReference Include="Zafiro.UI" Version="4.0.11" />
   </ItemGroup>
 </Project>
