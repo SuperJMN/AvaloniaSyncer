@@ -12,6 +12,10 @@ Welcome to AvaloniaSyncer, your go-to solution for seamless file synchronization
 
 - **Intuitive UI (Even if It's a Bit Ugly):** While I'm still working on the aesthetics, the user interface is designed to be user-friendly, providing an intuitive experience throughout your file synchronization journey.
 
+![image](https://github.com/SuperJMN/AvaloniaSyncer/assets/3109851/7009f118-10b6-4fed-ad60-105611f235ac)
+
+![image](https://github.com/SuperJMN/AvaloniaSyncer/assets/3109851/0bab68f0-5e6d-484d-83fa-a30be51a5166)
+
 ### Contributions
 
 I love contributions to improve AvaloniaSyncer! If you have ideas for new features, bug fixes, or UI enhancements, feel free to open an issue or submit a pull request.
