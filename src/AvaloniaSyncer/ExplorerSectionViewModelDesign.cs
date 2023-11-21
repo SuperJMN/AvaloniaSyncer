@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using AvaloniaSyncer.Sections.Explorer;
-using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.FileSystem;
@@ -33,4 +32,5 @@ public class FileSystemConnectionDesign : IFileSystemConnectionViewModel
 
     public ReactiveCommand<Unit, Result<IFileSystem>> Load { get; set; }
     public string Name { get; }
+    public ReactiveCommand<Unit, Result<IFileSystem>> Refresh { get; set; }
 }
