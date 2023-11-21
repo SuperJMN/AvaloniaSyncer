@@ -10,8 +10,8 @@
              x:DataType="explorer:FileSystemConnectionViewModel">
 	<Panel>
 		<Menu FlowDirection="RightToLeft" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Right">
-			<MenuItem Header="..." FlowDirection="LeftToRight" >
-				<MenuItem Header="Reconnect" Command="{Binding Refresh}" />
+			<MenuItem Header="...">
+				<MenuItem Header="Reconnect" FlowDirection="LeftToRight" Command="{Binding Refresh}" />
 			</MenuItem>
 		</Menu>
 		<ContentControl Margin="0" Content="{Binding FileSystemExplorer}">
