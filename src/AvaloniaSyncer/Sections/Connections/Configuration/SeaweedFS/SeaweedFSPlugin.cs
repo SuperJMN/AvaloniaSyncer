@@ -8,6 +8,9 @@ public class SeaweedFSPlugin : IPlugin
 
     public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository)
     {
-        return new SeaweedConfigurationViewModel(Guid.NewGuid(), "SeaweedFS", connectionsRepository);
+        return new SeaweedConfigurationViewModel(Guid.NewGuid(), "SeaweedFS", connectionsRepository)
+        {
+            Address = "http://"
+        };
     }
 }

@@ -42,7 +42,7 @@
 			</Button>
 		</Panel>
 		<Button DockPanel.Dock="Bottom" Command="{Binding CurrentConfiguration.Save}" Margin="10" HorizontalAlignment="Right" Content="Save" />
-		<ContentControl Content="{Binding CurrentConfiguration}" />
+		<ContentControl Padding="8" Content="{Binding CurrentConfiguration}" />
 	</DockPanel>
 
 </UserControl>
