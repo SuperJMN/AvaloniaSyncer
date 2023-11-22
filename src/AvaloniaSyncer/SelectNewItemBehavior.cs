@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using Avalonia.Controls.Primitives;
 using Avalonia.Xaml.Interactivity;
@@ -26,8 +27,8 @@ public class SelectNewItemBehavior : Behavior<SelectingItemsControl>
                 .FromEventPattern<NotifyCollectionChangedEventHandler, NotifyCollectionChangedEventArgs>(
                     handler => changed.CollectionChanged += handler,
                     handler => changed.CollectionChanged -= handler)
-                .Where(x => x.EventArgs.NewItems!.Count != AssociatedObject.ItemsView.Count && x.EventArgs.Action == NotifyCollectionChangedAction.Add)
-                .Select(x => x.EventArgs.NewItems!.Cast<object>().Last()))
+                .Where(HasAddedItems)
+                .Select(x => AssociatedObject.ItemsView.Cast<object>().Last()))
             .Switch();
 
         selectionUpdater = lastAddedItem
@@ -35,6 +36,23 @@ public class SelectNewItemBehavior : Behavior<SelectingItemsControl>
             .Subscribe();
 
         base.OnAttached();
+    }
+
+    private bool HasAddedItems(EventPattern<NotifyCollectionChangedEventArgs> x)
+    {
+        if (AssociatedObject is null)
+        {
+            return false; 
+        }
+
+        if (x.EventArgs.Action == NotifyCollectionChangedAction.Reset && AssociatedObject.ItemsView.Count == 1)
+        {
+            return true;
+        }
+
+        var allItemsAreNew = x.EventArgs.NewItems != null && x.EventArgs.NewItems.Count != AssociatedObject.ItemsView.Count;
+        var isAdd = x.EventArgs.Action == NotifyCollectionChangedAction.Add;
+        return allItemsAreNew && isAdd;
     }
 
     protected override void OnDetaching()
