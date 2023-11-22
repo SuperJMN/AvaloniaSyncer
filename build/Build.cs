@@ -66,7 +66,8 @@ class Build : NukeBuild
             runtimes.ForEach(rt =>
             {
                 var src = PublishDirectory / rt;
-                var dest = PackagesDirectory / rt + ".zip";
+                var zipName = $"{Solution.Name}-{rt.Replace("win", "Windows")}.zip";
+                var dest = PackagesDirectory / zipName;
                 Log.Information("Zipping {Input} to {Output}", src, dest);
                 src.ZipTo(dest);
             });

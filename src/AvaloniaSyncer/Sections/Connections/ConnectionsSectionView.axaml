@@ -8,14 +8,19 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
-
 	<DockPanel>
 		<Panel>
 			<ListBox SelectedItem="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
                      ItemsSource="{Binding Configurations}" Width="250">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-                        <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" Wrapper="{Binding Name}" />
+                        <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" Wrapper="{Binding Name}">
+							<s:StringEditorControl.Styles>
+                                <Style Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
+                                    <Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
+                                </Style>
+                            </s:StringEditorControl.Styles>
+                        </s:StringEditorControl>
                     </DataTemplate>
 				</ListBox.ItemTemplate>
 				<Interaction.Behaviors>
