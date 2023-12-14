@@ -56,7 +56,7 @@ public class GranularSessionViewModel
             });
         }, Maybe.From(canSync));
         SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
-        ItemsUpdater(sourceList, Analyze.Results.Successes()).Subscribe();
+        ItemsUpdater(sourceList, Analyze.Start.Successes()).Subscribe();
         IsSyncing = SyncAll.IsExecuting;
     }
 

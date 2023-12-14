@@ -7,11 +7,11 @@ using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 using ReactiveUI.Validation.Helpers;
 using Serilog;
-using Zafiro.Avalonia.Model;
 using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Synchronizer;
 using Zafiro.UI;
+using IValidatable = Zafiro.UI.IValidatable;
 
 namespace AvaloniaSyncer.Sections.Synchronization;
 

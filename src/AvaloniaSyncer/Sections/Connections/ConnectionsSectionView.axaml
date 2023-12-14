@@ -14,7 +14,7 @@
                      ItemsSource="{Binding Configurations}" Width="250">
 				<ListBox.ItemTemplate>
 					<DataTemplate>
-                        <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" Wrapper="{Binding Name}">
+                        <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" StringField="{Binding Name}">
 							<s:StringEditorControl.Styles>
                                 <Style Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
                                     <Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
