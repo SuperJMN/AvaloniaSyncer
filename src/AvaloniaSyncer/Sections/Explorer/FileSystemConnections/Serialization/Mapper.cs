@@ -92,14 +92,14 @@ public static class Mapper
     {
         return currentConfiguration switch
         {
-            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.InstanceOfType.Text, new Uri(swfs.Address), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.InstanceOfType.Text),
+            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.CommittedValue, new Uri(swfs.Address), Maybe<ILogger>.None),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.CommittedValue),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(sftp.Id,
-                sftp.Name.InstanceOfType.Text,
+                sftp.Name.CommittedValue,
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),
-            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.InstanceOfType.Text),
+            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.CommittedValue),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

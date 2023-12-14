@@ -9,6 +9,6 @@ public interface IConfiguration
 {
     public Guid Id { get; }
     IObservable<bool> IsValid { get; }
-    public EditableString Name { get; }
+    public StringField Name { get; }
     ReactiveCommand<Unit, Unit> Save { get; set; }
 }
