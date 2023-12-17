@@ -1,6 +1,5 @@
 using System;
 using AvaloniaSyncer.Sections.Connections;
-using AvaloniaSyncer.Sections.Connections.Configuration.Android;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
@@ -44,13 +43,6 @@ public static class Mapper
                         Password = sftp.Parameters.Password
                     }
                 },
-            AndroidFileSystemConnection android =>
-                new Connection()
-                {
-                    Id = android.Id,
-                    Name = android.Name,
-                    Parameters = new Android(),
-                },
             _ => throw new ArgumentOutOfRangeException(nameof(fileSystemConnection))
         };
     }
@@ -66,8 +58,6 @@ public static class Mapper
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 return new SftpFileSystemConnection(connection.Id, connection.Name, info);
-            case Android:
-                return new AndroidFileSystemConnection(connection.Id, connection.Name);
             default:
                 throw new ArgumentOutOfRangeException();
         }
@@ -82,7 +72,6 @@ public static class Mapper
             {
                 Address = seaweed.Uri.ToString(),
             },
-            AndroidFileSystemConnection android => new AndroidConfigurationViewModel(android.Id, android.Name, repo),
             SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };
@@ -99,7 +88,6 @@ public static class Mapper
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),
-            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.CommittedValue),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }
