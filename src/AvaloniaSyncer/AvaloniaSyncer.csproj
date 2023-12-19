@@ -37,7 +37,6 @@
       <Temp>Zafiro.Avalonia.FileExplorer</Temp>
       <Name>Zafiro.Avalonia.FileExplorer</Name>
     </ProjectReference>
-    <PackageReference Include="Zafiro.FileSystem.Android" Version="4.0.39" />
     <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj">
       <Temp>Zafiro.FileSystem.SeaweedFS.Filer.Client</Temp>
     </ProjectReference>
