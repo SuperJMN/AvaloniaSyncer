@@ -5,11 +5,11 @@ using DynamicData;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 
-public class FileSystemConnectionRepository : IFileSystemConnectionRepository
+public class FileSystemConnectionRepository : IZafiroFileSystemConnectionRepository
 {
-    private readonly SourceCache<Serialization.IFileSystemConnection, string> systems = new(x => x.Name);
+    private readonly SourceCache<Serialization.IZafiroFileSystemConnection, string> systems = new(x => x.Name);
 
-    public FileSystemConnectionRepository(IEnumerable<Serialization.IFileSystemConnection> configurations)
+    public FileSystemConnectionRepository(IEnumerable<Serialization.IZafiroFileSystemConnection> configurations)
     {
         systems.AddOrUpdate(configurations);
         var changes = systems.Connect();
@@ -17,5 +17,5 @@ public class FileSystemConnectionRepository : IFileSystemConnectionRepository
         Connections = collection;
     }
 
-    public ReadOnlyObservableCollection<Serialization.IFileSystemConnection> Connections { get; }
+    public ReadOnlyObservableCollection<Serialization.IZafiroFileSystemConnection> Connections { get; }
 }

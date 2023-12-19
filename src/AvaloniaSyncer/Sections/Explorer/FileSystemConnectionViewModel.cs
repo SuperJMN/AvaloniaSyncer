@@ -14,12 +14,12 @@ using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Explorer;
 
-public class FileSystemConnectionViewModel : ReactiveObject, IFileSystemConnectionViewModel
+public class FileSystemConnectionViewModel : ReactiveObject, IZafiroFileSystemConnectionViewModel
 {
-    private readonly IFileSystemConnection connection;
+    private readonly IZafiroFileSystemConnection connection;
     private readonly ObservableAsPropertyHelper<IFileSystemExplorer?> explorer;
 
-    public FileSystemConnectionViewModel(IFileSystemConnection connection, INotificationService notificationService, IClipboard clipboardViewModel, ITransferManager transferManager)
+    public FileSystemConnectionViewModel(IZafiroFileSystemConnection connection, INotificationService notificationService, IClipboard clipboardViewModel, ITransferManager transferManager)
     {
         this.connection = connection;
 
@@ -29,17 +29,17 @@ public class FileSystemConnectionViewModel : ReactiveObject, IFileSystemConnecti
 
         explorer = Load.Merge(Refresh)
             .Successes()
-            .Select(system => new FileSystemExplorer(system, notificationService, clipboardViewModel, transferManager))
+            .Select(system => new FileSystemExplorer(system, notificationService, clipboardViewModel, transferManager, null))
             .ToProperty(this, x => x.FileSystemExplorer);
 
         this.WhenAnyValue(x => x.FileSystemExplorer, selector: s => s is null).Subscribe(canLoad);
     }
 
-    public ReactiveCommand<Unit, Result<IFileSystem>> Refresh { get; set; }
+    public ReactiveCommand<Unit, Result<IFileSystemRoot>> Refresh { get; set; }
 
     public IFileSystemExplorer? FileSystemExplorer => explorer.Value;
 
-    public ReactiveCommand<Unit, Result<IFileSystem>> Load { get; set; }
+    public ReactiveCommand<Unit, Result<IFileSystemRoot>> Load { get; set; }
 
     public string Name => connection.Name;
 }

@@ -1,14 +1,13 @@
 using System;
-using System.IO.Abstractions;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
-using Serilog;
-using IFileSystem = Zafiro.FileSystem.IFileSystem;
+using Zafiro.FileSystem;
+using Zafiro.FileSystem.Local;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.Local;
 
-public class LocalFileSystemConnection : IFileSystemConnection
+public class LocalFileSystemConnection : IZafiroFileSystemConnection
 {
     public LocalFileSystemConnection(Guid id, string name)
     {
@@ -18,9 +17,9 @@ public class LocalFileSystemConnection : IFileSystemConnection
 
     public Guid Id { get; set; }
 
-    public Task<Result<IFileSystem>> FileSystem()
+    public Task<Result<IFileSystemRoot>> FileSystem()
     {
-        return Task.FromResult(Result.Success<IFileSystem>(new Zafiro.FileSystem.Local.LocalFileSystem(new FileSystem(), Maybe<ILogger>.None)));
+        return Task.FromResult(Result.Success<IFileSystemRoot>(new FileSystemRoot(new ObservableFileSystem(LocalFileSystem.Create()))));
     }
 
     public string Name { get; }

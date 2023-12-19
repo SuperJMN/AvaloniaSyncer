@@ -11,7 +11,7 @@ namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 
 public static class Mapper
 {
-    public static Connection ToConfiguration(IFileSystemConnection fileSystemConnection)
+    public static Connection ToConfiguration(IZafiroFileSystemConnection fileSystemConnection)
     {
         return fileSystemConnection switch
         {
@@ -47,7 +47,7 @@ public static class Mapper
         };
     }
 
-    public static IFileSystemConnection ToSystem(Connection connection, Maybe<ILogger> logger)
+    public static IZafiroFileSystemConnection ToSystem(Connection connection, Maybe<ILogger> logger)
     {
         switch (connection.Parameters)
         {
@@ -63,7 +63,7 @@ public static class Mapper
         }
     }
 
-    public static IConfiguration ToConfiguration(IFileSystemConnection connection, IConnectionsRepository repo)
+    public static IConfiguration ToConfiguration(IZafiroFileSystemConnection connection, IConnectionsRepository repo)
     {
         return connection switch
         {
@@ -77,7 +77,7 @@ public static class Mapper
         };
     }
 
-    public static IFileSystemConnection ToConnection(IConfiguration currentConfiguration)
+    public static IZafiroFileSystemConnection ToConnection(IConfiguration currentConfiguration)
     {
         return currentConfiguration switch
         {

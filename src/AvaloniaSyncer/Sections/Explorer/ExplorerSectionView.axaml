@@ -55,12 +55,12 @@
 
 	<TabControl Padding="0" ItemsSource="{Binding Connections}" TabStripPlacement="Top">
 		<TabControl.ItemTemplate>
-			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
+			<DataTemplate DataType="explorer:IZafiroFileSystemConnectionViewModel">
                 <TextBlock Text="{Binding Name}" />
             </DataTemplate>
 		</TabControl.ItemTemplate>
 		<TabControl.ContentTemplate>
-			<DataTemplate DataType="explorer:IFileSystemConnectionViewModel">
+			<DataTemplate DataType="explorer:IZafiroFileSystemConnectionViewModel">
 				<ContentControl Padding="8" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush}" Content="{Binding}" />
 			</DataTemplate>
 		</TabControl.ContentTemplate>

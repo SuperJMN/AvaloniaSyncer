@@ -11,7 +11,7 @@ using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
-internal class SeaweedFileSystemConnection : IFileSystemConnection
+internal class SeaweedFileSystemConnection : IZafiroFileSystemConnection
 {
     public Uri Uri { get; }
 
@@ -27,7 +27,7 @@ internal class SeaweedFileSystemConnection : IFileSystemConnection
 
     public Guid Id { get; set; }
 
-    public Task<Result<IFileSystem>> FileSystem()
+    public Task<Result<IFileSystemRoot>> FileSystem()
     {
         var handler = GetHandler();
 
@@ -38,7 +38,7 @@ internal class SeaweedFileSystemConnection : IFileSystemConnection
         };
 
         var seaweedFSClient = new SeaweedFSClient(httpClient);
-        IFileSystem seaweedFileSystem = new SeaweedFileSystem(seaweedFSClient, logger);
+        IFileSystemRoot seaweedFileSystem = new FileSystemRoot(new ObservableFileSystem(new SeaweedFileSystem(seaweedFSClient, logger)));
         return Task.FromResult(Result.Success(seaweedFileSystem));
     }
 

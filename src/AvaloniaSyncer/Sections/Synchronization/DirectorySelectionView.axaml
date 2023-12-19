@@ -18,8 +18,8 @@
 			<ContentControl.ContentTemplate>
 				<DataTemplate DataType="model:IFileSystemExplorer">
 					<DockPanel>
-						<address:AddressView DockPanel.Dock="Top" DataContext="{Binding Address}" />
-                        <explorer:DetailsView DataContext="{Binding Details^}" />
+						<address:PathNavigatorView DockPanel.Dock="Top" DataContext="{Binding PathNavigator}" />
+                        <explorer:DirectoryContentsView DataContext="{Binding Details^}" />
                     </DockPanel>
 				</DataTemplate>
 			</ContentControl.ContentTemplate>
