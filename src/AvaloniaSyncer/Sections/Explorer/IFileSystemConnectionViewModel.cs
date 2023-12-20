@@ -5,9 +5,9 @@ using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.Sections.Explorer;
 
-public interface IFileSystemConnectionViewModel
+public interface IZafiroFileSystemConnectionViewModel
 {
-    ReactiveCommand<Unit, Result<IFileSystem>> Load { get; set; }
+    ReactiveCommand<Unit, Result<IFileSystemRoot>> Load { get; set; }
     string Name { get; }
-    ReactiveCommand<Unit, Result<IFileSystem>> Refresh { get; set; }
+    ReactiveCommand<Unit, Result<IFileSystemRoot>> Refresh { get; set; }
 }

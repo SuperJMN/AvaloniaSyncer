@@ -7,6 +7,7 @@ using AvaloniaSyncer.Views;
 using CSharpFunctionalExtensions;
 using Serilog;
 using Zafiro.Avalonia.Mixins;
+using Zafiro.UI;
 
 namespace AvaloniaSyncer;
 
@@ -25,7 +26,7 @@ public class App : Application
     {
         this.Connect(() => new MainView(), view =>
         {
-            var vm = new ViewModelFactory(ApplicationLifetime!, view, Maybe<ILogger>.From(Log.Logger));
+            var vm = new ViewModelFactory(ApplicationLifetime!, view, new OperatingSystemContentOpener(), Maybe<ILogger>.From(Log.Logger));
 
             return new MainViewModel(async () =>
             {

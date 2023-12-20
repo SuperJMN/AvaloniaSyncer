@@ -9,7 +9,7 @@
     <NukeTelemetryVersion>1</NukeTelemetryVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DotnetPackaging" Version="1.0.16" />
+    <PackageReference Include="DotnetPackaging" Version="1.0.17" />
     <PackageReference Include="Nuke.Common" Version="7.0.2" />
     <PackageReference Include="Nuke.GitHub" Version="5.0.0" />
   </ItemGroup>

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using AvaloniaSyncer.Sections.Connections.Configuration.Android;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
@@ -34,7 +31,7 @@ public class ConnectionsSectionViewModel : ReactiveObject
 
         Plugins = new IPlugin[]
             {
-                OperatingSystem.IsAndroid() ? new AndroidPlugin() : new LocalPlugin(),
+                new LocalPlugin(),
                 new SeaweedFSPlugin(),
                 new SftpPlugin(),
             }

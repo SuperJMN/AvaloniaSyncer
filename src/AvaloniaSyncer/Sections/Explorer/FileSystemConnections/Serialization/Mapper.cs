@@ -1,6 +1,5 @@
 using System;
 using AvaloniaSyncer.Sections.Connections;
-using AvaloniaSyncer.Sections.Connections.Configuration.Android;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
@@ -12,7 +11,7 @@ namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 
 public static class Mapper
 {
-    public static Connection ToConfiguration(IFileSystemConnection fileSystemConnection)
+    public static Connection ToConfiguration(IZafiroFileSystemConnection fileSystemConnection)
     {
         return fileSystemConnection switch
         {
@@ -44,18 +43,11 @@ public static class Mapper
                         Password = sftp.Parameters.Password
                     }
                 },
-            AndroidFileSystemConnection android =>
-                new Connection()
-                {
-                    Id = android.Id,
-                    Name = android.Name,
-                    Parameters = new Android(),
-                },
             _ => throw new ArgumentOutOfRangeException(nameof(fileSystemConnection))
         };
     }
 
-    public static IFileSystemConnection ToSystem(Connection connection, Maybe<ILogger> logger)
+    public static IZafiroFileSystemConnection ToSystem(Connection connection, Maybe<ILogger> logger)
     {
         switch (connection.Parameters)
         {
@@ -66,14 +58,12 @@ public static class Mapper
             case Sftp sftp:
                 var info = new SftpConnectionParameters(sftp.Host, sftp.Port, sftp.Username, sftp.Password);
                 return new SftpFileSystemConnection(connection.Id, connection.Name, info);
-            case Android:
-                return new AndroidFileSystemConnection(connection.Id, connection.Name);
             default:
                 throw new ArgumentOutOfRangeException();
         }
     }
 
-    public static IConfiguration ToConfiguration(IFileSystemConnection connection, IConnectionsRepository repo)
+    public static IConfiguration ToConfiguration(IZafiroFileSystemConnection connection, IConnectionsRepository repo)
     {
         return connection switch
         {
@@ -82,13 +72,12 @@ public static class Mapper
             {
                 Address = seaweed.Uri.ToString(),
             },
-            AndroidFileSystemConnection android => new AndroidConfigurationViewModel(android.Id, android.Name, repo),
             SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };
     }
 
-    public static IFileSystemConnection ToConnection(IConfiguration currentConfiguration)
+    public static IZafiroFileSystemConnection ToConnection(IConfiguration currentConfiguration)
     {
         return currentConfiguration switch
         {
@@ -99,7 +88,6 @@ public static class Mapper
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),
-            AndroidConfigurationViewModel android => new AndroidFileSystemConnection(android.Id, android.Name.CommittedValue),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

@@ -12,25 +12,25 @@ public class ExplorerSectionViewModelDesign : IExplorerSectionViewModel
 {
     public ExplorerSectionViewModelDesign()
     {
-        Connections = new ReadOnlyObservableCollection<IFileSystemConnectionViewModel>(new ObservableCollection<IFileSystemConnectionViewModel>(new List<IFileSystemConnectionViewModel>()
+        Connections = new ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel>(new ObservableCollection<IZafiroFileSystemConnectionViewModel>(new List<IZafiroFileSystemConnectionViewModel>()
         {
-            (IFileSystemConnectionViewModel)new FileSystemConnectionDesign("Test1"),
-            (IFileSystemConnectionViewModel)new FileSystemConnectionDesign("Test2"),
-            (IFileSystemConnectionViewModel)new FileSystemConnectionDesign("Long title for this tab item"),
+            (IZafiroFileSystemConnectionViewModel)new FileSystemConnectionDesign("Test1"),
+            (IZafiroFileSystemConnectionViewModel)new FileSystemConnectionDesign("Test2"),
+            (IZafiroFileSystemConnectionViewModel)new FileSystemConnectionDesign("Long title for this tab item"),
         }));
     }
 
-    public ReadOnlyObservableCollection<IFileSystemConnectionViewModel> Connections { get; }
+    public ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> Connections { get; }
 }
 
-public class FileSystemConnectionDesign : IFileSystemConnectionViewModel
+public class FileSystemConnectionDesign : IZafiroFileSystemConnectionViewModel
 {
     public FileSystemConnectionDesign(string name)
     {
         Name = name;
     }
 
-    public ReactiveCommand<Unit, Result<IFileSystem>> Load { get; set; }
+    public ReactiveCommand<Unit, Result<IFileSystemRoot>> Load { get; set; }
     public string Name { get; }
-    public ReactiveCommand<Unit, Result<IFileSystem>> Refresh { get; set; }
+    public ReactiveCommand<Unit, Result<IFileSystemRoot>> Refresh { get; set; }
 }

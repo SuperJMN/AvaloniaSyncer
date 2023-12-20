@@ -2,7 +2,7 @@ using System.Collections.ObjectModel;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 
-public interface IFileSystemConnectionRepository
+public interface IZafiroFileSystemConnectionRepository
 {
-    ReadOnlyObservableCollection<Serialization.IFileSystemConnection> Connections { get; }
+    ReadOnlyObservableCollection<Serialization.IZafiroFileSystemConnection> Connections { get; }
 }

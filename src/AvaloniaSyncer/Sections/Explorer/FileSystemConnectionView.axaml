@@ -20,8 +20,8 @@
 					<Grid ColumnDefinitions="* *">
 						<DockPanel Grid.ColumnSpan="2">
 							<ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
-							<ContentControl Content="{Binding Address}" DockPanel.Dock="Top" Margin="0 4" />
-							<ContentControl Content="{Binding Details^}" />
+							<ContentControl Content="{Binding PathNavigator}" DockPanel.Dock="Top" Margin="0 4" />
+							<ContentControl Content="{Binding Details}" />
 						</DockPanel>
 						<transferManager:LightTransferManagerView Grid.Column="1" VerticalAlignment="Bottom"
 																  HorizontalAlignment="Right" Margin="15"

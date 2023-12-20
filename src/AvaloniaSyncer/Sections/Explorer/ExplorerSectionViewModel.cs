@@ -14,22 +14,22 @@ namespace AvaloniaSyncer.Sections.Explorer;
 
 public interface IExplorerSectionViewModel
 {
-    ReadOnlyObservableCollection<IFileSystemConnectionViewModel> Connections { get; }
+    ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> Connections { get; }
 }
 
 public class ExplorerSectionViewModel : ReactiveObject, IExplorerSectionViewModel
 {
-    private readonly ReadOnlyObservableCollection<IFileSystemConnectionViewModel> connections;
+    private readonly ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> connections;
 
-    public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
+    public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger, IContentOpener contentOpenener)
     {
         repository.Connections
             .ToObservableChangeSet(x => x.Id)
-            .Transform(connection => (IFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
-            .Sort(SortExpressionComparer<IFileSystemConnectionViewModel>.Ascending(x => x.Name))
+            .Transform(connection => (IZafiroFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager, contentOpenener))
+            .Sort(SortExpressionComparer<IZafiroFileSystemConnectionViewModel>.Ascending(x => x.Name))
             .Bind(out connections)
             .Subscribe();
     }
     
-    public ReadOnlyObservableCollection<IFileSystemConnectionViewModel> Connections => connections;
+    public ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> Connections => connections;
 }

@@ -19,14 +19,14 @@ public class DirectorySelectionViewModel : ReactiveObject, IValidatable
 {
     private readonly ObservableAsPropertyHelper<IZafiroDirectory> currentDirectoryWrapper;
 
-    public DirectorySelectionViewModel(ReadOnlyCollection<IFileSystemConnection> connections, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager)
+    public DirectorySelectionViewModel(ReadOnlyCollection<IZafiroFileSystemConnection> connections, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager)
     {
         Connections = connections;
 
         Explorer = this
             .WhenAnyValue(x => x.SelectedConnection)
             .WhereNotNull()
-            .SelectMany(connection => connection.FileSystem().Map(fs => new FileSystemExplorer(fs, notificationService, clipboard, transferManager)))
+            .SelectMany(connection => connection.FileSystem().Map(fs => new FileSystemExplorer(fs, notificationService, clipboard, transferManager, null)))
             .Successes()
             .Publish()  // This is to force subscribers share a single subscription (they will share instances of the FileSystemExplorer, this way)
             .RefCount();
@@ -38,8 +38,8 @@ public class DirectorySelectionViewModel : ReactiveObject, IValidatable
 
     public IZafiroDirectory CurrentDirectory => currentDirectoryWrapper.Value;
 
-    public ReadOnlyCollection<IFileSystemConnection> Connections { get; set; }
-    [Reactive] public IFileSystemConnection? SelectedConnection { get; set; }
+    public ReadOnlyCollection<IZafiroFileSystemConnection> Connections { get; set; }
+    [Reactive] public IZafiroFileSystemConnection? SelectedConnection { get; set; }
     public IObservable<FileSystemExplorer> Explorer { get; }
     public IObservable<bool> IsValid { get; }
 }

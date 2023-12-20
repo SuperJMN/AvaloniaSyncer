@@ -14,11 +14,11 @@ namespace AvaloniaSyncer.Sections.Connections;
 internal class ConnectionsRepository : IConnectionsRepository
 {
     private readonly Maybe<ILogger> logger;
-    private readonly ReadOnlyObservableCollection<IFileSystemConnection> connections;
-    private readonly SourceCache<IFileSystemConnection, Guid> connectionsSource = new(x => x.Id);
+    private readonly ReadOnlyObservableCollection<IZafiroFileSystemConnection> connections;
+    private readonly SourceCache<IZafiroFileSystemConnection, Guid> connectionsSource = new(x => x.Id);
     private readonly ConfigurationStore store;
 
-    public ConnectionsRepository(IEnumerable<IFileSystemConnection> connections, Maybe<ILogger> logger, ConfigurationStore store)
+    public ConnectionsRepository(IEnumerable<IZafiroFileSystemConnection> connections, Maybe<ILogger> logger, ConfigurationStore store)
     {
         this.store = store;
         this.logger = logger;
@@ -26,9 +26,9 @@ internal class ConnectionsRepository : IConnectionsRepository
         connectionsSource.Connect().Bind(out this.connections).Subscribe();
     }
 
-    public ReadOnlyObservableCollection<IFileSystemConnection> Connections => connections;
+    public ReadOnlyObservableCollection<IZafiroFileSystemConnection> Connections => connections;
 
-    public async Task AddOrUpdate(IFileSystemConnection connection)
+    public async Task AddOrUpdate(IZafiroFileSystemConnection connection)
     {
         connectionsSource.AddOrUpdate(connection);
         var result = await store.Save(Connections.Select(Mapper.ToConfiguration));

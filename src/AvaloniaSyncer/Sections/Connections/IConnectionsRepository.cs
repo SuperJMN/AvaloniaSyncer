@@ -6,6 +6,6 @@ namespace AvaloniaSyncer.Sections.Connections;
 
 public interface IConnectionsRepository
 {
-    ReadOnlyObservableCollection<IFileSystemConnection> Connections { get; }
-    Task AddOrUpdate(IFileSystemConnection connection);
+    ReadOnlyObservableCollection<IZafiroFileSystemConnection> Connections { get; }
+    Task AddOrUpdate(IZafiroFileSystemConnection connection);
 }

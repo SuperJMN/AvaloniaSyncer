@@ -22,7 +22,7 @@ namespace AvaloniaSyncer.Sections.Synchronization;
 public class SyncronizationSectionViewModel : ReactiveObject
 {
     private readonly IClipboard clipboard;
-    private readonly ReadOnlyObservableCollection<IFileSystemConnection> connections;
+    private readonly ReadOnlyObservableCollection<IZafiroFileSystemConnection> connections;
     private readonly IDialogService dialogService;
     private readonly INotificationService notificationService;
     private readonly ITransferManager transferManager;
