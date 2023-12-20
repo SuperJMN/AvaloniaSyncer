@@ -20,12 +20,13 @@ using Zafiro.Avalonia.FileExplorer.Clipboard;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Notifications;
 using Zafiro.FileSystem;
+using Zafiro.UI;
 
 namespace AvaloniaSyncer;
 
 public class ViewModelFactory
 {
-    public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control, Maybe<ILogger> logger)
+    public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control, IContentOpener contentOpener, Maybe<ILogger> logger)
     {
         Logger = logger;
         NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
@@ -33,7 +34,10 @@ public class ViewModelFactory
         Clipboard = new ClipboardViewModel();
         TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
         ConnectionsRepository = GetConnectionsRepository(Logger);
+        ContentOpener = contentOpener;
     }
+
+    public IContentOpener ContentOpener { get; }
 
     private IObservable<IConnectionsRepository> ConnectionsRepository { get; }
 
@@ -59,7 +63,7 @@ public class ViewModelFactory
 
     public async Task<ExplorerSectionViewModel> GetExploreSection()
     {
-        return new ExplorerSectionViewModel(await ConnectionsRepository, NotificationService, Clipboard, TransferManager, Logger);
+        return new ExplorerSectionViewModel(await ConnectionsRepository, NotificationService, Clipboard, TransferManager, Logger, ContentOpener);
     }
 
     public async Task<ConnectionsSectionViewModel> GetConnectionsViewModel()

@@ -8,23 +8,26 @@
              x:Class="AvaloniaSyncer.Views.MainView"
              x:DataType="vm:MainViewModel">
 
-    <controls:MasterDetailsView ItemsSource="{Binding Sections}" MasterPaneWidth="120">
-        <controls:MasterDetailsView.ItemTemplate>
-            <DataTemplate x:DataType="vm:Section">
-                <TextBlock Text="{Binding Name}" />
-            </DataTemplate>
-        </controls:MasterDetailsView.ItemTemplate>
-        <controls:MasterDetailsView.DetailsTemplate>
-            <DataTemplate DataType="vm:Section">
-                <ContentControl Content="{Binding ViewModel}" />
-            </DataTemplate>
-        </controls:MasterDetailsView.DetailsTemplate>
-    </controls:MasterDetailsView>
+	<DockPanel>
+        <controls:MasterDetailsNavigator DockPanel.Dock="Top" />
+        <controls:MasterDetailsView ItemsSource="{Binding Sections}" MasterPaneWidth="120">
+			<controls:MasterDetailsView.ItemTemplate>
+				<DataTemplate x:DataType="vm:Section">
+					<TextBlock Text="{Binding Name}" />
+				</DataTemplate>
+			</controls:MasterDetailsView.ItemTemplate>
+			<controls:MasterDetailsView.DetailsTemplate>
+				<DataTemplate DataType="vm:Section">
+					<ContentControl Content="{Binding ViewModel}" />
+				</DataTemplate>
+			</controls:MasterDetailsView.DetailsTemplate>
+		</controls:MasterDetailsView>
+	</DockPanel>
 
-    <Interaction.Behaviors>
-        <RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
-            <InvokeCommandAction Command="{Binding LoadSections}" />
-        </RoutedEventTriggerBehavior>
-    </Interaction.Behaviors>
+	<Interaction.Behaviors>
+		<RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
+			<InvokeCommandAction Command="{Binding LoadSections}" />
+		</RoutedEventTriggerBehavior>
+	</Interaction.Behaviors>
 
 </UserControl>

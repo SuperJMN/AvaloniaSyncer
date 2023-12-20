@@ -21,11 +21,11 @@ public class ExplorerSectionViewModel : ReactiveObject, IExplorerSectionViewMode
 {
     private readonly ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> connections;
 
-    public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
+    public ExplorerSectionViewModel(IConnectionsRepository repository, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger, IContentOpener contentOpenener)
     {
         repository.Connections
             .ToObservableChangeSet(x => x.Id)
-            .Transform(connection => (IZafiroFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager))
+            .Transform(connection => (IZafiroFileSystemConnectionViewModel)new FileSystemConnectionViewModel(connection, notificationService, clipboard, transferManager, contentOpenener))
             .Sort(SortExpressionComparer<IZafiroFileSystemConnectionViewModel>.Ascending(x => x.Name))
             .Bind(out connections)
             .Subscribe();

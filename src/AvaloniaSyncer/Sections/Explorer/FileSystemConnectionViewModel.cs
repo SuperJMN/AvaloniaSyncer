@@ -19,7 +19,7 @@ public class FileSystemConnectionViewModel : ReactiveObject, IZafiroFileSystemCo
     private readonly IZafiroFileSystemConnection connection;
     private readonly ObservableAsPropertyHelper<IFileSystemExplorer?> explorer;
 
-    public FileSystemConnectionViewModel(IZafiroFileSystemConnection connection, INotificationService notificationService, IClipboard clipboardViewModel, ITransferManager transferManager)
+    public FileSystemConnectionViewModel(IZafiroFileSystemConnection connection, INotificationService notificationService, IClipboard clipboardViewModel, ITransferManager transferManager, IContentOpener contentOpener)
     {
         this.connection = connection;
 
@@ -29,7 +29,7 @@ public class FileSystemConnectionViewModel : ReactiveObject, IZafiroFileSystemCo
 
         explorer = Load.Merge(Refresh)
             .Successes()
-            .Select(system => new FileSystemExplorer(system, notificationService, clipboardViewModel, transferManager, null))
+            .Select(system => new FileSystemExplorer(system, notificationService, clipboardViewModel, transferManager, contentOpener))
             .ToProperty(this, x => x.FileSystemExplorer);
 
         this.WhenAnyValue(x => x.FileSystemExplorer, selector: s => s is null).Subscribe(canLoad);
