@@ -5,7 +5,7 @@ using Android.OS;
 using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
-using Zafiro.FileSystem.Android;
+using Zafiro.FileSystem.Local.Android;
 
 namespace AvaloniaSyncer.Android;
 
