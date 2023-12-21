@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
@@ -17,9 +18,9 @@ public class LocalFileSystemConnection : IZafiroFileSystemConnection
 
     public Guid Id { get; set; }
 
-    public Task<Result<IFileSystemRoot>> FileSystem()
+    public Task<Result<IDisposableFilesystemRoot>> FileSystem()
     {
-        return Task.FromResult(Result.Success<IFileSystemRoot>(new FileSystemRoot(new ObservableFileSystem(LocalFileSystem.Create()))));
+        return Task.FromResult(Result.Success<IDisposableFilesystemRoot>(new DisposableFileSystemRoot(new FileSystemRoot(new ObservableFileSystem(LocalFileSystem.Create())), () => { })));
     }
 
     public string Name { get; }

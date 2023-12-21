@@ -12,11 +12,6 @@ using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Explorer;
 
-public interface IExplorerSectionViewModel
-{
-    ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> Connections { get; }
-}
-
 public class ExplorerSectionViewModel : ReactiveObject, IExplorerSectionViewModel
 {
     private readonly ReadOnlyObservableCollection<IZafiroFileSystemConnectionViewModel> connections;

@@ -2,10 +2,6 @@ using System;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
-using Renci.SshNet;
-using Serilog;
-using Zafiro.FileSystem;
-using Zafiro.FileSystem.Sftp;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
@@ -22,9 +18,9 @@ internal class SftpFileSystemConnection : IZafiroFileSystemConnection
 
     public Guid Id { get; set; }
 
-    public async Task<Result<IFileSystemRoot>> FileSystem()
+    public Task<Result<IDisposableFilesystemRoot>> FileSystem()
     {
-        return new FileSystemRoot(new ObservableFileSystem(new SftpFileSystem(new SftpClient(Parameters.Host, Parameters.Username, Parameters.Username))));
+        return SftpFileSystemRoot.Create(Parameters.Host, Parameters.Username, Parameters.Password);
     }
 
     public string Name { get; }

@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using CSharpFunctionalExtensions;
-using Zafiro.FileSystem;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 
 public interface IZafiroFileSystemConnection
 {
-    public Guid Id { get; set; }
-    Task<Result<IFileSystemRoot>> FileSystem();
+    public Guid Id { get; }
+    Task<Result<IDisposableFilesystemRoot>> FileSystem();
     string Name { get; }
 }

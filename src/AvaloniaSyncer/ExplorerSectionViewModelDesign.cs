@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
+using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
@@ -30,7 +31,7 @@ public class FileSystemConnectionDesign : IZafiroFileSystemConnectionViewModel
         Name = name;
     }
 
-    public ReactiveCommand<Unit, Result<IFileSystemRoot>> Load { get; set; }
+    public ReactiveCommand<Unit, Result<IDisposableFilesystemRoot>> Load { get; set; }
     public string Name { get; }
-    public ReactiveCommand<Unit, Result<IFileSystemRoot>> Refresh { get; set; }
+    public ReactiveCommand<Unit, Result<IDisposableFilesystemRoot>> Refresh { get; set; }
 }

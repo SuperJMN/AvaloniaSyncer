@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Connections.Configuration.Local;
+using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
@@ -27,7 +29,7 @@ internal class SeaweedFileSystemConnection : IZafiroFileSystemConnection
 
     public Guid Id { get; set; }
 
-    public Task<Result<IFileSystemRoot>> FileSystem()
+    public async Task<Result<IDisposableFilesystemRoot>> FileSystem()
     {
         var handler = GetHandler();
 
@@ -39,7 +41,7 @@ internal class SeaweedFileSystemConnection : IZafiroFileSystemConnection
 
         var seaweedFSClient = new SeaweedFSClient(httpClient);
         IFileSystemRoot seaweedFileSystem = new FileSystemRoot(new ObservableFileSystem(new SeaweedFileSystem(seaweedFSClient, logger)));
-        return Task.FromResult(Result.Success(seaweedFileSystem));
+        return Result.Success((IDisposableFilesystemRoot)new DisposableFileSystemRoot(seaweedFileSystem, () => { }));
     }
 
     private HttpMessageHandler GetHandler()
