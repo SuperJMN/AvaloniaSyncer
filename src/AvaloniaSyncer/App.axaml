@@ -3,6 +3,7 @@
              xmlns:misc="clr-namespace:Zafiro.Avalonia.Misc;assembly=Zafiro.Avalonia"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              xmlns:wizard="clr-namespace:Zafiro.Avalonia.Wizard;assembly=Zafiro.Avalonia"
+             xmlns:e="clr-namespace:AvaloniaSyncer.Sections.Explorer"
              x:Class="AvaloniaSyncer.App"
              RequestedThemeVariant="Default">
 	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
@@ -16,6 +17,43 @@
 
     <Application.Resources>
         <SolidColorBrush x:Key="TabItemBorderBrush" Opacity="0.4" Color="{StaticResource SystemChromeAltLowColor}"></SolidColorBrush>
+
+        <ControlTheme TargetType="ItemsControl" x:Key="{x:Type ItemsControl}" BasedOn="{StaticResource {x:Type ItemsControl}}">
+            <Style Selector="^:empty">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme TargetType="TabControl" x:Key="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
+            <Style Selector="^:empty">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
+        <ControlTheme TargetType="ListBox" x:Key="{x:Type ListBox}" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Style Selector="^:empty">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ControlTheme>
+
     </Application.Resources>
 
 	<Application.Styles>

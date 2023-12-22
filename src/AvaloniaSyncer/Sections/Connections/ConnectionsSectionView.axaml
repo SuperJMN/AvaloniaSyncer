@@ -12,7 +12,12 @@
 		<Panel>
 			<ListBox SelectedItem="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
                      ItemsSource="{Binding Configurations}" Width="250">
-				<ListBox.ItemTemplate>
+                <Empty.Content>
+                    <StackPanel VerticalAlignment="Center" Spacing="10">
+                        <TextBlock TextWrapping="Wrap" Margin="10" TextAlignment="Center">You can create a new connection using the ➕ button below</TextBlock>
+                    </StackPanel>
+                </Empty.Content>
+                <ListBox.ItemTemplate>
 					<DataTemplate>
                         <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" StringField="{Binding Name}">
 							<s:StringEditorControl.Styles>
