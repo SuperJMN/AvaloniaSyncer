@@ -53,31 +53,25 @@
 		<DrawingImage Drawing="{StaticResource refresh_xaml}" x:Key="di_refresh_xaml"/>
 	</UserControl.Resources>
 
-	<StackPanel>
-		<ListBox>
-
-        </ListBox>
-        <TabControl Padding="0" ItemsSource="{Binding Connections}"
-                    TabStripPlacement="Top">
-            <Empty.Content>
-                <StackPanel VerticalAlignment="Center" Spacing="10">
-                    <TextBlock>There are no connection yet 😅</TextBlock>
-                    <TextBlock>Please, create a connection by going to Settings/Add</TextBlock>
-                </StackPanel>
-            </Empty.Content>
-            <TabControl.ItemTemplate>
-				<DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
-					<TextBlock Text="{Binding Name}" />
-				</DataTemplate>
-			</TabControl.ItemTemplate>
-			<TabControl.ContentTemplate>
-				<DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
-					<ContentControl Padding="8" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush}"
-                                    Content="{Binding}" />
-				</DataTemplate>
-			</TabControl.ContentTemplate>
-		</TabControl>
-	</StackPanel>
-
+    <TabControl Padding="0" ItemsSource="{Binding Connections}"
+                TabStripPlacement="Top">
+        <Empty.Content>
+            <StackPanel VerticalAlignment="Center" Spacing="10">
+                <TextBlock>There are no connection yet 😅</TextBlock>
+                <TextBlock>Please, create a connection by going to Settings/Add</TextBlock>
+            </StackPanel>
+        </Empty.Content>
+        <TabControl.ItemTemplate>
+            <DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
+                <TextBlock Text="{Binding Name}" />
+            </DataTemplate>
+        </TabControl.ItemTemplate>
+        <TabControl.ContentTemplate>
+            <DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
+                <ContentControl Padding="8" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush}"
+                                Content="{Binding}" />
+            </DataTemplate>
+        </TabControl.ContentTemplate>
+    </TabControl>
 
 </UserControl>

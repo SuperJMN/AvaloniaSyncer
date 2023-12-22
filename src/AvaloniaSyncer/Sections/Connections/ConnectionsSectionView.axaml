@@ -5,34 +5,36 @@
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
              xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              xmlns:s="clr-namespace:Zafiro.Avalonia.Controls.StringEditor;assembly=Zafiro.Avalonia"
+             xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
-	<DockPanel>
-		<Panel>
-			<ListBox SelectedItem="{Binding CurrentConfiguration}" DockPanel.Dock="Left"
-                     ItemsSource="{Binding Configurations}" Width="250">
-                <Empty.Content>
-                    <StackPanel VerticalAlignment="Center" Spacing="10">
-                        <TextBlock TextWrapping="Wrap" Margin="10" TextAlignment="Center">You can create a new connection using the ➕ button below</TextBlock>
-                    </StackPanel>
-                </Empty.Content>
-                <ListBox.ItemTemplate>
-					<DataTemplate>
-                        <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" StringField="{Binding Name}">
-							<s:StringEditorControl.Styles>
-                                <Style Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
-                                    <Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
-                                </Style>
-                            </s:StringEditorControl.Styles>
-                        </s:StringEditorControl>
-                    </DataTemplate>
-				</ListBox.ItemTemplate>
-				<Interaction.Behaviors>
-					<avaloniaSyncer:SelectNewItemBehavior />
-				</Interaction.Behaviors>
-			</ListBox>
-			<Button Content="+" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+
+	<controls:MasterDetailsView ItemsSource="{Binding Configurations}" SelectedItem="{Binding CurrentConfiguration}">
+
+		<controls:MasterDetailsView.DetailsTemplate>
+			<DataTemplate DataType="connections:IConfiguration">
+				<Panel>
+					<Button DockPanel.Dock="Bottom" Command="{Binding Save}" Margin="10"
+                            HorizontalAlignment="Right" Content="Save" />
+					<ContentControl Padding="8" Content="{Binding}" />
+				</Panel>
+			</DataTemplate>
+		</controls:MasterDetailsView.DetailsTemplate>
+
+		<controls:MasterDetailsView.ItemTemplate>
+			<DataTemplate>
+				<s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" StringField="{Binding Name}">
+					<s:StringEditorControl.Styles>
+						<Style Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
+							<Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
+						</Style>
+					</s:StringEditorControl.Styles>
+				</s:StringEditorControl>
+			</DataTemplate>
+		</controls:MasterDetailsView.ItemTemplate>
+		<controls:MasterDetailsView.Header>
+			<Button Content="➕ Add connection" DockPanel.Dock="Top" VerticalAlignment="Bottom" Margin="10">
 				<Button.Flyout>
 					<MenuFlyout ItemsSource="{Binding Plugins}">
 						<MenuFlyout.ItemContainerTheme>
@@ -45,9 +47,7 @@
 					</MenuFlyout>
 				</Button.Flyout>
 			</Button>
-		</Panel>
-		<Button DockPanel.Dock="Bottom" Command="{Binding CurrentConfiguration.Save}" Margin="10" HorizontalAlignment="Right" Content="Save" />
-		<ContentControl Padding="8" Content="{Binding CurrentConfiguration}" />
-	</DockPanel>
+		</controls:MasterDetailsView.Header>
+	</controls:MasterDetailsView>
 
 </UserControl>
