@@ -18,7 +18,12 @@
 			<ContentControl.ContentTemplate>
 				<DataTemplate DataType="explorer1:FileSystemExplorer">
 					<Grid ColumnDefinitions="* *">
-						<DockPanel Grid.ColumnSpan="2">
+                        <Grid.KeyBindings>
+                            <KeyBinding Command="{Binding ToolBar.Copy}" Gesture="Ctrl+C" />
+                            <KeyBinding Command="{Binding ToolBar.Paste}" Gesture="Ctrl+V" />
+                            <KeyBinding Command="{Binding ToolBar.Delete}" Gesture="Delete" />
+                        </Grid.KeyBindings>
+                        <DockPanel Grid.ColumnSpan="2">
 							<ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
 							<ContentControl Content="{Binding PathNavigator}" DockPanel.Dock="Top" Margin="0 4" />
 							<ContentControl Content="{Binding Details}" />

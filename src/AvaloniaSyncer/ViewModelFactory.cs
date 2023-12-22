@@ -29,7 +29,7 @@ public class ViewModelFactory
     public ViewModelFactory(IApplicationLifetime applicationLifetime, Visual control, IContentOpener contentOpener, Maybe<ILogger> logger)
     {
         Logger = logger;
-        NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)));
+        NotificationService = new NotificationService(new WindowNotificationManager(TopLevel.GetTopLevel(control)) { Position = NotificationPosition.BottomRight});
         DialogService = Zafiro.Avalonia.Dialogs.DialogService.Create(applicationLifetime, configureWindow: Maybe<Action<ConfigureWindowContext>>.From(ConfigureWindow));
         Clipboard = new ClipboardViewModel();
         TransferManager = new TransferManagerViewModel { AutoStartOnAdd = true };
