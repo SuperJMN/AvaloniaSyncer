@@ -15,7 +15,7 @@
 		<controls:MasterDetailsView.DetailsTemplate>
 			<DataTemplate DataType="connections:IConfiguration">
 				<Panel>
-					<Button DockPanel.Dock="Bottom" Command="{Binding Save}" Margin="10"
+					<Button VerticalAlignment="Bottom" Command="{Binding Save}" Margin="10"
                             HorizontalAlignment="Right" Content="Save" />
 					<ContentControl Padding="8" Content="{Binding}" />
 				</Panel>
