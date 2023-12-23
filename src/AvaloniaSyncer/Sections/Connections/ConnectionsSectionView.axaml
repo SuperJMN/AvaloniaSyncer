@@ -34,7 +34,7 @@
 			</DataTemplate>
 		</controls:MasterDetailsView.ItemTemplate>
 		<controls:MasterDetailsView.Header>
-			<Button Content="➕ Add connection" DockPanel.Dock="Top" VerticalAlignment="Bottom" Margin="10">
+			<Button HorizontalAlignment="Center" Content="➕ Add connection" Margin="10">
 				<Button.Flyout>
 					<MenuFlyout ItemsSource="{Binding Plugins}">
 						<MenuFlyout.ItemContainerTheme>
