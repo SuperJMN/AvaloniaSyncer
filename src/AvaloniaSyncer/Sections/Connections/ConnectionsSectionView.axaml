@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
-             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              xmlns:s="clr-namespace:Zafiro.Avalonia.Controls.StringEditor;assembly=Zafiro.Avalonia"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -23,7 +22,7 @@
 		</controls:MasterDetailsView.DetailsTemplate>
 
 		<controls:MasterDetailsView.ItemTemplate>
-			<DataTemplate>
+			<DataTemplate DataType="connections:IConfiguration">
 				<s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" StringField="{Binding Name}">
 					<s:StringEditorControl.Styles>
 						<Style Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
