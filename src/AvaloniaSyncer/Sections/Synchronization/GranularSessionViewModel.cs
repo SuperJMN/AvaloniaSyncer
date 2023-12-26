@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -89,12 +90,6 @@ public class GranularSessionViewModel
 
     private Task<Result<IFileActionViewModel>> GenerateActionFor(FileDiff fileDiff)
     {
-        return fileDiff switch
-        {
-            BothDiff both => Task.FromResult(Result.Success(new SkipFileActionViewModel(both))).Cast(model => (IFileActionViewModel) model),
-            RightOnlyDiff rightOnly => Task.FromResult(Result.Success(new SkipFileActionViewModel(rightOnly))).Cast(model => (IFileActionViewModel) model),
-            LeftOnlyDiff leftOnly => LeftOnlyFileActionViewModel.Create(leftOnly.Left, Destination).Cast(model => (IFileActionViewModel) model),
-            _ => throw new ArgumentOutOfRangeException(nameof(fileDiff))
-        };
+        return new FileActionFactory(Destination).Create(fileDiff);
     }
 }

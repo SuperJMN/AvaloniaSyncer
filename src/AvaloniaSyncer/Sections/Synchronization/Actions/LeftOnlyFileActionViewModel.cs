@@ -51,18 +51,14 @@ internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewMode
         return execute;
     }
 
-    [Reactive]
-    public string? Error { get; private set; }
+    [Reactive] public string? Error { get; private set; }
 
     public IObservable<ByteSize> Rate => Progress.Select(x => x.Current).Rate().Select(ByteSize.FromBytes);
-
-    public override string ToString()
-    {
-        return $"{nameof(Left)}: {Left}, {nameof(Source)}: {Source}, {nameof(Destination)}: {Destination}";
-    }
 
     public static Task<Result<LeftOnlyFileActionViewModel>> Create(FileWithMetadata left, IZafiroDirectory destination)
     {
         return CopyFileAction.Create(left.File, left.File.EquivaletIn(destination)).Map(action => new LeftOnlyFileActionViewModel(left.File, destination, action));
     }
+
+    public override string ToString() => $"{nameof(Left)}: {Left}, {nameof(Source)}: {Source}, {nameof(Destination)}: {Destination}";
 }
