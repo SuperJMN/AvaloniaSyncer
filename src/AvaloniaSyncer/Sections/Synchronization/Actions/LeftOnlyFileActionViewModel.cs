@@ -8,28 +8,28 @@ using CSharpFunctionalExtensions;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Zafiro.Actions;
-using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Actions;
+using Zafiro.FileSystem.Comparer;
 using Zafiro.Mixins;
 
-namespace AvaloniaSyncer.Sections.Synchronization;
+namespace AvaloniaSyncer.Sections.Synchronization.Actions;
 
 internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewModel
 {
     private readonly CopyFileAction copyFileAction;
     private readonly BehaviorSubject<bool> isSyncing = new(false);
 
-    public LeftOnlyFileActionViewModel(ZafiroPath left, IZafiroDirectory source, IZafiroDirectory destination, CopyFileAction copyFileAction)
+    public LeftOnlyFileActionViewModel(IZafiroFile left, IZafiroDirectory destination, CopyFileAction copyFileAction)
     {
         this.copyFileAction = copyFileAction;
         Left = left;
-        Source = source;
+        Source = left.Parent();
         Destination = destination;
         Progress = copyFileAction.Progress;
     }
 
-    public ZafiroPath Left { get; }
+    public IZafiroFile Left { get; }
     public IZafiroDirectory Source { get; }
     public IZafiroDirectory Destination { get; }
 
@@ -61,13 +61,8 @@ internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewMode
         return $"{nameof(Left)}: {Left}, {nameof(Source)}: {Source}, {nameof(Destination)}: {Destination}";
     }
 
-    public static Task<Result<LeftOnlyFileActionViewModel>> Create(ZafiroPath left, IZafiroDirectory source, IZafiroDirectory destination)
+    public static Task<Result<LeftOnlyFileActionViewModel>> Create(FileWithMetadata left, IZafiroDirectory destination)
     {
-        return source.GetFromPath(left).CombineAndBind(destination.GetFromPath(left), (src, dst) =>
-        {
-            return CopyFileAction
-                .Create(src, dst)
-                .Map(action => new LeftOnlyFileActionViewModel(left, source, destination, action));
-        });
+        return CopyFileAction.Create(left.File, left.File.EquivaletIn(destination)).Map(action => new LeftOnlyFileActionViewModel(left.File, destination, action));
     }
 }

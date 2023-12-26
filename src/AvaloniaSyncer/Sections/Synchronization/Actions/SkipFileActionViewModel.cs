@@ -10,7 +10,7 @@ using Zafiro.Actions;
 using Zafiro.FileSystem.Comparer;
 using Zafiro.UI;
 
-namespace AvaloniaSyncer.Sections.Synchronization;
+namespace AvaloniaSyncer.Sections.Synchronization.Actions;
 
 internal class SkipFileActionViewModel : ReactiveObject, IFileActionViewModel
 {

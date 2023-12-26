@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using AvaloniaSyncer.Sections.Synchronization.Actions;
 using CSharpFunctionalExtensions;
 using DynamicData;
 using ReactiveUI;
@@ -28,27 +29,29 @@ public class GranularSessionViewModel
         Source = source;
         Destination = destination;
 
-        var sourceList = new SourceList<IFileActionViewModel>();
-        var sourceListChanges = sourceList
+        var syncActionsList = new SourceList<IFileActionViewModel>();
+        var sourceListChanges = syncActionsList
             .Connect();
 
         sourceListChanges
-            .Bind(out var actions)
+            .Bind(out var syncActions)
             .Subscribe();
+
+        SyncActions = syncActions;
 
         var pendingSync = sourceListChanges
             .AutoRefresh()
             .Filter(x => x is { IsIgnored: false, IsSynced: false });
 
         ISubject<bool> canAnalyze = new Subject<bool>();
-        Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer().Diff(source, destination)), Maybe.From(canAnalyze.AsObservable()));
+        Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer2().Diff(source, destination)), Maybe.From(canAnalyze.AsObservable()));
         var canSync = pendingSync.ToCollection().Any();
-        Actions = actions;
+
         SyncAll = StoppableCommand.Create(() =>
         {
             return Observable.FromAsync(async ct =>
             {
-                var compositeAction = new CompositeAction(Actions.Where(x => !x.IsIgnored).Cast<IAction<LongProgress>>().ToList());
+                var compositeAction = new CompositeAction(SyncActions.Where(x => !x.IsIgnored).Cast<IAction<LongProgress>>().ToList());
                 using (compositeAction.Progress.Subscribe(progress))
                 {
                     return await compositeAction.Execute(ct);
@@ -56,7 +59,7 @@ public class GranularSessionViewModel
             });
         }, Maybe.From(canSync));
         SyncAll.IsExecuting.Not().Subscribe(canAnalyze);
-        ItemsUpdater(sourceList, Analyze.Start.Successes()).Subscribe();
+        ItemsUpdater(syncActionsList, Analyze.Start.Successes()).Subscribe();
         IsSyncing = SyncAll.IsExecuting;
     }
 
@@ -64,38 +67,33 @@ public class GranularSessionViewModel
     public StoppableCommand<Unit, Result> SyncAll { get; }
     public IZafiroDirectory Source { get; }
     public IZafiroDirectory Destination { get; }
-
-    public ReadOnlyObservableCollection<IFileActionViewModel> Actions { get; }
-
+    public ReadOnlyObservableCollection<IFileActionViewModel> SyncActions { get; }
     public StoppableCommand<Unit, Result<IEnumerable<FileDiff>>> Analyze { get; }
     public string Description => $"{Source} => {Destination}";
     public IObservable<bool> IsSyncing { get; }
 
-    private IObservable<IList<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> sourceList, IObservable<IEnumerable<FileDiff>> listsOfDiffs)
+    private IObservable<IList<IFileActionViewModel>> ItemsUpdater(ISourceList<IFileActionViewModel> actions, IObservable<IEnumerable<FileDiff>> listsOfDiffs)
     {
         var observableOfLists = listsOfDiffs
             .SelectMany(diffs =>
                 diffs
                     .ToObservable()
-                    .Select(diff => Observable.FromAsync(() => GenerateAction(diff)))
+                    .Select(diff => Observable.FromAsync(() => GenerateActionFor(diff)))
                     .Merge(3)
                     .Successes().ToList());
 
         return observableOfLists
             .ObserveOn(RxApp.MainThreadScheduler)
-            .Do(list =>
-        {
-            sourceList.EditDiff(list);
-        });
+            .Do(acts => actions.EditDiff(acts));
     }
 
-    private Task<Result<IFileActionViewModel>> GenerateAction(FileDiff fileDiff)
+    private Task<Result<IFileActionViewModel>> GenerateActionFor(FileDiff fileDiff)
     {
         return fileDiff switch
         {
-            Both both => Task.FromResult(Result.Success(new SkipFileActionViewModel(both))).Cast(model => (IFileActionViewModel)model),
-            RightOnly rightOnly => Task.FromResult(Result.Success(new SkipFileActionViewModel(rightOnly))).Cast(model => (IFileActionViewModel)model),
-            LeftOnly leftOnly => LeftOnlyFileActionViewModel.Create(leftOnly.Left.Path, Source, Destination).Cast(model => (IFileActionViewModel)model),
+            BothDiff both => Task.FromResult(Result.Success(new SkipFileActionViewModel(both))).Cast(model => (IFileActionViewModel) model),
+            RightOnlyDiff rightOnly => Task.FromResult(Result.Success(new SkipFileActionViewModel(rightOnly))).Cast(model => (IFileActionViewModel) model),
+            LeftOnlyDiff leftOnly => LeftOnlyFileActionViewModel.Create(leftOnly.Left, Destination).Cast(model => (IFileActionViewModel) model),
             _ => throw new ArgumentOutOfRangeException(nameof(fileDiff))
         };
     }

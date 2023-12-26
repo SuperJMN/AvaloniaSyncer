@@ -22,7 +22,7 @@
 			IsVisible="{Binding IsSyncing^}"
             VerticalAlignment="Stretch" Height="20" DockPanel.Dock="Bottom" Margin="4" Maximum="{Binding Progress^.Total}"
                      Value="{Binding Progress^.Current}" />
-        <DataGrid ItemsSource="{Binding Actions}" CanUserResizeColumns="True" CanUserSortColumns="True">
+        <DataGrid ItemsSource="{Binding SyncActions}" CanUserResizeColumns="True" CanUserSortColumns="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Description}" Header="Action" />
                 <DataGridCheckBoxColumn Header="IsSynced" Binding="{Binding IsSynced}" />
