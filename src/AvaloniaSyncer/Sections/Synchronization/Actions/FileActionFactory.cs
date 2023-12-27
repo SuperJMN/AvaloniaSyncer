@@ -37,7 +37,7 @@ public class FileActionFactory
 
     private Task<Result<IFileActionViewModel>> CopyToDestination(IZafiroFile source)
     {
-        return CopyAction.Create(source, source.EquivaletIn(destination)).Cast(action => (IFileActionViewModel)action);
+        return CopyAction.Create(source, source.EquivalentIn(destination)).Cast(action => (IFileActionViewModel)action);
     }
 
     private static Task<Result<IFileActionViewModel>> Copy(IZafiroFile source, IZafiroFile destination)

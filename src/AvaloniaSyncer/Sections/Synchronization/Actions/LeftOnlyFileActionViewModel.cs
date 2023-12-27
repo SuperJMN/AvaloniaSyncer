@@ -57,7 +57,7 @@ internal class LeftOnlyFileActionViewModel : ReactiveObject, IFileActionViewMode
 
     public static Task<Result<LeftOnlyFileActionViewModel>> Create(FileWithMetadata left, IZafiroDirectory destination)
     {
-        return CopyFileAction.Create(left.File, left.File.EquivaletIn(destination)).Map(action => new LeftOnlyFileActionViewModel(left.File, destination, action));
+        return CopyFileAction.Create(left.File, left.File.EquivalentIn(destination)).Map(action => new LeftOnlyFileActionViewModel(left.File, destination, action));
     }
 
     public override string ToString() => $"{nameof(Left)}: {Left}, {nameof(Source)}: {Source}, {nameof(Destination)}: {Destination}";
