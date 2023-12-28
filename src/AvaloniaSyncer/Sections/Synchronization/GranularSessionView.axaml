@@ -27,7 +27,7 @@
                 <DataGridTemplateColumn Header="Action">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}" ToolTip.Tip="{Binding Comment}" />
+                            <TextBlock HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" Text="{Binding Description}" ToolTip.Tip="{Binding Comment}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

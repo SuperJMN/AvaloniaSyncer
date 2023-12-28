@@ -11,7 +11,7 @@
         <TabControl ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Description}" />
+                    <TextBlock ToolTip.Tip="{Binding Description}" Text="{Binding Description}" />
                 </DataTemplate>
             </TabControl.ItemTemplate>
         </TabControl>
