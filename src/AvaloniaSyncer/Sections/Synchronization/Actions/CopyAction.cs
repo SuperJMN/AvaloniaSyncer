@@ -19,13 +19,19 @@ public class CopyAction : ReactiveObject, IFileActionViewModel
     private readonly CopyFileAction copyAction;
     private readonly BehaviorSubject<bool> isSyncing = new(false);
 
-    private CopyAction(CopyFileAction copyAction)
+    private CopyAction(CopyFileAction copyAction, Maybe<string> comment)
     {
         this.copyAction = copyAction;
         Progress = copyAction.Progress;
-        Description = $"Copy {copyAction.Source} over {copyAction.Destination}";
+        Description = $"Copy {copyAction.Source} to {copyAction.Destination}";
+        Comment = comment.GetValueOrDefault("");
+        LeftFile = Maybe<IZafiroFile>.From(this.copyAction.Source);
+        RightFile = Maybe<IZafiroFile>.From(this.copyAction.Destination);
     }
 
+    public string Comment { get; }
+    public Maybe<IZafiroFile> LeftFile { get; }
+    public Maybe<IZafiroFile> RightFile { get; }
     public string Description { get; }
     public bool IsIgnored => false;
     [Reactive] public bool IsSynced { get; private set; }
@@ -44,8 +50,8 @@ public class CopyAction : ReactiveObject, IFileActionViewModel
         return execute;
     }
 
-    public static Task<Result<CopyAction>> Create(IZafiroFile source, IZafiroFile destination)
+    public static Task<Result<CopyAction>> Create(IZafiroFile source, IZafiroFile destination, Maybe<string> comment)
     {
-        return CopyFileAction.Create(source, destination).Map(action => new CopyAction(action));
+        return CopyFileAction.Create(source, destination).Map(action => new CopyAction(action, comment));
     }
 }
