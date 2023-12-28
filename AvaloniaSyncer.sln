@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Desktop", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Tests", "AvaloniaSyncer.Tests\AvaloniaSyncer.Tests.csproj", "{258C4207-A2C7-4BF3-9266-45365ECDEAB6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\AvaloniaSyncer\AvaloniaSyncer.csproj", "{C4175539-20BE-4FBC-9AD5-52BF54294394}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{44B49082-C9E6-48D3-9F89-6E2CE99759B0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\AvaloniaSyncer\AvaloniaSyncer.csproj", "{975C2AED-D262-4970-AD82-AF4AF15167C3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,14 +33,14 @@ Global
 		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C4175539-20BE-4FBC-9AD5-52BF54294394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4175539-20BE-4FBC-9AD5-52BF54294394}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4175539-20BE-4FBC-9AD5-52BF54294394}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4175539-20BE-4FBC-9AD5-52BF54294394}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
