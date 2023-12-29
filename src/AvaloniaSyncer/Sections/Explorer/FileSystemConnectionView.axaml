@@ -3,8 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:explorer="clr-namespace:AvaloniaSyncer.Sections.Explorer"
-             xmlns:transferManager="clr-namespace:Zafiro.Avalonia.FileExplorer.TransferManager;assembly=Zafiro.Avalonia.FileExplorer"
-             xmlns:explorer1="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer;assembly=Zafiro.Avalonia.FileExplorer"
+             xmlns:ze="clr-namespace:Zafiro.Avalonia.FileExplorer.Explorer;assembly=Zafiro.Avalonia.FileExplorer"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Explorer.FileSystemConnectionView"
              x:DataType="explorer:FileSystemConnectionViewModel">
@@ -16,23 +15,18 @@
 		</Menu>
 		<ContentControl Margin="0" Content="{Binding FileSystemExplorer}">
 			<ContentControl.ContentTemplate>
-				<DataTemplate DataType="explorer1:FileSystemExplorer">
-					<Grid ColumnDefinitions="* *">
-                        <Grid.KeyBindings>
+				<DataTemplate DataType="ze:FileSystemExplorer">
+                    <DockPanel>
+                        <DockPanel.KeyBindings>
                             <KeyBinding Command="{Binding ToolBar.Copy}" Gesture="Ctrl+C" />
                             <KeyBinding Command="{Binding ToolBar.Paste}" Gesture="Ctrl+V" />
                             <KeyBinding Command="{Binding ToolBar.Delete}" Gesture="Delete" />
-                        </Grid.KeyBindings>
-                        <DockPanel Grid.ColumnSpan="2">
-							<ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
-							<ContentControl Content="{Binding PathNavigator}" DockPanel.Dock="Top" Margin="0 4" />
-							<ContentControl Content="{Binding Details}" />
-						</DockPanel>
-						<transferManager:LightTransferManagerView Grid.Column="1" VerticalAlignment="Bottom"
-																  HorizontalAlignment="Right" Margin="15"
-																  DataContext="{Binding TransferManager}" />
-					</Grid>
-				</DataTemplate>
+                        </DockPanel.KeyBindings>
+                        <ContentControl Content="{Binding ToolBar}" DockPanel.Dock="Top" />
+                        <ContentControl Content="{Binding PathNavigator}" DockPanel.Dock="Top" Margin="0 4" />
+                        <ContentControl Content="{Binding Details}" />
+                    </DockPanel>
+                </DataTemplate>
 			</ContentControl.ContentTemplate>
 		</ContentControl>
 		<Interaction.Behaviors>

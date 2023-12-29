@@ -3,7 +3,6 @@
              xmlns:misc="clr-namespace:Zafiro.Avalonia.Misc;assembly=Zafiro.Avalonia"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              xmlns:wizard="clr-namespace:Zafiro.Avalonia.Wizard;assembly=Zafiro.Avalonia"
-             xmlns:e="clr-namespace:AvaloniaSyncer.Sections.Explorer"
              x:Class="AvaloniaSyncer.App"
              RequestedThemeVariant="Default">
 	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
@@ -77,17 +76,6 @@
 
         <Style Selector="ComboBox.FullWidth">
             <Setter Property="HorizontalAlignment" Value="Stretch" />
-        </Style>
-
-        <Style Selector="TabItem">
-            <Setter Property="MinHeight" Value="27" />
-            <Setter Property="MaxWidth" Value="120" />
-            <Setter Property="TextElement.FontSize" Value="16" />
-            <Setter Property="BorderBrush" Value="{StaticResource TabItemBorderBrush}" />
-        </Style>
-        <Style Selector="TabItem TextBlock">
-            <Setter Property="TextWrapping" Value="NoWrap" />
-            <Setter Property="TextTrimming" Value="{x:Static TextTrimming.LeadingCharacterEllipsis}" />
         </Style>
 
 	</Application.Styles>

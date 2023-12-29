@@ -49,7 +49,7 @@ public class ViewModelFactory
 
     private IDialogService DialogService { get; }
 
-    private ITransferManager TransferManager { get; }
+    public ITransferManager TransferManager { get; }
 
     public async Task<SyncronizationSectionViewModel> GetSynchronizationSection()
     {
