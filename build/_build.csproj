@@ -9,7 +9,19 @@
     <NukeTelemetryVersion>1</NukeTelemetryVersion>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="DotnetPackaging" Version="1.0.17" />
+    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj">
+      <Temp>Zafiro.FileSystem.Local</Temp>
+    </ProjectReference>
+    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj">
+      <Temp>Zafiro.FileSystem</Temp>
+    </ProjectReference>
+    <ProjectReference Include="E:\Repos\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj">
+      <Temp>Zafiro</Temp>
+    </ProjectReference>
+    <ProjectReference Include="E:\Repos\SuperJMN\DotnetPackaging\src\DotnetPackaging\DotnetPackaging.csproj" Version="1.0.17">
+      <Temp>DotnetPackaging</Temp>
+      <Name>DotnetPackaging</Name>
+    </ProjectReference>
     <PackageReference Include="Nuke.Common" Version="7.0.2" />
     <PackageReference Include="Nuke.GitHub" Version="5.0.0" />
   </ItemGroup>

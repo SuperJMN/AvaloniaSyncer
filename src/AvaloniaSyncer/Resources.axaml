@@ -1,20 +1,6 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:AvaloniaSyncer.ViewModels"
-             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Views.MainView"
-			 x:Name="UserControl"
-             x:DataType="vm:MainViewModel">
-
-	<UserControl.Resources>
-
-        <avaloniaSyncer:ResourceConverter x:Key="ResourceConverter">
-            <avaloniaSyncer:ResourceConverter.Source>
-				<ResourceDictionary>
-		<DrawingGroup x:Key="file_preview_svgrepo_com_xaml">
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    		<DrawingGroup x:Key="file_preview_svgrepo_com_xaml">
 			<DrawingGroup.ClipGeometry>
 				<RectangleGeometry Rect="0.0,0.0,448.0,448.0"/>
 			</DrawingGroup.ClipGeometry>
@@ -56,7 +42,7 @@
 				</GeometryDrawing.Geometry>
 			</GeometryDrawing>
 		</DrawingGroup>
-		<DrawingImage Drawing="{StaticResource sync_svgrepo_com_xaml}" x:Key="Synchronize"/>
+		<DrawingImage Drawing="{StaticResource sync_svgrepo_com_xaml}" x:Key="Syncronize"/>
 		<DrawingGroup x:Key="settings_svgrepo_com_xaml">
 			<DrawingGroup.ClipGeometry>
 				<RectangleGeometry Rect="0.0,0.0,24.0,24.0"/>
@@ -73,53 +59,4 @@
 			</GeometryDrawing>
 		</DrawingGroup>
 		<DrawingImage Drawing="{StaticResource settings_svgrepo_com_xaml}" x:Key="Explore"/>
-                </ResourceDictionary>
-            </avaloniaSyncer:ResourceConverter.Source>
-        </avaloniaSyncer:ResourceConverter>
-
-    </UserControl.Resources>
-
-	<!--<DockPanel>
-        <controls:MasterDetailsNavigator DockPanel.Dock="Top" />
-        <controls:MasterDetailsView ItemsSource="{Binding Sections}" SelectedItem="{Binding SelectedSection}" MasterPaneWidth="120">
-			<controls:MasterDetailsView.ItemTemplate>
-				<DataTemplate x:DataType="vm:Section">
-					<TextBlock Text="{Binding Name}" />
-				</DataTemplate>
-			</controls:MasterDetailsView.ItemTemplate>
-			<controls:MasterDetailsView.DetailsTemplate>
-				<DataTemplate DataType="vm:Section">
-					<ContentControl Content="{Binding ViewModel}" />
-				</DataTemplate>
-			</controls:MasterDetailsView.DetailsTemplate>
-		</controls:MasterDetailsView>
-	</DockPanel>-->
-
-	<TabControl ItemsSource="{Binding Sections}" SelectedItem="{Binding SelectedSection, Mode=TwoWay}" TabStripPlacement="Bottom">
-		<TabControl.ContentTemplate>
-			<DataTemplate DataType="vm:Section">
-				<ContentControl Content="{Binding ViewModel}" />
-			</DataTemplate>
-		</TabControl.ContentTemplate>
-		<TabControl.ItemTemplate>
-			<DataTemplate>
-				<StackPanel Margin="4">
-                    <Image Height="32" Source="{Binding Name, Converter={StaticResource ResourceConverter}}" />
-                    <TextBlock TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Name}" />
-                </StackPanel>
-			</DataTemplate>
-		</TabControl.ItemTemplate>
-		<TabControl.ItemsPanel>
-			<ItemsPanelTemplate>
-				<UniformGrid Rows="1" />
-			</ItemsPanelTemplate>
-		</TabControl.ItemsPanel>
-	</TabControl>
-
-	<Interaction.Behaviors>
-		<RoutedEventTriggerBehavior RoutedEvent="{x:Static Control.LoadedEvent}">
-			<InvokeCommandAction Command="{Binding LoadSections}" />
-		</RoutedEventTriggerBehavior>
-	</Interaction.Behaviors>
-
-</UserControl>
+</ResourceDictionary>

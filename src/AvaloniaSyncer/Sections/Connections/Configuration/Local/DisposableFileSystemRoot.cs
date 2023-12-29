@@ -34,11 +34,13 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
 
     public Task<Result<FileProperties>> GetFileProperties(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileProperties(path);
 
+    public Task<Result<IDictionary<ChecksumKind, byte[]>>> GetChecksums(ZafiroPath path) => disposableFilesystemRootImplementation.GetChecksums(path);
+
     public Task<Result<DirectoryProperties>> GetDirectoryProperties(ZafiroPath path) => disposableFilesystemRootImplementation.GetDirectoryProperties(path);
 
-    public Task<Result<IEnumerable<ZafiroPath>>> GetFilePaths(ZafiroPath path, CancellationToken ct = new CancellationToken()) => disposableFilesystemRootImplementation.GetFilePaths(path, ct);
+    public Task<Result<IEnumerable<ZafiroPath>>> GetFilePaths(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetFilePaths(path, ct);
 
-    public Task<Result<IEnumerable<ZafiroPath>>> GetDirectoryPaths(ZafiroPath path, CancellationToken ct = new CancellationToken()) => disposableFilesystemRootImplementation.GetDirectoryPaths(path, ct);
+    public Task<Result<IEnumerable<ZafiroPath>>> GetDirectoryPaths(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetDirectoryPaths(path, ct);
 
     public Task<Result<bool>> ExistDirectory(ZafiroPath path) => disposableFilesystemRootImplementation.ExistDirectory(path);
 
@@ -54,7 +56,7 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
 
     public IZafiroDirectory GetDirectory(ZafiroPath path) => disposableFilesystemRootImplementation.GetDirectory(path);
 
-    public Task<Result<IEnumerable<IZafiroFile>>> GetFiles(ZafiroPath path, CancellationToken ct = new CancellationToken()) => disposableFilesystemRootImplementation.GetFiles(path, ct);
+    public Task<Result<IEnumerable<IZafiroFile>>> GetFiles(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetFiles(path, ct);
 
-    public Task<Result<IEnumerable<IZafiroDirectory>>> GetDirectories(ZafiroPath path, CancellationToken ct = new CancellationToken()) => disposableFilesystemRootImplementation.GetDirectories(path, ct);
+    public Task<Result<IEnumerable<IZafiroDirectory>>> GetDirectories(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetDirectories(path, ct);
 }
