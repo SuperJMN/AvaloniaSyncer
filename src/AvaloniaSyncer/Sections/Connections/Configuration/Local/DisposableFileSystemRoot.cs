@@ -35,7 +35,7 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
     public Task<Result<FileProperties>> GetFileProperties(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileProperties(path);
 
     public Task<Result<IDictionary<ChecksumKind, byte[]>>> GetChecksums(ZafiroPath path) => disposableFilesystemRootImplementation.GetChecksums(path);
-
+    
     public Task<Result<DirectoryProperties>> GetDirectoryProperties(ZafiroPath path) => disposableFilesystemRootImplementation.GetDirectoryProperties(path);
 
     public Task<Result<IEnumerable<ZafiroPath>>> GetFilePaths(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetFilePaths(path, ct);
