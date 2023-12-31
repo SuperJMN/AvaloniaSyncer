@@ -1,0 +1,54 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:Zafiro.Avalonia.Converters;assembly=Zafiro.Avalonia"
+             xmlns:items="clr-namespace:Zafiro.Avalonia.FileExplorer.TransferManager.Items;assembly=Zafiro.Avalonia.FileExplorer"
+             xmlns:designTime="clr-namespace:Zafiro.Avalonia.DesignTime;assembly=Zafiro.Avalonia"
+             xmlns:actions="clr-namespace:Zafiro.Actions;assembly=Zafiro"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.TransferView"
+             x:DataType="items:ITransferItem">
+	<Design.DataContext>
+		<items:DesignTransferItem
+            SourceString="ff"
+            DestinationString="Flepito">
+			<items:DesignTransferItem.Progress>
+				<designTime:Return>
+					<designTime:Return.Value>
+						<actions:LongProgress />
+					</designTime:Return.Value>
+				</designTime:Return>
+			</items:DesignTransferItem.Progress>
+		</items:DesignTransferItem>
+	</Design.DataContext>
+
+	<DockPanel>
+		<DockPanel.Transitions>
+			<Transitions>
+				<DoubleTransition Property="Opacity" Duration="0:0:1">
+					<DoubleTransition.Easing>
+						<LinearEasing />
+					</DoubleTransition.Easing>
+				</DoubleTransition>
+			</Transitions>
+		</DockPanel.Transitions>
+
+		<Button Padding="0" Margin="3" Height="20" HorizontalContentAlignment="Center" Width="20"
+                x:CompileBindings="False" DockPanel.Dock="Right" Content="x" Command="{Binding DoTransfer.Stop}"
+                VerticalAlignment="Center" Theme="{StaticResource TransparentButton}" />
+        <Panel>
+            <ProgressBar
+                VerticalAlignment="Bottom"
+                Opacity="{Binding IsTransferring, Converter={x:Static converters:BoolOpacityConverters.BoolToOpacity}}"
+                DockPanel.Dock="Bottom" Maximum="{Binding Progress^.Total}"
+                Value="{Binding Progress^.Current}" />
+            <TextBlock Margin="0 0 0 6" TextWrapping="NoWrap" ToolTip.Tip="{Binding Destination}"
+                       TextTrimming="CharacterEllipsis" Text="{Binding Description}" VerticalAlignment="Center" />
+            <TextBlock TextAlignment="Right" TextWrapping="NoWrap" Foreground="Red"
+                       ToolTip.Tip="{Binding Errors^}"
+                       TextTrimming="CharacterEllipsis" Text="{Binding Errors^}" VerticalAlignment="Center" />
+        </Panel>
+	</DockPanel>
+
+</UserControl>

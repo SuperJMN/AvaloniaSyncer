@@ -6,7 +6,21 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Synchronization.SyncronizationSectionView"
              x:DataType="synchronization:SyncronizationSectionViewModel">
-	<DockPanel>
+
+    <UserControl.Styles>
+        <Style Selector="TabItem">
+            <Setter Property="MinHeight" Value="27" />
+            <Setter Property="MaxWidth" Value="120" />
+            <Setter Property="TextElement.FontSize" Value="16" />
+            <Setter Property="BorderBrush" Value="{StaticResource TabItemBorderBrush}" />
+        </Style>
+        <Style Selector="TabItem TextBlock">
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="TextTrimming" Value="{x:Static TextTrimming.LeadingCharacterEllipsis}" />
+        </Style>
+    </UserControl.Styles>
+
+    <DockPanel>
 		<Button DockPanel.Dock="Top" Margin="8" Content="Add session…" Command="{Binding AddSession}" />
         <TabControl ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}">
             <TabControl.ItemTemplate>

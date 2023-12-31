@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Tests", "Ava
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{44B49082-C9E6-48D3-9F89-6E2CE99759B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\AvaloniaSyncer\AvaloniaSyncer.csproj", "{975C2AED-D262-4970-AD82-AF4AF15167C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\AvaloniaSyncer\AvaloniaSyncer.csproj", "{59F0D3F2-8961-432D-A992-10B9050D2824}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{975C2AED-D262-4970-AD82-AF4AF15167C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59F0D3F2-8961-432D-A992-10B9050D2824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59F0D3F2-8961-432D-A992-10B9050D2824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59F0D3F2-8961-432D-A992-10B9050D2824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59F0D3F2-8961-432D-A992-10B9050D2824}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

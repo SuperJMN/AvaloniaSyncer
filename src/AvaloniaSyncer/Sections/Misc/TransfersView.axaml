@@ -1,0 +1,22 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:items="clr-namespace:Zafiro.Avalonia.FileExplorer.TransferManager.Items;assembly=Zafiro.Avalonia.FileExplorer"
+             xmlns:transferManager="clr-namespace:Zafiro.Avalonia.FileExplorer.TransferManager;assembly=Zafiro.Avalonia.FileExplorer"
+             xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.TransfersView"
+             x:DataType="transferManager:ITransferManager">
+    <StackPanel Spacing="6">
+        <TextBlock FontWeight="Bold" DockPanel.Dock="Top" Text="Processing actions" />
+        <Separator />
+        <ItemsControl ItemsSource="{Binding OngoingTransfers}" Empty.Content="There are no pending transfers 😁">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="items:ITransferItem">
+                    <avaloniaSyncer:TransferView />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

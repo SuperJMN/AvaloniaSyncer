@@ -38,7 +38,7 @@ public class App : Application
                 };
 
                 return sections;
-            });
+            }, vm.TransferManager);
         }, () => new MainWindow());
 
         base.OnFrameworkInitializationCompleted();
