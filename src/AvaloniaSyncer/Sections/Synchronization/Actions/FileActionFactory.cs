@@ -35,7 +35,7 @@ public class FileActionFactory
             {
                 if (areEqual)
                 {
-                    return Task.FromResult(Result.Success((IFileActionViewModel)new DoNothing("Files are considered equal", Maybe<string>.None, Maybe<IZafiroFile>.From(bothDiff.Left), Maybe<IZafiroFile>.From(bothDiff.Right))));
+                    return Task.FromResult(Result.Success((IFileActionViewModel)new DoNothing("Skip", "Files are considered equal", Maybe<IZafiroFile>.From(bothDiff.Left), Maybe<IZafiroFile>.From(bothDiff.Right))));
                 }
 
                 return CopyAction.Create(bothDiff.Right, bothDiff.Left, "File are different").Cast(action => (IFileActionViewModel)action);

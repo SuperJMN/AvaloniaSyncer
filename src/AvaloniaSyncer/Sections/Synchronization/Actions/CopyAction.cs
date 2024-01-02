@@ -10,7 +10,7 @@ using ReactiveUI.Fody.Helpers;
 using Zafiro.Actions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Actions;
-using Zafiro.Mixins;
+using Zafiro.Reactive;
 
 namespace AvaloniaSyncer.Sections.Synchronization.Actions;
 
