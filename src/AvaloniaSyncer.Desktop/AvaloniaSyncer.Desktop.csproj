@@ -18,8 +18,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AvaloniaSyncer\AvaloniaSyncer.csproj" />
-    <ProjectReference Include="E:\Repos\SuperJMN\AvaloniaSyncer\src\AvaloniaSyncer\AvaloniaSyncer.csproj">
-      <Temp>AvaloniaSyncer</Temp>
-    </ProjectReference>
   </ItemGroup>
 </Project>
