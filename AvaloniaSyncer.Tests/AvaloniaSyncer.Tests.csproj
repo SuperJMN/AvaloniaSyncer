@@ -19,9 +19,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <ProjectReference Include="E:\Repos\SuperJMN\AvaloniaSyncer\src\AvaloniaSyncer\AvaloniaSyncer.csproj">
-      <Temp>AvaloniaSyncer</Temp>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
