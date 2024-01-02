@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
+using Zafiro.Avalonia.FileExplorer.TransferManager;
 
 namespace AvaloniaSyncer.ViewModels;
 
@@ -13,8 +14,9 @@ public class MainViewModel : ReactiveObject
 {
     private readonly ObservableAsPropertyHelper<IEnumerable<Section>> sectionsHelper;
 
-    public MainViewModel(Func<Task<IEnumerable<Section>>> sectionsFactory)
+    public MainViewModel(Func<Task<IEnumerable<Section>>> sectionsFactory, ITransferManager transferManager)
     {
+        TransferManager = transferManager;
         LoadSections = ReactiveCommand.CreateFromTask(sectionsFactory);
         sectionsHelper = LoadSections.ToProperty(this, x => x.Sections);
 
@@ -24,8 +26,9 @@ public class MainViewModel : ReactiveObject
             .Subscribe();
     }
 
-    [Reactive]
-    public Section SelectedSection { get; set; }
+    public ITransferManager TransferManager { get; }
+
+    [Reactive] public Section SelectedSection { get; set; }
 
     public IEnumerable<Section> Sections => sectionsHelper.Value;
 
