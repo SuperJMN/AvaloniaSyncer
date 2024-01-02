@@ -17,6 +17,7 @@ using Zafiro.CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.Comparer;
 using Zafiro.Mixins;
+using Zafiro.Reactive;
 using Zafiro.UI;
 
 namespace AvaloniaSyncer.Sections.Synchronization;
@@ -45,7 +46,7 @@ public class GranularSessionViewModel
             .Filter(x => x is { IsIgnored: false, IsSynced: false });
 
         ISubject<bool> canAnalyze = new Subject<bool>();
-        Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer2().Diff(source, destination)), Maybe.From(canAnalyze.AsObservable()));
+        Analyze = StoppableCommand.Create(() => Observable.FromAsync(() => new FileSystemComparer().Diff(source, destination)), Maybe.From(canAnalyze.AsObservable()));
         var canSync = pendingSync.ToCollection().Any();
 
         SyncAll = StoppableCommand.Create(() =>
@@ -90,6 +91,6 @@ public class GranularSessionViewModel
 
     private Task<Result<IFileActionViewModel>> GenerateActionFor(FileDiff fileDiff)
     {
-        return new FileActionFactory(Destination).Create(fileDiff);
+        return new FileActionFactory(Destination).Create(fileDiff, new CompareFileSizeStrategy());
     }
 }
