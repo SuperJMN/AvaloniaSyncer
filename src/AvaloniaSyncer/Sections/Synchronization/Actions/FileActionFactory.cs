@@ -38,7 +38,7 @@ public class FileActionFactory
                     return Task.FromResult(Result.Success((IFileActionViewModel)new DoNothing("Skip", "Files are considered equal", Maybe<IZafiroFile>.From(bothDiff.Left), Maybe<IZafiroFile>.From(bothDiff.Right))));
                 }
 
-                return CopyAction.Create(bothDiff.Right, bothDiff.Left, "File are different").Cast(action => (IFileActionViewModel)action);
+                return CopyAction.Create(bothDiff.Right, bothDiff.Left, "Files are different").Cast(action => (IFileActionViewModel)action);
             });
     }
 
@@ -51,10 +51,5 @@ public class FileActionFactory
     private Task<Result<IFileActionViewModel>> CopyToDestination(IZafiroFile source)
     {
         return CopyAction.Create(source, source.EquivalentIn(destination), $"File {source} does not exist in {destination}").Cast(action => (IFileActionViewModel)action);
-    }
-
-    private static Task<Result<IFileActionViewModel>> FileAreDifferent(IZafiroFile source, IZafiroFile destination)
-    {
-        return CopyAction.Create(source, destination, "Files are different").Cast(action => (IFileActionViewModel)action);
     }
 }
