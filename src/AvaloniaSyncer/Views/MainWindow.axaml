@@ -5,7 +5,7 @@
         xmlns:views="clr-namespace:AvaloniaSyncer.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaSyncer.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
+        Icon="/Assets/Icon.png"
         Title="AvaloniaSyncer">
         <views:MainView />
 </Window>
