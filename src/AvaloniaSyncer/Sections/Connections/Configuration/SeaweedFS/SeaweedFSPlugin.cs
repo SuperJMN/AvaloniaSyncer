@@ -10,7 +10,7 @@ public class SeaweedFSPlugin : IPlugin
     {
         return new SeaweedConfigurationViewModel(Guid.NewGuid(), "SeaweedFS", connectionsRepository)
         {
-            Address = "http://"
+            AddressField = { Value = "http://" }
         };
     }
 }

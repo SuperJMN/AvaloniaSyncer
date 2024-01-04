@@ -91,6 +91,6 @@ public class GranularSessionViewModel
 
     private Task<Result<IFileActionViewModel>> GenerateActionFor(FileDiff fileDiff)
     {
-        return new FileActionFactory(Destination).Create(fileDiff, new CompareFileSizeStrategy());
+        return new FileActionFactory(Destination).Create(fileDiff, new SizeCompareStrategy());
     }
 }

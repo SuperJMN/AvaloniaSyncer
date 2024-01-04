@@ -5,6 +5,7 @@
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
              xmlns:s="clr-namespace:Zafiro.Avalonia.Controls.StringEditor;assembly=Zafiro.Avalonia"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
+             xmlns:configuration="clr-namespace:AvaloniaSyncer.Sections.Connections.Configuration"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.ConnectionsSectionView"
              x:DataType="connections:ConnectionsSectionViewModel">
@@ -12,24 +13,31 @@
 	<controls:MasterDetailsView ItemsSource="{Binding Configurations}" SelectedItem="{Binding CurrentConfiguration}">
 
 		<controls:MasterDetailsView.DetailsTemplate>
-			<DataTemplate DataType="connections:IConfiguration">
+			<DataTemplate DataType="configuration:ConfigurationViewModelBase">
 				<Panel>
+					<ContentControl Padding="8" Content="{Binding}" />
 					<Button VerticalAlignment="Bottom" Command="{Binding Save}" Margin="10"
                             HorizontalAlignment="Right" Content="Save" />
-					<ContentControl Padding="8" Content="{Binding}" />
+					<CheckBox IsChecked="{Binding IsDirty^}" />
 				</Panel>
 			</DataTemplate>
 		</controls:MasterDetailsView.DetailsTemplate>
 
 		<controls:MasterDetailsView.ItemTemplate>
-			<DataTemplate DataType="connections:IConfiguration">
-				<s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}" IsLocked="{Binding !$parent[ListBoxItem].IsSelected}" StringField="{Binding Name}">
-					<s:StringEditorControl.Styles>
-						<Style Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
-							<Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
-						</Style>
-					</s:StringEditorControl.Styles>
-				</s:StringEditorControl>
+			<DataTemplate DataType="configuration:ConfigurationViewModelBase">
+				<Panel>
+					<TextBlock IsVisible="{Binding IsDirty^}">Dirty</TextBlock>
+                    <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}"
+                                           IsLocked="{Binding !$parent[ListBoxItem].IsSelected}"
+                                           StringField="{Binding Name}">
+						<s:StringEditorControl.Styles>
+							<Style
+                                Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
+								<Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
+							</Style>
+						</s:StringEditorControl.Styles>
+					</s:StringEditorControl>
+				</Panel>
 			</DataTemplate>
 		</controls:MasterDetailsView.ItemTemplate>
 		<controls:MasterDetailsView.Header>

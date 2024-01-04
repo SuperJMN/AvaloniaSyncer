@@ -10,5 +10,5 @@ public interface IConfiguration
     public Guid Id { get; }
     IObservable<bool> IsValid { get; }
     public StringField Name { get; }
-    ReactiveCommand<Unit, Unit> Save { get; set; }
+    ReactiveCommand<Unit, Unit> Save { get; }
 }

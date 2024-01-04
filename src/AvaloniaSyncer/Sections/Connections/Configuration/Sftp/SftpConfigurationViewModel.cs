@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
 
@@ -23,4 +24,6 @@ public class SftpConfigurationViewModel : ConfigurationViewModelBase
     [Reactive] public int Port { get; set; }
     [Reactive] public string Username { get; set; }
     [Reactive] public string Password { get; set; }
+    public override IObservable<bool> IsValid => Name.IsValid;
+    public override IObservable<bool> IsDirty => Name.IsDirty;
 }
