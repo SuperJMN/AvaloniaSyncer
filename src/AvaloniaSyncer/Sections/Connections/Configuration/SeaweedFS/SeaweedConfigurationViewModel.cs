@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
+using System.Collections.Generic;
 using Zafiro.Avalonia.Controls.StringEditor;
 using Zafiro.UI.Fields;
 
@@ -17,6 +16,5 @@ public class SeaweedConfigurationViewModel : ConfigurationViewModelBase
     }
 
     public StringField AddressField { get; }
-    public override IObservable<bool> IsValid => Observable.CombineLatest([Name.IsValid, AddressField.IsValid]).Select(list => list.All(valid => valid));
-    public override IObservable<bool> IsDirty => Observable.CombineLatest([Name.IsDirty, AddressField.IsDirty]).Select(list => list.Any(dirty => dirty));
+    public override IEnumerable<IField> Fields => [Name, AddressField];
 }

@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using ReactiveUI;
 using ReactiveUI.Validation.Helpers;
@@ -24,8 +27,9 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
     public Guid Id { get; }
     public StringField Name { get; }
 
-    public abstract IObservable<bool> IsValid { get; }
-    public abstract IObservable<bool> IsDirty { get; }
+    public IObservable<bool> IsValid => Fields.Select(x => x.IsValid).CombineLatest().Select(list => list.All(isValid => isValid));
+    public IObservable<bool> IsDirty => Fields.Select(x => x.IsDirty).CombineLatest().Select(list => list.Any(isDirty => isDirty));
+    public abstract IEnumerable<IField> Fields { get; }
 
     protected bool Equals(ConfigurationViewModelBase other) => Id.Equals(other.Id);
 

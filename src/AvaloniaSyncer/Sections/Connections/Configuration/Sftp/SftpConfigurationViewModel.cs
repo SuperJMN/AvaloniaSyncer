@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Extensions;
+using Zafiro.UI.Fields;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
@@ -24,6 +26,6 @@ public class SftpConfigurationViewModel : ConfigurationViewModelBase
     [Reactive] public int Port { get; set; }
     [Reactive] public string Username { get; set; }
     [Reactive] public string Password { get; set; }
-    public override IObservable<bool> IsValid => Name.IsValid;
-    public override IObservable<bool> IsDirty => Name.IsDirty;
+
+    public override IEnumerable<IField> Fields => [Name];
 }
