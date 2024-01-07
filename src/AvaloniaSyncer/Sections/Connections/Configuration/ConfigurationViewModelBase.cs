@@ -26,25 +26,24 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
 
     public CombinedReactiveCommand<Unit, Unit> CommitAllFields => ReactiveCommand.CreateCombined(Fields.Select(f => f.Commit));
 
+    public IObservable<bool> CanSave => IsValid.CombineLatest(Observable.CombineLatest(this.WhenAnyValue(x => x.IsNew), IsDirty).Select(list => list.Any(b => b)), (isValid, hasFreshData) => isValid && hasFreshData);
+    public IObservable<bool> IsDirty => Fields.Select(x => x.IsDirty).CombineLatest().Select(list => list.Any(isDirty => isDirty));
+    protected abstract IEnumerable<IField> Fields { get; }
+
+    [Reactive] public bool IsNew { get; set; }
+
     public ReactiveCommand<Unit, Unit> Save => ReactiveCommand.CreateFromTask(async () =>
     {
         await connectionsRepository.AddOrUpdate(Mapper.ToConnection(this));
         CommitAllFields.Execute().Subscribe();
         IsNew = false;
         return Unit.Default;
-    }, IsValid.CombineLatest(Observable.CombineLatest(IsNewObs, IsDirty).Select(list => list.Any(b => b)), (isValid, hasFreshData) => isValid && hasFreshData));
+    }, CanSave);
+
     public Guid Id { get; }
     public StringField Name { get; }
 
     public IObservable<bool> IsValid => Fields.Select(x => x.IsValid).CombineLatest().Select(list => list.All(isValid => isValid));
-    public IObservable<bool> IsDirty => Fields.Select(x => x.IsDirty).CombineLatest().Select(list => list.Any(isDirty => isDirty));
-    public IObservable<bool> IsNewObs => this.WhenAnyValue(x => x.IsNew);
-    public abstract IEnumerable<IField> Fields { get; }
-
-    [Reactive]
-    public bool IsNew { get; set; }
-
-    protected bool Equals(ConfigurationViewModelBase other) => Id.Equals(other.Id);
 
     public override bool Equals(object? obj)
     {
@@ -58,13 +57,15 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
             return true;
         }
 
-        if (obj.GetType() != this.GetType())
+        if (obj.GetType() != GetType())
         {
             return false;
         }
 
-        return Equals((ConfigurationViewModelBase)obj);
+        return Equals((ConfigurationViewModelBase) obj);
     }
 
     public override int GetHashCode() => Id.GetHashCode();
+
+    protected bool Equals(ConfigurationViewModelBase other) => Id.Equals(other.Id);
 }

@@ -9,6 +9,6 @@ public class LocalConfigurationViewModel : ConfigurationViewModelBase
     public LocalConfigurationViewModel(Guid id, string name, IConnectionsRepository connectionsRepository) : base(id, name, connectionsRepository)
     {
     }
-    
-    public override IEnumerable<IField> Fields => [Name];
+
+    protected override IEnumerable<IField> Fields => [Name];
 }

@@ -7,7 +7,7 @@ namespace AvaloniaSyncer.Sections.Connections;
 
 public class PluginViewModel : ReactiveObject
 {
-    public PluginViewModel(IPlugin plugin, SourceCache<IConfiguration, Guid> sourceCache, IConnectionsRepository connectionsRepository)
+    public PluginViewModel(IPlugin plugin, ISourceCache<IConfiguration, Guid> sourceCache, IConnectionsRepository connectionsRepository)
     {
         Add = ReactiveCommand.Create(() => sourceCache.AddOrUpdate(plugin.CreateConfig(connectionsRepository)));
         Name = plugin.Name;

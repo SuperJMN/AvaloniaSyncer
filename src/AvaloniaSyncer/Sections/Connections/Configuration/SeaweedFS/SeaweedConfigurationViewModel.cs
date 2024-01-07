@@ -15,5 +15,5 @@ public class SeaweedConfigurationViewModel : ConfigurationViewModelBase
     }
     
     public StringField AddressField { get; }
-    public override IEnumerable<IField> Fields => [Name, AddressField];
+    protected override IEnumerable<IField> Fields => [Name, AddressField];
 }

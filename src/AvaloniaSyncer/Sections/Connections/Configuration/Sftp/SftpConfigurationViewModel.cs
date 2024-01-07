@@ -26,5 +26,5 @@ public class SftpConfigurationViewModel : ConfigurationViewModelBase
     [Reactive] public string Username { get; set; }
     [Reactive] public string Password { get; set; }
 
-    public override IEnumerable<IField> Fields => [Name];
+    protected override IEnumerable<IField> Fields => [Name];
 }

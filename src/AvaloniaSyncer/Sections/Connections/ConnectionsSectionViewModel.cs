@@ -23,11 +23,12 @@ public class ConnectionsSectionViewModel : ReactiveObject
     {
         configs.AddOrUpdate(repo.Connections.ToList().Select(connection => Mapper.ToConfiguration(connection, repo)));
         configs.Connect().Bind(out configurations).Subscribe();
+        configs.Connect().OnItemAdded(x => CurrentConfiguration = x).Subscribe();
         ReactiveCommand.Create(() =>
         {
-            var connection = Mapper.ToConnection(CurrentConfiguration);
+            var connection = Mapper.ToConnection(CurrentConfiguration!);
             repo.AddOrUpdate(connection);
-        }, this.WhenAnyObservable(x => x.CurrentConfiguration.IsValid));
+        }, this.WhenAnyObservable(x => x.CurrentConfiguration!.IsValid));
 
         Plugins = new IPlugin[]
             {
