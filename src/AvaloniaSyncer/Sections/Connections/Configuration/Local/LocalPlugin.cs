@@ -8,6 +8,9 @@ public class LocalPlugin : IPlugin
 
     public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository)
     {
-        return new LocalConfigurationViewModel(Guid.NewGuid(), "Local", connectionsRepository);
+        return new LocalConfigurationViewModel(Guid.NewGuid(), "Local", connectionsRepository)
+        {
+            IsNew = true,
+        };
     }
 }

@@ -12,9 +12,8 @@ public class SeaweedConfigurationViewModel : ConfigurationViewModelBase
         AddressField = new StringField();
         AddressField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");
         AddressField.AddRule(s => Uri.TryCreate(s, UriKind.Absolute, out _), "Invalid address");
-        Save.InvokeCommand(AddressField.Commit);
     }
-
+    
     public StringField AddressField { get; }
     public override IEnumerable<IField> Fields => [Name, AddressField];
 }

@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Helpers;
 using Zafiro.Avalonia.Controls.StringEditor;
 using Zafiro.UI.Fields;
@@ -23,13 +24,25 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
         Name.AddRule(s => !string.IsNullOrWhiteSpace(s), "Can't be empty");
     }
 
-    public ReactiveCommand<Unit, Unit> Save => ReactiveCommand.CreateFromTask(() => connectionsRepository.AddOrUpdate(Mapper.ToConnection(this)), IsValid);
+    public CombinedReactiveCommand<Unit, Unit> CommitAllFields => ReactiveCommand.CreateCombined(Fields.Select(f => f.Commit));
+
+    public ReactiveCommand<Unit, Unit> Save => ReactiveCommand.CreateFromTask(async () =>
+    {
+        await connectionsRepository.AddOrUpdate(Mapper.ToConnection(this));
+        CommitAllFields.Execute().Subscribe();
+        IsNew = false;
+        return Unit.Default;
+    }, IsValid.CombineLatest(Observable.CombineLatest(IsNewObs, IsDirty).Select(list => list.Any(b => b)), (isValid, hasFreshData) => isValid && hasFreshData));
     public Guid Id { get; }
     public StringField Name { get; }
 
     public IObservable<bool> IsValid => Fields.Select(x => x.IsValid).CombineLatest().Select(list => list.All(isValid => isValid));
     public IObservable<bool> IsDirty => Fields.Select(x => x.IsDirty).CombineLatest().Select(list => list.Any(isDirty => isDirty));
+    public IObservable<bool> IsNewObs => this.WhenAnyValue(x => x.IsNew);
     public abstract IEnumerable<IField> Fields { get; }
+
+    [Reactive]
+    public bool IsNew { get; set; }
 
     protected bool Equals(ConfigurationViewModelBase other) => Id.Equals(other.Id);
 
