@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS.SeaweedConfigurationView"
              x:DataType="seaweedFs:SeaweedConfigurationViewModel">
-    <HeaderedContentControl VerticalAlignment="Top" Header="Server Address">
-      <TextBox Watermark="Server Address" Text="{Binding AddressField.Value, Mode=TwoWay}" />
-  </HeaderedContentControl>
+	<HeaderedContentControl VerticalAlignment="Top" Header="Server Address">
+		<TextBox Watermark="Server Address" Text="{Binding AddressField.Value, Mode=TwoWay}" />
+	</HeaderedContentControl>
 </UserControl>

@@ -6,9 +6,9 @@ public class SftpPlugin : IPlugin
 {
     public string Name => "SFTP";
 
-    public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository)
+    public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove)
     {
-        return new SftpConfigurationViewModel(Guid.NewGuid(), "SFTP", new SftpConnectionParameters("", 22, "", ""), connectionsRepository)
+        return new SftpConfigurationViewModel(Guid.NewGuid(), "SFTP", new SftpConnectionParameters("", 22, "", ""), connectionsRepository, onRemove)
         {
             IsNew = true,
         };

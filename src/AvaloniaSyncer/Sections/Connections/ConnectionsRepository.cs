@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
@@ -31,6 +30,13 @@ internal class ConnectionsRepository : IConnectionsRepository
     public async Task AddOrUpdate(IZafiroFileSystemConnection connection)
     {
         connectionsSource.AddOrUpdate(connection);
+        var result = await store.Save(Connections.Select(Mapper.ToConfiguration));
+        result.TapError(e => logger.Execute(l => l.Error($"Could not save the configuration file: {e}")));
+    }
+
+    public async Task Remove(Guid id)
+    {
+        connectionsSource.RemoveKey(id);
         var result = await store.Save(Connections.Select(Mapper.ToConfiguration));
         result.TapError(e => logger.Execute(l => l.Error($"Could not save the configuration file: {e}")));
     }

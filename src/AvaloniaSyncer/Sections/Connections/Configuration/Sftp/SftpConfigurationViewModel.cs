@@ -8,7 +8,7 @@ namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
 public class SftpConfigurationViewModel : ConfigurationViewModelBase
 {
-    public SftpConfigurationViewModel(Guid id, string name, SftpConnectionParameters sftpConnectionParameters, IConnectionsRepository connectionsRepository) : base(id, name, connectionsRepository)
+    public SftpConfigurationViewModel(Guid id, string name, SftpConnectionParameters sftpConnectionParameters, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
     {
         Host = sftpConnectionParameters.Host;
         Port = sftpConnectionParameters.Port;

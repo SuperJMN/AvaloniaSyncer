@@ -11,4 +11,5 @@ public interface IConfiguration
     IObservable<bool> IsValid { get; }
     public StringField Name { get; }
     ReactiveCommand<Unit, Unit> Save { get; }
+    ReactiveCommand<Unit, Unit> Remove { get; }
 }

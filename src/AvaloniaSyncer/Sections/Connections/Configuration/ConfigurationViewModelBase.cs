@@ -16,13 +16,16 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
 {
     private readonly IConnectionsRepository connectionsRepository;
 
-    public ConfigurationViewModelBase(Guid id, string name, IConnectionsRepository connectionsRepository)
+    public ConfigurationViewModelBase(Guid id, string name, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove)
     {
         this.connectionsRepository = connectionsRepository;
         Id = id;
         Name = new StringField { Initial = name };
         Name.AddRule(s => !string.IsNullOrWhiteSpace(s), "Can't be empty");
+        Remove = ReactiveCommand.Create(() => onRemove(this));
     }
+
+    public ReactiveCommand<Unit, Unit> Remove { get; }
 
     public CombinedReactiveCommand<Unit, Unit> CommitAllFields => ReactiveCommand.CreateCombined(Fields.Select(f => f.Commit));
 

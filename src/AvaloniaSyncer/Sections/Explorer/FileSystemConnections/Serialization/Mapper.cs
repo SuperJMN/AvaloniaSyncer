@@ -1,5 +1,6 @@
 using System;
 using AvaloniaSyncer.Sections.Connections;
+using AvaloniaSyncer.Sections.Connections.Configuration;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
@@ -63,16 +64,16 @@ public static class Mapper
         }
     }
 
-    public static IConfiguration ToConfiguration(IZafiroFileSystemConnection connection, IConnectionsRepository repo)
+    public static IConfiguration ToConfiguration(IZafiroFileSystemConnection connection, IConnectionsRepository repo, Action<ConfigurationViewModelBase> onRemove)
     {
         return connection switch
         {
-            LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Id, local.Name, repo),
-            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, repo)
+            LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Id, local.Name, repo, onRemove),
+            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, repo, onRemove)
             {
                 AddressField = { Initial = seaweed.Uri.ToString() },
             },
-            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo),
+            SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo, onRemove),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };
     }
@@ -81,10 +82,10 @@ public static class Mapper
     {
         return currentConfiguration switch
         {
-            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.CommittedValue, new Uri(swfs.AddressField.CommittedValue), Maybe<ILogger>.None),
-            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.CommittedValue),
+            SeaweedConfigurationViewModel swfs => new SeaweedFileSystemConnection(swfs.Id, swfs.Name.Value, new Uri(swfs.AddressField.Value), Maybe<ILogger>.None),
+            LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.Value),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(sftp.Id,
-                sftp.Name.CommittedValue,
+                sftp.Name.Value,
                 new SftpConnectionParameters(sftp.Host,
                     sftp.Port, sftp.Username,
                     sftp.Password)),

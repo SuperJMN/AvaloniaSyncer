@@ -11,41 +11,69 @@
              x:DataType="connections:ConnectionsSectionViewModel">
 
 	<UserControl.Resources>
-        <StreamGeometry x:Key="WarningCircle">m 12 2.25 c -5.37589 0 -9.75 4.37411 -9.75 9.75 c 0 5.37592 4.37412 9.75 9.75 9.75 c 5.37592 0 9.75 -4.37408 9.75 -9.75 c 0 -5.37588 -4.37408 -9.75 -9.75 -9.75 z m 0 1.5 c 4.56527 0 8.25 3.68477 8.25 8.25 c 0 4.56527 -3.68473 8.25 -8.25 8.25 C 7.43477 20.25 3.75 16.5653 3.75 12 C 3.75 7.43478 7.43478 3.75 12 3.75 Z m 0 2.5 A 0.75 0.75 0 0 0 11.25 7 v 7 A 0.75 0.75 0 0 0 12 14.75 A 0.75 0.75 0 0 0 12.75 14 V 7 A 0.75 0.75 0 0 0 12 6.25 Z m 0 9.99023 a 0.75 0.75 0 0 0 -0.75 0.75 V 17 A 0.75 0.75 0 0 0 12 17.75 A 0.75 0.75 0 0 0 12.75 17 v -0.0098 a 0.75 0.75 0 0 0 -0.75 -0.75 z</StreamGeometry>
-    </UserControl.Resources>
 
-    <controls:MasterDetailsView ItemsSource="{Binding Configurations}" SelectedItem="{Binding CurrentConfiguration}">
+        <DrawingGroup x:Key="bin_svgrepo_com_xaml">
+			<DrawingGroup.ClipGeometry>
+				<RectangleGeometry Rect="0.0,0.0,24.0,24.0"/>
+			</DrawingGroup.ClipGeometry>
+			<GeometryDrawing Brush="{DynamicResource Accent}">
+				<GeometryDrawing.Geometry>
+					<PathGeometry Figures="M 1.5 3.75 C 1.08579 3.75 0.75 4.08579 0.75 4.5 C 0.75 4.91421 1.08579 5.25 1.5 5.25 V 3.75 Z M 22.5 5.25 C 22.9142 5.25 23.25 4.91421 23.25 4.5 C 23.25 4.08579 22.9142 3.75 22.5 3.75 V 5.25 Z M 1.5 5.25 H 22.5 V 3.75 H 1.5 V 5.25 Z" FillRule="NonZero"/>
+				</GeometryDrawing.Geometry>
+			</GeometryDrawing>
+			<GeometryDrawing Brush="{DynamicResource Accent}">
+				<GeometryDrawing.Geometry>
+					<PathGeometry Figures="M 9.75 1.5 V 0.75 V 1.5 Z M 8.25 3 H 7.5 H 8.25 Z M 7.5 4.5 C 7.5 4.91421 7.83579 5.25 8.25 5.25 C 8.66421 5.25 9 4.91421 9 4.5 H 7.5 Z M 15 4.5 C 15 4.91421 15.3358 5.25 15.75 5.25 C 16.1642 5.25 16.5 4.91421 16.5 4.5 H 15 Z M 15.75 3 H 16.5 H 15.75 Z M 14.25 0.75 H 9.75 V 2.25 H 14.25 V 0.75 Z M 9.75 0.75 C 9.15326 0.75 8.58097 0.987053 8.15901 1.40901 L 9.21967 2.46967 C 9.36032 2.32902 9.55109 2.25 9.75 2.25 V 0.75 Z M 8.15901 1.40901 C 7.73705 1.83097 7.5 2.40326 7.5 3 H 9 C 9 2.80109 9.07902 2.61032 9.21967 2.46967 L 8.15901 1.40901 Z M 7.5 3 V 4.5 H 9 V 3 H 7.5 Z M 16.5 4.5 V 3 H 15 V 4.5 H 16.5 Z M 16.5 3 C 16.5 2.40326 16.2629 1.83097 15.841 1.40901 L 14.7803 2.46967 C 14.921 2.61032 15 2.80109 15 3 H 16.5 Z M 15.841 1.40901 C 15.419 0.987053 14.8467 0.75 14.25 0.75 V 2.25 C 14.4489 2.25 14.6397 2.32902 14.7803 2.46967 L 15.841 1.40901 Z" FillRule="NonZero"/>
+				</GeometryDrawing.Geometry>
+			</GeometryDrawing>
+			<GeometryDrawing Brush="{DynamicResource Accent}">
+				<GeometryDrawing.Geometry>
+					<PathGeometry Figures="M 9 17.25 C 9 17.6642 9.33579 18 9.75 18 C 10.1642 18 10.5 17.6642 10.5 17.25 H 9 Z M 10.5 9.75 C 10.5 9.33579 10.1642 9 9.75 9 C 9.33579 9 9 9.33579 9 9.75 H 10.5 Z M 10.5 17.25 V 9.75 H 9 V 17.25 H 10.5 Z" FillRule="NonZero"/>
+				</GeometryDrawing.Geometry>
+			</GeometryDrawing>
+			<GeometryDrawing Brush="{DynamicResource Accent}">
+				<GeometryDrawing.Geometry>
+					<PathGeometry Figures="M 13.5 17.25 C 13.5 17.6642 13.8358 18 14.25 18 C 14.6642 18 15 17.6642 15 17.25 H 13.5 Z M 15 9.75 C 15 9.33579 14.6642 9 14.25 9 C 13.8358 9 13.5 9.33579 13.5 9.75 H 15 Z M 15 17.25 V 9.75 H 13.5 V 17.25 H 15 Z" FillRule="NonZero"/>
+				</GeometryDrawing.Geometry>
+			</GeometryDrawing>
+			<GeometryDrawing Brush="{DynamicResource Accent}">
+				<GeometryDrawing.Geometry>
+					<PathGeometry Figures="M 18.865 21.124 L 18.1176 21.0617 L 18.1176 21.062 L 18.865 21.124 Z M 17.37 22.5 L 17.3701 21.75 H 17.37 V 22.5 Z M 6.631 22.5 V 21.75 H 6.63093 L 6.631 22.5 Z M 5.136 21.124 L 5.88343 21.062 L 5.88341 21.0617 L 5.136 21.124 Z M 4.49741 4.43769 C 4.46299 4.0249 4.10047 3.71818 3.68769 3.75259 C 3.2749 3.78701 2.96818 4.14953 3.00259 4.56231 L 4.49741 4.43769 Z M 20.9974 4.56227 C 21.0318 4.14949 20.7251 3.78698 20.3123 3.75259 C 19.8995 3.7182 19.537 4.02495 19.5026 4.43773 L 20.9974 4.56227 Z M 18.1176 21.062 C 18.102 21.2495 18.0165 21.4244 17.878 21.5518 L 18.8939 22.6555 C 19.3093 22.2732 19.5658 21.7486 19.6124 21.186 L 18.1176 21.062 Z M 17.878 21.5518 C 17.7396 21.6793 17.5583 21.75 17.3701 21.75 L 17.3699 23.25 C 17.9345 23.25 18.4785 23.0379 18.8939 22.6555 L 17.878 21.5518 Z M 17.37 21.75 H 6.631 V 23.25 H 17.37 V 21.75 Z M 6.63093 21.75 C 6.44274 21.75 6.26142 21.6793 6.12295 21.5518 L 5.10713 22.6555 C 5.52253 23.0379 6.06649 23.25 6.63107 23.25 L 6.63093 21.75 Z M 6.12295 21.5518 C 5.98449 21.4244 5.89899 21.2495 5.88343 21.062 L 4.38857 21.186 C 4.43524 21.7486 4.69172 22.2732 5.10713 22.6555 L 6.12295 21.5518 Z M 5.88341 21.0617 L 4.49741 4.43769 L 3.00259 4.56231 L 4.38859 21.1863 L 5.88341 21.0617 Z M 19.5026 4.43773 L 18.1176 21.0617 L 19.6124 21.1863 L 20.9974 4.56227 L 19.5026 4.43773 Z" FillRule="NonZero"/>
+				</GeometryDrawing.Geometry>
+			</GeometryDrawing>
+		</DrawingGroup>
+		<DrawingImage Drawing="{StaticResource bin_svgrepo_com_xaml}" x:Key="di_bin_svgrepo_com_xaml"/>
+
+	</UserControl.Resources>
+
+	<UserControl.Styles>
+		<Style Selector="Image">
+			<Setter Property="Height" Value="16" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
+	</UserControl.Styles>
+
+	<controls:MasterDetailsView ItemsSource="{Binding Configurations}" SelectedItem="{Binding CurrentConfiguration}">
 
 		<controls:MasterDetailsView.DetailsTemplate>
 			<DataTemplate DataType="configuration:ConfigurationViewModelBase">
-				<Panel>
-					<ContentControl Padding="8" Content="{Binding}" />
-					<Button VerticalAlignment="Bottom" Command="{Binding Save}" Margin="10"
-                            HorizontalAlignment="Right" Content="Save" />
-					<CheckBox IsChecked="{Binding IsDirty^}" />
-				</Panel>
-			</DataTemplate>
+				<connections:ConfigurationView Margin="10" />
+            </DataTemplate>
 		</controls:MasterDetailsView.DetailsTemplate>
 
 		<controls:MasterDetailsView.ItemTemplate>
 			<DataTemplate DataType="configuration:ConfigurationViewModelBase">
 				<DockPanel>
-                    <controls:Info DockPanel.Dock="Left" IsVisible="{Binding CanSave^}" ToolTipContent="Contains unsaved changes">
-                        <controls:Info.IconContent>
-                            <PathIcon Width="16" Height="16" Data="{StaticResource WarningCircle}" />
-                        </controls:Info.IconContent>
-                    </controls:Info>
-                    <s:StringEditorControl Theme="{StaticResource TransparentStringEditorControl}"
-                                           IsLocked="{Binding !$parent[ListBoxItem].IsSelected}"
-                                           StringField="{Binding Name}">
-						<s:StringEditorControl.Styles>
-							<Style
-                                Selector="s|StringEditorControl TextBox#PART_TextBox ContentPresenter#PART_RightContent">
-								<Setter Property="IsVisible" Value="{Binding $parent[ListBoxItem].IsSelected}" />
-							</Style>
-						</s:StringEditorControl.Styles>
-					</s:StringEditorControl>
-                </DockPanel>
+					<controls:Info Margin="5 0 10 0" DockPanel.Dock="Left" IsVisible="{Binding CanSave^}" Details="Contains unsaved changes">
+						<controls:Info.Icon>
+							<PathIcon Width="16" Height="16" Data="{StaticResource WarningCircle}" />
+						</controls:Info.Icon>
+					</controls:Info>
+					<Button Theme="{StaticResource TransparentButton}" DockPanel.Dock="Right" Command="{Binding Remove}" IsVisible="{Binding $parent[ListBoxItem].IsSelected}">
+						<Image Source="{StaticResource di_bin_svgrepo_com_xaml}" />
+					</Button>
+					<TextBlock VerticalAlignment="Center" Text="{Binding Name.Value}" />
+				</DockPanel>
 			</DataTemplate>
 		</controls:MasterDetailsView.ItemTemplate>
 		<controls:MasterDetailsView.Header>

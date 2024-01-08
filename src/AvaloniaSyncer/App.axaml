@@ -15,43 +15,53 @@
     </Application.DataTemplates>
 
     <Application.Resources>
-        <SolidColorBrush x:Key="TabItemBorderBrush" Opacity="0.4" Color="{StaticResource SystemChromeAltLowColor}"></SolidColorBrush>
 
-        <ControlTheme TargetType="ItemsControl" x:Key="{x:Type ItemsControl}" BasedOn="{StaticResource {x:Type ItemsControl}}">
-            <Style Selector="^:empty">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ControlTheme>
+        <ResourceDictionary>
 
-        <ControlTheme TargetType="TabControl" x:Key="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
-            <Style Selector="^:empty">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ControlTheme>
+            <ResourceDictionary.MergedDictionaries>
+                <MergeResourceInclude Source="Icons.axaml" />
+            </ResourceDictionary.MergedDictionaries>
 
-        <ControlTheme TargetType="ListBox" x:Key="{x:Type ListBox}" BasedOn="{StaticResource {x:Type ListBox}}">
-            <Style Selector="^:empty">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate>
-                            <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-        </ControlTheme>
+            <SolidColorBrush x:Key="TabItemBorderBrush" Opacity="0.4" Color="{StaticResource SystemChromeAltLowColor}"></SolidColorBrush>
+
+            <ControlTheme TargetType="ItemsControl" x:Key="{x:Type ItemsControl}" BasedOn="{StaticResource {x:Type ItemsControl}}">
+                <Style Selector="^:empty">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ControlTheme>
+
+            <ControlTheme TargetType="TabControl" x:Key="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
+                <Style Selector="^:empty">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ControlTheme>
+
+            <ControlTheme TargetType="ListBox" x:Key="{x:Type ListBox}" BasedOn="{StaticResource {x:Type ListBox}}">
+                <Style Selector="^:empty">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ControlTheme>
+        </ResourceDictionary>
+
+       
 
     </Application.Resources>
 
