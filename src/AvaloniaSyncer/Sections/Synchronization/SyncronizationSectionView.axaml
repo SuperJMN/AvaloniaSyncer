@@ -21,7 +21,7 @@
     </UserControl.Styles>
 
     <DockPanel>
-		<Button DockPanel.Dock="Top" Margin="8" Content="Add session…" Command="{Binding AddSession}" />
+		<Button DockPanel.Dock="Top" Margin="8" Content="➕ Add session" Command="{Binding AddSession}" />
         <TabControl ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}">
             <TabControl.ItemTemplate>
                 <DataTemplate>
