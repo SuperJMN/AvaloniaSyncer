@@ -86,8 +86,8 @@ public static class Mapper
                 new SftpConnectionParameters(
                     sftp.HostField.Value,
                     sftp.PortField.Value!.Value,
-                    sftp.HostField.Value,
-                    sftp.HostField.Value)),
+                    sftp.UsernameField.Value,
+                    sftp.PasswordField.Value)),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

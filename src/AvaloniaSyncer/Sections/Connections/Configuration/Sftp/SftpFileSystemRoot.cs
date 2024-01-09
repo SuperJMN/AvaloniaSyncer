@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using CSharpFunctionalExtensions;
 using Renci.SshNet;
 using Zafiro.FileSystem;
