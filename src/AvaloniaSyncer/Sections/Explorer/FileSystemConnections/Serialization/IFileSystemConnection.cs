@@ -1,6 +1,6 @@
 using System;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
+using AvaloniaSyncer.Sections.Connections.Configuration;
 using CSharpFunctionalExtensions;
 
 namespace AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;

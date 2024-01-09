@@ -8,9 +8,8 @@ public class SeaweedFSPlugin : IPlugin
 
     public IConfiguration CreateConfig(IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove)
     {
-        return new SeaweedConfigurationViewModel(Guid.NewGuid(), "SeaweedFS", connectionsRepository, onRemove)
+        return new SeaweedConfigurationViewModel(Guid.NewGuid(), "SeaweedFS", new Uri("http://myhost:8888"), connectionsRepository, onRemove)
         {
-            AddressField = { Value = "http://" },
             IsNew = true,
         };
     }

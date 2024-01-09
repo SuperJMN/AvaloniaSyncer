@@ -3,7 +3,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
+using AvaloniaSyncer.Sections.Connections.Configuration;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using ReactiveUI;

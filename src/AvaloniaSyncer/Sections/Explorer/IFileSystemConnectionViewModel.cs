@@ -1,5 +1,5 @@
 ﻿using System.Reactive;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
+using AvaloniaSyncer.Sections.Connections.Configuration;
 using CSharpFunctionalExtensions;
 using ReactiveUI;
 using Zafiro.FileSystem;

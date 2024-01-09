@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Connections.Configuration.Local;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;

@@ -69,7 +69,7 @@ public static class Mapper
         return connection switch
         {
             LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Id, local.Name, repo, onRemove),
-            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, repo, onRemove),
+            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, seaweed.Uri, repo, onRemove),
             SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo, onRemove),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };

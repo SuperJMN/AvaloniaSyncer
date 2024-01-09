@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reactive;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
+using AvaloniaSyncer.Sections.Connections.Configuration;
 using AvaloniaSyncer.Sections.Explorer;
 using CSharpFunctionalExtensions;
 using ReactiveUI;

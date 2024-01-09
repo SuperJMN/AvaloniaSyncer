@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using Zafiro.FileSystem;

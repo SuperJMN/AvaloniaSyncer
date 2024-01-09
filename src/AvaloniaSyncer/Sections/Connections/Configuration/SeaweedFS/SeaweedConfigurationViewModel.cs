@@ -7,9 +7,9 @@ namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
 public class SeaweedConfigurationViewModel : ConfigurationViewModelBase
 {
-    public SeaweedConfigurationViewModel(Guid id, string name, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
+    public SeaweedConfigurationViewModel(Guid id, string name, Uri address, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
     {
-        AddressField = new StringField(name);
+        AddressField = new StringField(address.ToString());
         AddressField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");
         AddressField.AddRule(s => Uri.TryCreate(s, UriKind.Absolute, out _), "Invalid address");
     }
