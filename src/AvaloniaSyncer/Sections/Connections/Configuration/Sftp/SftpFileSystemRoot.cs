@@ -8,12 +8,12 @@ namespace AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 
 internal class SftpFileSystemRoot
 {
-    public static async Task<Result<IDisposableFilesystemRoot>> Create(string host, string username, string password)
+    public static Task<Result<IDisposableFilesystemRoot>> Create(string host, string username, string password)
     {
-        return Result.Try(() =>
+        return Result.Try(async () =>
         {
             var sftpClient = new SftpClient(host, username, password);
-            sftpClient.Connect();
+            await Task.Run(() => sftpClient.Connect());
             return sftpClient;
         }).Map(client => (IDisposableFilesystemRoot) new DisposableFileSystemRoot(new FileSystemRoot(new ObservableFileSystem(new SftpFileSystem(client))), client.Dispose));
     }
