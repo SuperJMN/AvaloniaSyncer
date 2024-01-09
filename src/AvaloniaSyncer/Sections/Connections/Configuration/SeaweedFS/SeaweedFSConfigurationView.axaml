@@ -4,9 +4,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:seaweedFs="clr-namespace:AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS.SeaweedConfigurationView"
-             x:DataType="seaweedFs:SeaweedConfigurationViewModel">
-    <HeaderedContentControl VerticalAlignment="Top" Header="Server Address">
-      <TextBox Watermark="Server Address" Text="{Binding Address}" />
-  </HeaderedContentControl>
+             x:Class="AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS.SeaweedFSConfigurationView"
+             x:DataType="seaweedFs:SeaweedFSConfigurationViewModel">
+	<HeaderedContentControl VerticalAlignment="Top" Header="Server Address">
+		<TextBox Watermark="Server Address" Text="{Binding AddressField.Value, Mode=TwoWay}" />
+	</HeaderedContentControl>
 </UserControl>

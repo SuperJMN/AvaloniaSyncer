@@ -53,25 +53,28 @@
 		<DrawingImage Drawing="{StaticResource refresh_xaml}" x:Key="di_refresh_xaml"/>
 	</UserControl.Resources>
 
-    <TabControl Padding="0" ItemsSource="{Binding Connections}"
+	<TabControl Padding="0" ItemsSource="{Binding Connections}"
                 TabStripPlacement="Top">
-        <Empty.Content>
-            <StackPanel VerticalAlignment="Center" Spacing="10">
-                <TextBlock>There are no connection yet 😅</TextBlock>
-                <TextBlock>Please, create a connection by going to Settings/Add</TextBlock>
-            </StackPanel>
-        </Empty.Content>
-        <TabControl.ItemTemplate>
-            <DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
-                <TextBlock Text="{Binding Name}" />
-            </DataTemplate>
-        </TabControl.ItemTemplate>
-        <TabControl.ContentTemplate>
-            <DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
-                <ContentControl Padding="8" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush}"
+		<Empty.Content>
+			<StackPanel VerticalAlignment="Center" Spacing="10">
+				<TextBlock>There are no connection yet 😅</TextBlock>
+				<TextBlock>Please, create a connection by going to Settings/Add</TextBlock>
+			</StackPanel>
+		</Empty.Content>
+		<TabControl.ItemTemplate>
+			<DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
+				<DockPanel>
+                    <ContentControl Height="20" Width="20" Margin="0 0 6 0" Content="{Binding Converter={x:Static MiscConverters.ConnectionToIcon}}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+				</DockPanel>
+			</DataTemplate>
+		</TabControl.ItemTemplate>
+		<TabControl.ContentTemplate>
+			<DataTemplate DataType="e:IZafiroFileSystemConnectionViewModel">
+				<ContentControl Padding="8" BorderBrush="{StaticResource SystemControlBackgroundBaseHighBrush}"
                                 Content="{Binding}" />
-            </DataTemplate>
-        </TabControl.ContentTemplate>
-    </TabControl>
+			</DataTemplate>
+		</TabControl.ContentTemplate>
+	</TabControl>
 
 </UserControl>

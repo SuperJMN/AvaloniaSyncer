@@ -37,17 +37,13 @@
                 <DataGridTemplateColumn Header="Error">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="ToggleButton"
-                                    IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                                <PathIcon Foreground="{StaticResource SystemErrorTextColor}"
-                                          IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
-                                          Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}" />
-                                <Button.Flyout>
-                                    <Flyout>
-                                        <TextBlock TextWrapping="Wrap" Text="{Binding Error}" />
-                                    </Flyout>
-                                </Button.Flyout>
-                            </Button>
+                            <controls:Info Details="{Binding Error}">
+                                <controls:Info.Icon>
+                                    <PathIcon Foreground="{StaticResource SystemErrorTextColor}"
+                                              IsVisible="{Binding Error, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
+                                              Data="{StaticResource Warning}" Width="24" ToolTip.Tip="{Binding Error}" />
+                                </controls:Info.Icon>
+                            </controls:Info>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

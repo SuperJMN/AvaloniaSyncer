@@ -7,11 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Android", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Desktop", "src\AvaloniaSyncer.Desktop\AvaloniaSyncer.Desktop.csproj", "{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Tests", "AvaloniaSyncer.Tests\AvaloniaSyncer.Tests.csproj", "{258C4207-A2C7-4BF3-9266-45365ECDEAB6}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{44B49082-C9E6-48D3-9F89-6E2CE99759B0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\AvaloniaSyncer\AvaloniaSyncer.csproj", "{59F0D3F2-8961-432D-A992-10B9050D2824}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Tests", "test\AvaloniaSyncer.Tests\AvaloniaSyncer.Tests.csproj", "{2C8FFFA6-189C-495E-BDE2-4F013544A169}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,6 @@ Global
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DA05AFD-51F3-44BE-988F-3E9FD05653BE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{258C4207-A2C7-4BF3-9266-45365ECDEAB6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44B49082-C9E6-48D3-9F89-6E2CE99759B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,6 +37,10 @@ Global
 		{59F0D3F2-8961-432D-A992-10B9050D2824}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59F0D3F2-8961-432D-A992-10B9050D2824}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59F0D3F2-8961-432D-A992-10B9050D2824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

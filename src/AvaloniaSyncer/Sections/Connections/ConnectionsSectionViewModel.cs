@@ -21,13 +21,18 @@ public class ConnectionsSectionViewModel : ReactiveObject
 
     public ConnectionsSectionViewModel(IConnectionsRepository repo, INotificationService notificationService, IDialogService dialogService)
     {
-        configs.AddOrUpdate(repo.Connections.ToList().Select(connection => Mapper.ToConfiguration(connection, repo)));
+        configs.AddOrUpdate(repo.Connections.ToList().Select(connection => Mapper.ToConfiguration(connection, repo, c =>
+        {
+            repo.Remove(c.Id);
+            configs.Remove(c);
+        })));
         configs.Connect().Bind(out configurations).Subscribe();
+        configs.Connect().OnItemAdded(x => CurrentConfiguration = x).Subscribe();
         ReactiveCommand.Create(() =>
         {
-            var connection = Mapper.ToConnection(CurrentConfiguration);
+            var connection = Mapper.ToConnection(CurrentConfiguration!);
             repo.AddOrUpdate(connection);
-        }, this.WhenAnyObservable(x => x.CurrentConfiguration.IsValid));
+        }, this.WhenAnyObservable(x => x.CurrentConfiguration!.IsValid));
 
         Plugins = new IPlugin[]
             {
@@ -35,7 +40,7 @@ public class ConnectionsSectionViewModel : ReactiveObject
                 new SeaweedFSPlugin(),
                 new SftpPlugin(),
             }
-            .Select(plugin => new PluginViewModel(plugin, configs, repo))
+            .Select(plugin => new PluginViewModel(plugin, configs, repo, x => configs.Remove(x)))
             .ToList();
     }
 

@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:configuration="clr-namespace:AvaloniaSyncer.Sections.Connections.Configuration"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="AvaloniaSyncer.Sections.Connections.ConfigurationView"
+             x:DataType="configuration:ConfigurationViewModelBase">
+	<Panel>
+		<DockPanel>
+			<HeaderedContentControl Margin="0 10" Header="Name" DockPanel.Dock="Top">
+				<TextBox Watermark="Name" Text="{Binding Name.Value, Mode=TwoWay}" />
+			</HeaderedContentControl>
+			<Grid ColumnDefinitions="* Auto" DockPanel.Dock="Bottom" Margin="0 10">
+				<Border IsVisible="{Binding CanSave^}" Grid.ColumnSpan="2" Background="#FFE63E" CornerRadius="10" DockPanel.Dock="Bottom">
+					<DockPanel>
+						<PathIcon Margin="10" Data="{StaticResource WarningCircle}" />
+						<TextBlock VerticalAlignment="Center" DockPanel.Dock="Bottom">This configuration has unsaved changes</TextBlock>
+					</DockPanel>
+				</Border>
+				<StackPanel Grid.Column="1" Orientation="Horizontal">
+					<Button VerticalAlignment="Center" IsVisible="{Binding IsDirty^}" Margin="10" Command="{Binding Cancel}"
+                            Content="Cancel" />
+                    <Button VerticalAlignment="Center" Margin="10" Command="{Binding Save}"
+                            Content="Save" />
+				</StackPanel>
+			</Grid>
+			<ContentControl Content="{Binding}" />
+		</DockPanel>
+
+	</Panel>
+</UserControl>

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 
@@ -8,4 +9,5 @@ public interface IConnectionsRepository
 {
     ReadOnlyObservableCollection<IZafiroFileSystemConnection> Connections { get; }
     Task AddOrUpdate(IZafiroFileSystemConnection connection);
+    Task Remove(Guid id);
 }

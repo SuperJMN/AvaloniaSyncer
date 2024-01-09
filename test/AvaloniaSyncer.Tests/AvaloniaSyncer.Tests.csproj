@@ -21,6 +21,6 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
+    <ProjectReference Include="..\..\src\AvaloniaSyncer\AvaloniaSyncer.csproj" />
   </ItemGroup>
 </Project>

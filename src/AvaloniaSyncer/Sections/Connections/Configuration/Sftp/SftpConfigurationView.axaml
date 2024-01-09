@@ -8,16 +8,16 @@
              x:DataType="sftp:SftpConfigurationViewModel">
 	<StackPanel Spacing="8">
 		<HeaderedContentControl Header="Host">
-			<TextBox Watermark="Host" Text="{Binding Host}" />
+			<TextBox Watermark="Host" TabIndex="1" Text="{Binding HostField.Value, Mode=TwoWay}" />
 		</HeaderedContentControl>
 		<HeaderedContentControl Header="Port">
-			<TextBox Watermark="Port" Text="{Binding Port}" />
+			<NumericUpDown AllowSpin="False" TabIndex="2" ShowButtonSpinner="False" Watermark="Port" Value="{Binding PortField.Value, Mode=TwoWay}" />
 		</HeaderedContentControl>
 		<HeaderedContentControl Header="Username">
-			<TextBox Watermark="Username" Text="{Binding Username}" />
+			<TextBox Watermark="Username" TabIndex="3" Text="{Binding UsernameField.Value, Mode=TwoWay}" />
 		</HeaderedContentControl>
 		<HeaderedContentControl Header="Password">
-			<TextBox PasswordChar="*" Watermark="Password" Text="{Binding Password}" />
+			<TextBox PasswordChar="*" TabIndex="4" Watermark="Password" Text="{Binding PasswordField.Value, Mode=TwoWay}" />
 		</HeaderedContentControl>
 	</StackPanel>
 </UserControl>

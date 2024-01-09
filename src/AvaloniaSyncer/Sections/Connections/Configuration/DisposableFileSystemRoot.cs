@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Sections.Connections.Configuration.Sftp;
 using CSharpFunctionalExtensions;
 using Zafiro.FileSystem;
 
-namespace AvaloniaSyncer.Sections.Connections.Configuration.Local;
+namespace AvaloniaSyncer.Sections.Connections.Configuration;
 
 public class DisposableFileSystemRoot : IDisposableFilesystemRoot
 {
@@ -34,8 +33,8 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
 
     public Task<Result<FileProperties>> GetFileProperties(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileProperties(path);
 
-    public Task<Result<IDictionary<ChecksumKind, byte[]>>> GetChecksums(ZafiroPath path) => disposableFilesystemRootImplementation.GetChecksums(path);
-    
+    public Task<Result<IDictionary<HashMethod, byte[]>>> GetHashes(ZafiroPath path) => disposableFilesystemRootImplementation.GetHashes(path);
+
     public Task<Result<DirectoryProperties>> GetDirectoryProperties(ZafiroPath path) => disposableFilesystemRootImplementation.GetDirectoryProperties(path);
 
     public Task<Result<IEnumerable<ZafiroPath>>> GetFilePaths(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetFilePaths(path, ct);
