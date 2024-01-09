@@ -69,10 +69,7 @@ public static class Mapper
         return connection switch
         {
             LocalFileSystemConnection local => new LocalConfigurationViewModel(local.Id, local.Name, repo, onRemove),
-            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, repo, onRemove)
-            {
-                AddressField = { Initial = seaweed.Uri.ToString() },
-            },
+            SeaweedFileSystemConnection seaweed => new SeaweedConfigurationViewModel(seaweed.Id, seaweed.Name, repo, onRemove),
             SftpFileSystemConnection sftp => new SftpConfigurationViewModel(sftp.Id, sftp.Name, sftp.Parameters, repo, onRemove),
             _ => throw new ArgumentOutOfRangeException(nameof(connection))
         };
@@ -86,9 +83,9 @@ public static class Mapper
             LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.Value),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(sftp.Id,
                 sftp.Name.Value,
-                new SftpConnectionParameters(sftp.Host,
-                    sftp.Port, sftp.Username,
-                    sftp.Password)),
+                new SftpConnectionParameters(sftp.HostField.Value,
+                    sftp.Port, sftp.HostField.Value,
+                    sftp.HostField.Value)),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };
     }

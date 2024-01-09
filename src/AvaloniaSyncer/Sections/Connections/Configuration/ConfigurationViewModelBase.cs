@@ -20,7 +20,7 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
     {
         this.connectionsRepository = connectionsRepository;
         Id = id;
-        Name = new StringField { Initial = name };
+        Name = new StringField(name);
         Name.AddRule(s => !string.IsNullOrWhiteSpace(s), "Can't be empty");
         Remove = ReactiveCommand.Create(() => onRemove(this));
     }
