@@ -18,7 +18,12 @@
 						<TextBlock VerticalAlignment="Center" DockPanel.Dock="Bottom">This configuration has unsaved changes</TextBlock>
 					</DockPanel>
 				</Border>
-                <Button Grid.Column="1" VerticalAlignment="Center" Margin="10" Command="{Binding Save}" Content="Save" />
+				<StackPanel Grid.Column="1" Orientation="Horizontal">
+					<Button VerticalAlignment="Center" IsVisible="{Binding IsDirty^}" Margin="10" Command="{Binding Cancel}"
+                            Content="Cancel" />
+                    <Button VerticalAlignment="Center" Margin="10" Command="{Binding Save}"
+                            Content="Save" />
+				</StackPanel>
 			</Grid>
 			<ContentControl Content="{Binding}" />
 		</DockPanel>

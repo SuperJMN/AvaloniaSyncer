@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReactiveUI.Fody.Helpers;
-using ReactiveUI.Validation.Extensions;
 using Zafiro.Avalonia.Controls.StringEditor;
 using Zafiro.UI.Fields;
 
@@ -12,21 +10,20 @@ public class SftpConfigurationViewModel : ConfigurationViewModelBase
     public SftpConfigurationViewModel(Guid id, string name, SftpConnectionParameters sftpConnectionParameters, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
     {
         HostField = new StringField(sftpConnectionParameters.Host);
-        Port = sftpConnectionParameters.Port;
+        PortField = new Field<int?>(sftpConnectionParameters.Port);
         UsernameField = new StringField(sftpConnectionParameters.Username);
         PasswordField = new StringField(sftpConnectionParameters.Password);
 
-        HostField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");
-        this.ValidationRule(x => x.Port, s => s is > 0 and < ushort.MaxValue, "Cannot be empty");
-        UsernameField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");
-        PasswordField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");
+        HostField.Validate(s => !string.IsNullOrEmpty(s), "Cannot be empty");
+        PortField.Validate(s => s is > 0 and < ushort.MaxValue, "Cannot be empty");
+        UsernameField.Validate(s => !string.IsNullOrEmpty(s), "Cannot be empty");
+        PasswordField.Validate(s => !string.IsNullOrEmpty(s), "Cannot be empty");
     }
 
+    public Field<int?> PortField { get; }
     public StringField HostField { get; }
-
-    [Reactive] public int Port { get; set; }
     public StringField UsernameField { get; }
     public StringField PasswordField { get; }
 
-    protected override IEnumerable<IField> Fields => [Name, HostField, UsernameField, PasswordField];
+    protected override IEnumerable<IField> Fields => [Name, HostField, UsernameField, PortField, PasswordField];
 }

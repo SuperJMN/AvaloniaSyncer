@@ -11,7 +11,7 @@
 			<TextBox Watermark="Host" Text="{Binding HostField.Value, Mode=TwoWay}" />
 		</HeaderedContentControl>
 		<HeaderedContentControl Header="Port">
-			<TextBox Watermark="Port" Text="{Binding Port}" />
+			<NumericUpDown ShowButtonSpinner="False" Watermark="Port" Value="{Binding PortField.Value, Mode=TwoWay}" />
 		</HeaderedContentControl>
 		<HeaderedContentControl Header="Username">
 			<TextBox Watermark="Username" Text="{Binding UsernameField.Value, Mode=TwoWay}" />

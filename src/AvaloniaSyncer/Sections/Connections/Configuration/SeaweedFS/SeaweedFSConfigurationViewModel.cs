@@ -10,8 +10,8 @@ public class SeaweedFSConfigurationViewModel : ConfigurationViewModelBase
     public SeaweedFSConfigurationViewModel(Guid id, string name, Uri address, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
     {
         AddressField = new StringField(address.ToString());
-        AddressField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");
-        AddressField.AddRule(s => Uri.TryCreate(s, UriKind.Absolute, out _), "Invalid address");
+        AddressField.Validate(s => !string.IsNullOrEmpty(s), "Cannot be empty");
+        AddressField.Validate(s => Uri.TryCreate(s, UriKind.Absolute, out _), "Invalid address");
     }
     
     public StringField AddressField { get; }

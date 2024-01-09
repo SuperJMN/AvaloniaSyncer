@@ -83,8 +83,10 @@ public static class Mapper
             LocalConfigurationViewModel local => new LocalFileSystemConnection(local.Id, local.Name.Value),
             SftpConfigurationViewModel sftp => new SftpFileSystemConnection(sftp.Id,
                 sftp.Name.Value,
-                new SftpConnectionParameters(sftp.HostField.Value,
-                    sftp.Port, sftp.HostField.Value,
+                new SftpConnectionParameters(
+                    sftp.HostField.Value,
+                    sftp.PortField.Value!.Value,
+                    sftp.HostField.Value,
                     sftp.HostField.Value)),
             _ => throw new ArgumentOutOfRangeException(nameof(currentConfiguration))
         };

@@ -21,13 +21,14 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
         this.connectionsRepository = connectionsRepository;
         Id = id;
         Name = new StringField(name);
-        Name.AddRule(s => !string.IsNullOrWhiteSpace(s), "Can't be empty");
+        Name.Validate(s => !string.IsNullOrWhiteSpace(s), "Can't be empty");
         Remove = ReactiveCommand.Create(() => onRemove(this));
     }
 
     public ReactiveCommand<Unit, Unit> Remove { get; }
 
     public CombinedReactiveCommand<Unit, Unit> CommitAllFields => ReactiveCommand.CreateCombined(Fields.Select(f => f.Commit));
+    public CombinedReactiveCommand<Unit, Unit> CancelAllFields => ReactiveCommand.CreateCombined(Fields.Select(f => f.Rollback));
 
     public IObservable<bool> CanSave => IsValid.CombineLatest(Observable.CombineLatest(this.WhenAnyValue(x => x.IsNew), IsDirty).Select(list => list.Any(b => b)), (isValid, hasFreshData) => isValid && hasFreshData);
     public IObservable<bool> IsDirty => Fields.Select(x => x.IsDirty).CombineLatest().Select(list => list.Any(isDirty => isDirty));
@@ -42,6 +43,8 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
         IsNew = false;
         return Unit.Default;
     }, CanSave);
+
+    public CombinedReactiveCommand<Unit, Unit> Cancel => CancelAllFields;
 
     public Guid Id { get; }
     public StringField Name { get; }
