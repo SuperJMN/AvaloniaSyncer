@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using AvaloniaSyncer.Sections.Connections.Configuration.Local;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
 using HttpClient.Extensions.LoggingHttpMessageHandler;
@@ -12,13 +11,13 @@ using Zafiro.FileSystem.SeaweedFS.Filer.Client;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
-internal class SeaweedFileSystemConnection : IZafiroFileSystemConnection
+internal class SeaweedFSFileSystemConnection : IZafiroFileSystemConnection
 {
     public Uri Uri { get; }
 
     private readonly Maybe<ILogger> logger;
 
-    public SeaweedFileSystemConnection(Guid id, string name, Uri uri, Maybe<ILogger> logger)
+    public SeaweedFSFileSystemConnection(Guid id, string name, Uri uri, Maybe<ILogger> logger)
     {
         Id = id;
         Name = name;

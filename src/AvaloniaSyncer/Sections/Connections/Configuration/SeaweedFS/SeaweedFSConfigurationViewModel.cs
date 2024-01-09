@@ -5,9 +5,9 @@ using Zafiro.UI.Fields;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration.SeaweedFS;
 
-public class SeaweedConfigurationViewModel : ConfigurationViewModelBase
+public class SeaweedFSConfigurationViewModel : ConfigurationViewModelBase
 {
-    public SeaweedConfigurationViewModel(Guid id, string name, Uri address, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
+    public SeaweedFSConfigurationViewModel(Guid id, string name, Uri address, IConnectionsRepository connectionsRepository, Action<ConfigurationViewModelBase> onRemove) : base(id, name, connectionsRepository, onRemove)
     {
         AddressField = new StringField(address.ToString());
         AddressField.AddRule(s => !string.IsNullOrEmpty(s), "Cannot be empty");

@@ -3,7 +3,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:connections="clr-namespace:AvaloniaSyncer.Sections.Connections"
-             xmlns:s="clr-namespace:Zafiro.Avalonia.Controls.StringEditor;assembly=Zafiro.Avalonia"
              xmlns:controls="clr-namespace:Zafiro.Avalonia.Controls;assembly=Zafiro.Avalonia"
              xmlns:configuration="clr-namespace:AvaloniaSyncer.Sections.Connections.Configuration"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -47,7 +46,7 @@
 	</UserControl.Resources>
 
 	<UserControl.Styles>
-		<Style Selector="Image">
+		<Style Selector="Image.Icon">
 			<Setter Property="Height" Value="16" />
 			<Setter Property="VerticalAlignment" Value="Center" />
 		</Style>
@@ -64,13 +63,14 @@
 		<controls:MasterDetailsView.ItemTemplate>
 			<DataTemplate DataType="configuration:ConfigurationViewModelBase">
 				<DockPanel>
-					<controls:Info Margin="5 0 10 0" DockPanel.Dock="Left" IsVisible="{Binding CanSave^}" Details="Contains unsaved changes">
+                    <ContentControl Height="20" Width="20" Margin="0 0 6 0" Content="{Binding Converter={x:Static MiscConverters.ConfigurationToIcon}}" />
+                    <controls:Info Margin="5 0 10 0" DockPanel.Dock="Left" IsVisible="{Binding CanSave^}" Details="Contains unsaved changes">
 						<controls:Info.Icon>
 							<PathIcon Width="16" Height="16" Data="{StaticResource WarningCircle}" />
 						</controls:Info.Icon>
 					</controls:Info>
 					<Button Theme="{StaticResource TransparentButton}" DockPanel.Dock="Right" Command="{Binding Remove}" IsVisible="{Binding $parent[ListBoxItem].IsSelected}">
-						<Image Source="{StaticResource di_bin_svgrepo_com_xaml}" />
+						<Image Classes="Icon" Source="{StaticResource di_bin_svgrepo_com_xaml}" />
 					</Button>
 					<TextBlock VerticalAlignment="Center" Text="{Binding Name.Value}" />
 				</DockPanel>

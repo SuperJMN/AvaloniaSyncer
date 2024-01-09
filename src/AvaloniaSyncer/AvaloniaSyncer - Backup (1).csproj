@@ -7,12 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
-    <AvaloniaResource Include="**\*.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Plugins\Local\Icon.png" />
-    <None Remove="Plugins\SeaweedFS\Icon.png" />
-    <None Remove="Plugins\Sftp\Icon.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
@@ -72,8 +66,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Sections\Connections\Configuration\SeaweedFS\SeaweedFSConfigurationView.axaml.cs">
-      <DependentUpon>SeaweedFSConfigurationView.axaml</DependentUpon>
-    </Compile>
+    <Folder Include="Plugins\Local\" />
   </ItemGroup>
 </Project>
