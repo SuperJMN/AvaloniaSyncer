@@ -7,7 +7,6 @@ using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using ReactiveUI.Validation.Helpers;
-using Zafiro.Avalonia.Controls.StringEditor;
 using Zafiro.UI.Fields;
 
 namespace AvaloniaSyncer.Sections.Connections.Configuration;
@@ -20,7 +19,7 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
     {
         this.connectionsRepository = connectionsRepository;
         Id = id;
-        Name = new StringField(name);
+        Name = new Field<string>(name);
         Name.Validate(s => !string.IsNullOrWhiteSpace(s), "Can't be empty");
         Remove = ReactiveCommand.Create(() => onRemove(this));
     }
@@ -47,7 +46,7 @@ public abstract class ConfigurationViewModelBase : ReactiveValidationObject, ICo
     public CombinedReactiveCommand<Unit, Unit> Cancel => CancelAllFields;
 
     public Guid Id { get; }
-    public StringField Name { get; }
+    public Field<string> Name { get; }
 
     public IObservable<bool> IsValid => Fields.Select(x => x.IsValid).CombineLatest().Select(list => list.All(isValid => isValid));
 

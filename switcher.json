@@ -1,0 +1,11 @@
+{
+  "solution": "AvaloniaSyncer.sln",
+  "solutionFolder": null,
+  "mappings": {
+    "Zafiro": "../../SuperJMN-Zafiro/Zafiro/Zafiro.csproj",
+    "Zafiro.FileSystem": "../../SuperJMN-Zafiro/Zafiro.FileSystem/Zafiro.FileSystem.csproj",
+    "Zafiro.Avalonia.FileExplorer": "../../SuperJMN-Zafiro/Zafiro.Avalonia.FileExplorer/Zafiro.Avalonia.FileExplorer.csproj",
+    "Zafiro.Avalonia": "../../SuperJMN-Zafiro/Zafiro.Avalonia/Zafiro.Avalonia.csproj",
+    "Zafiro.UI": "../../SuperJMN-Zafiro/Zafiro.UI/Zafiro.UI.csproj"
+  }
+}

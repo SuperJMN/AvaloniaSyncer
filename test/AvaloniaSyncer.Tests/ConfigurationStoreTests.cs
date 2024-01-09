@@ -1,4 +1,3 @@
-using System.Xml.Linq;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization.Model;
@@ -8,10 +7,10 @@ using File = System.IO.File;
 
 namespace AvaloniaSyncer.Tests;
 
-public class UnitTest1
+public class ConfigurationStoreTests
 {
-    [Fact]
-    public async Task Test1()
+    [Fact(Skip = "Integration test")]
+    public async Task Save()
     {
         var store = new ConfigurationStore(() => File.OpenRead("Connections.json"), () => File.OpenWrite("Connections.json"));
         var repoResult = await store.Load()
