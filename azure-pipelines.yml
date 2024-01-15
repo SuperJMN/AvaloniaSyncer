@@ -9,7 +9,7 @@ steps:
   displayName: Install Android dependencies
   inputs:
     command: build
-    projects: "${{ parameters.project }}"
+    projects: "AvaloniaSyncer.Android"
     arguments: >
       -t:InstallAndroidDependencies
       -f:net${{ variables.DOTNET_VERSION }}-android
