@@ -4,8 +4,19 @@ variables:
 steps:
 - checkout: self
 
-- powershell: | 
-    dotnet build -t:InstallAndroidDependencies -f:net7.0-android -p:AcceptAndroidSDKLicenses=True -p:AndroidSdkPath="/usr/local/lib/android/sdk/"
+
+- task: DotNetCoreCLI@2
+  displayName: Install Android dependencies
+  inputs:
+    command: build
+    projects: "${{ parameters.project }}"
+    arguments: >
+      -t:InstallAndroidDependencies
+      -f:net${{ variables.DOTNET_VERSION }}-android
+      -p:AcceptAndroidSDKLicenses=True
+      -p:AndroidSdkPath="/usr/local/lib/android/sdk/"
+      -o:$(Build.ArtifactStagingDirectory)
+
 - powershell: .\build.ps1 publishgithubrelease
   env:
     GitHubAuthenticationToken: $(GitHubAuthenticationToken)
