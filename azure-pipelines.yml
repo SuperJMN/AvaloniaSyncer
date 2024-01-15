@@ -4,6 +4,8 @@ variables:
 steps:
 - checkout: self
 
+- powershell: | 
+    dotnet build -t:InstallAndroidDependencies -f:net7.0-android -p:AcceptAndroidSDKLicenses=True -p:AndroidSdkPath="/usr/local/lib/android/sdk/"
 - powershell: .\build.ps1 publishgithubrelease
   env:
     GitHubAuthenticationToken: $(GitHubAuthenticationToken)
