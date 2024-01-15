@@ -46,8 +46,7 @@ public class FileActionFactory
 
     private Task<Result<IFileActionViewModel>> Delete(IZafiroFile rightFile)
     {
-        // Implement this
-        return Task.FromResult(Result.Success<IFileActionViewModel>(new DoNothing("Skip", "File only appear of the right side. Ignoring!", Maybe<IZafiroFile>.None, Maybe.From(rightFile))));
+        return DeleteDestinationAction.Create(rightFile, $"File {rightFile} exists in {destination}, but it doesn't exist in {source}, so we will delete it").Cast(x => (IFileActionViewModel)x);
     }
 
     private Task<Result<IFileActionViewModel>> CopyToDestination(IZafiroFile toCopy)
