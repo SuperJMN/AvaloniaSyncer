@@ -5,7 +5,7 @@
     <LangVersion>latest</LangVersion>
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
- <ItemGroup>
+  <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <AvaloniaResource Include="**\*.png" />
   </ItemGroup>
@@ -26,12 +26,17 @@
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
     <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Zafiro.Avalonia" Version="3.0.73" />
-    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.73" />
-    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.34" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.0.5" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.0.5" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.5" />
-    <PackageReference Include="Zafiro.UI" Version="4.0.21" />
+    <PackageReference Include="Zafiro.Avalonia" Version="3.0.75" />
+    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.75" />
+    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.36" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.0.8" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.0.8" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.8" />
+    <PackageReference Include="Zafiro.UI" Version="4.0.24" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Sections\Synchronization\SyncSessionView.axaml.cs">
+      <DependentUpon>SyncSessionView.axaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

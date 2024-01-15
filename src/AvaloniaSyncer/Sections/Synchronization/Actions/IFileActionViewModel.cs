@@ -21,3 +21,11 @@ public interface IFileActionViewModel : INotifyPropertyChanged, IFileAction
     Maybe<IZafiroFile> LeftFile { get; }
     Maybe<IZafiroFile> RightFile { get; }
 }
+
+public static class FileActionExtensions
+{
+    public static bool ShouldSync(this IFileActionViewModel fileAction)
+    {
+        return !(fileAction.IsSynced || fileAction.IsIgnored);
+    }
+}

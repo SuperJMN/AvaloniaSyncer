@@ -7,6 +7,27 @@
              RequestedThemeVariant="Default">
 	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
+    <Application.Styles>
+        <Style Selector=":is(ItemsControl):empty">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style Selector=":is(DataGrid):empty-rows">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Styles>
+
 	<Application.DataTemplates>
 		<misc:NamingConventionViewLocator />
         <DataTemplate DataType="wizard:IWizard">
@@ -24,41 +45,6 @@
 
             <SolidColorBrush x:Key="TabItemBorderBrush" Opacity="0.4" Color="{StaticResource SystemChromeAltLowColor}"></SolidColorBrush>
 
-            <ControlTheme TargetType="ItemsControl" x:Key="{x:Type ItemsControl}" BasedOn="{StaticResource {x:Type ItemsControl}}">
-                <Style Selector="^:empty">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ControlTheme>
-
-            <ControlTheme TargetType="TabControl" x:Key="{x:Type TabControl}" BasedOn="{StaticResource {x:Type TabControl}}">
-                <Style Selector="^:empty">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ControlTheme>
-
-            <ControlTheme TargetType="ListBox" x:Key="{x:Type ListBox}" BasedOn="{StaticResource {x:Type ListBox}}">
-                <Style Selector="^:empty">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate>
-                                <ContentControl Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(Empty.Content)}" />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ControlTheme>
         </ResourceDictionary>
 
        

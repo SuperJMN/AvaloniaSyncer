@@ -9,10 +9,12 @@ namespace AvaloniaSyncer.Sections.Synchronization.Actions;
 
 public class FileActionFactory
 {
+    private readonly IZafiroDirectory source;
     private readonly IZafiroDirectory destination;
 
-    public FileActionFactory(IZafiroDirectory destination)
+    public FileActionFactory(IZafiroDirectory source, IZafiroDirectory destination)
     {
+        this.source = source;
         this.destination = destination;
     }
 
@@ -44,12 +46,12 @@ public class FileActionFactory
 
     private Task<Result<IFileActionViewModel>> Delete(IZafiroFile rightFile)
     {
-        // Implement this
-        return Task.FromResult(Result.Success<IFileActionViewModel>(new DoNothing("Skip", "File only appear of the right side. Ignoring!", Maybe<IZafiroFile>.None, Maybe.From(rightFile))));
+        return DeleteDestinationAction.Create(rightFile, $"File {rightFile} exists in {destination}, but it doesn't exist in {source}, so we will delete it").Cast(x => (IFileActionViewModel)x);
     }
 
-    private Task<Result<IFileActionViewModel>> CopyToDestination(IZafiroFile source)
+    private Task<Result<IFileActionViewModel>> CopyToDestination(IZafiroFile toCopy)
     {
-        return CopyAction.Create(source, source.EquivalentIn(destination), $"File {source} does not exist in {destination}").Cast(action => (IFileActionViewModel)action);
+        var translatedToDestination = destination.FileSystem.GetFile(destination.Path.Combine(toCopy.Path.MakeRelativeTo(source.Path)));
+        return CopyAction.Create(toCopy, translatedToDestination, $"File {toCopy} does not exist in {destination}").Cast(action => (IFileActionViewModel)action);
     }
 }

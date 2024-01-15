@@ -2,10 +2,16 @@
   "solution": "AvaloniaSyncer.sln",
   "solutionFolder": null,
   "mappings": {
-    "Zafiro": "../../SuperJMN-Zafiro/Zafiro/Zafiro.csproj",
-    "Zafiro.FileSystem": "../../SuperJMN-Zafiro/Zafiro.FileSystem/Zafiro.FileSystem.csproj",
-    "Zafiro.Avalonia.FileExplorer": "../../SuperJMN-Zafiro/Zafiro.Avalonia.FileExplorer/Zafiro.Avalonia.FileExplorer.csproj",
-    "Zafiro.Avalonia": "../../SuperJMN-Zafiro/Zafiro.Avalonia/Zafiro.Avalonia.csproj",
-    "Zafiro.UI": "../../SuperJMN-Zafiro/Zafiro.UI/Zafiro.UI.csproj"
-  }
+    "Zafiro": "../../SuperJMN-Zafiro/Zafiro/src/Zafiro/Zafiro.csproj",
+    "Zafiro.FileSystem": "../../SuperJMN-Zafiro/Zafiro.FileSystem/src/Zafiro.FileSystem/Zafiro.FileSystem.csproj",
+    "Zafiro.FileSystem.Local": "../../SuperJMN-Zafiro/Zafiro.FileSystem/src/Zafiro.FileSystem.Local/Zafiro.FileSystem.Local.csproj",
+    "Zafiro.FileSystem.SeaweedFS": "../../SuperJMN-Zafiro/Zafiro.FileSystem/src/Zafiro.FileSystem.SeaweedFS/Zafiro.FileSystem.SeaweedFS.csproj",
+    "Zafiro.FileSystem.SeaweedFS.Filer.Client": "../../SuperJMN-Zafiro/Zafiro.FileSystem/src/Zafiro.FilesSystem.SeaweedFS.Filer.Client/Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj",
+    "Zafiro.FileSystem.Sftp": "../../SuperJMN-Zafiro/Zafiro.FileSystem/src/Zafiro.FileSystem.Sftp/Zafiro.FileSystem.Sftp.csproj",
+    "Zafiro.Avalonia.FileExplorer": "../../SuperJMN-Zafiro/Zafiro.Avalonia.FileExplorer/src/Zafiro.Avalonia.FileExplorer/Zafiro.Avalonia.FileExplorer.csproj",
+    "Zafiro.Avalonia": "../../SuperJMN-Zafiro/Zafiro.Avalonia/src/Zafiro.Avalonia/Zafiro.Avalonia.csproj",
+    "Zafiro.Avalonia.Dialogs": "../../SuperJMN-Zafiro/Zafiro.Avalonia/src/Zafiro.Avalonia.Dialogs/Zafiro.Avalonia.Dialogs.csproj",
+    "Zafiro.UI": "../../SuperJMN-Zafiro/Zafiro.UI/src/Zafiro.UI/Zafiro.UI.csproj"
+  },
+  "removeProjects": true
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -15,19 +14,19 @@ using Zafiro.Reactive;
 
 namespace AvaloniaSyncer.Sections.Synchronization.Actions;
 
-public class CopyAction : ReactiveObject, IFileActionViewModel
+public class DeleteDestinationAction : ReactiveObject, IFileActionViewModel
 {
-    private readonly CopyFileAction copyAction;
+    private readonly DeleteFileAction deleteFileAction;
     private readonly BehaviorSubject<bool> isSyncing = new(false);
 
-    private CopyAction(CopyFileAction copyAction, Maybe<string> comment)
+    private DeleteDestinationAction(DeleteFileAction deleteFileAction, Maybe<string> comment)
     {
-        this.copyAction = copyAction;
-        Progress = copyAction.Progress;
-        Description = "Copy";
+        this.deleteFileAction = deleteFileAction;
+        Progress = deleteFileAction.Progress;
+        Description = "Delete";
         Comment = comment.GetValueOrDefault("");
-        LeftFile = Maybe<IZafiroFile>.From(this.copyAction.Source);
-        RightFile = Maybe<IZafiroFile>.From(this.copyAction.Destination);
+        LeftFile = Maybe<IZafiroFile>.None;
+        RightFile = Maybe<IZafiroFile>.From(this.deleteFileAction.Source);
     }
 
     public string Comment { get; }
@@ -44,21 +43,15 @@ public class CopyAction : ReactiveObject, IFileActionViewModel
     public async Task<Result> Execute(CancellationToken cancellationToken)
     {
         isSyncing.OnNext(true);
-        var execute = await copyAction.Execute(cancellationToken);
+        var execute = await deleteFileAction.Execute(cancellationToken);
         isSyncing.OnNext(false);
         execute.TapError(e => Error = e);
         execute.Tap(() => IsSynced = true);
         return execute;
     }
 
-    public static Task<Result<CopyAction>> Create(IZafiroFile source, IZafiroFile destination, Maybe<string> comment)
+    public static async Task<Result<DeleteDestinationAction>> Create(IZafiroFile source, Maybe<string> comment)
     {
-        return CopyFileAction.Create(
-                source: source,
-                destination: destination,
-                timeoutScheduler: Scheduler.Default,
-                progressScheduler: Scheduler.Default,
-                readTimeout: TimeSpan.FromSeconds(30))
-            .Map(action => new CopyAction(action, comment));
+        return DeleteFileAction.Create(source).Map(action => new DeleteDestinationAction(action, comment));
     }
 }

@@ -27,11 +27,11 @@ public class SyncronizationSectionViewModel : ReactiveObject
     private readonly INotificationService notificationService;
     private readonly ITransferManager transferManager;
     private readonly Maybe<ILogger> logger;
-    private readonly ReadOnlyObservableCollection<GranularSessionViewModel> sessionsCollection;
+    private readonly ReadOnlyObservableCollection<ISyncSessionViewModel> sessionsCollection;
 
     public SyncronizationSectionViewModel(IConnectionsRepository connectionsRepository, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
     {
-        var sessions = new SourceList<GranularSessionViewModel>();
+        var sessions = new SourceList<ISyncSessionViewModel>();
         connections = connectionsRepository.Connections;
         this.dialogService = dialogService;
         this.notificationService = notificationService;
@@ -48,30 +48,30 @@ public class SyncronizationSectionViewModel : ReactiveObject
     }
 
     [Reactive]
-    public GranularSessionViewModel SelectedSession { get; set; }
+    public ISyncSessionViewModel SelectedSession { get; set; }
 
-    public ReactiveCommand<Unit, Maybe<GranularSessionViewModel>> AddSession { get; set; }
+    public ReactiveCommand<Unit, Maybe<ISyncSessionViewModel>> AddSession { get; set; }
 
-    public ReadOnlyObservableCollection<GranularSessionViewModel> Sessions => sessionsCollection;
+    public ReadOnlyObservableCollection<ISyncSessionViewModel> Sessions => sessionsCollection;
 
-    public Task<Maybe<GranularSessionViewModel>> OnAddSession()
+    public Task<Maybe<ISyncSessionViewModel>> OnAddSession()
     {
         var wizard = CreateWizard();
         return ShowWizard(wizard);
     }
 
-    private Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel> CreateWizard()
+    private Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, ISyncSessionViewModel> CreateWizard()
     {
-        var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>(
+        var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, ISyncSessionViewModel>(
             new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Next", "Choose the source directory"),
             new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish", "Choose the destination directory"), 
-            (p1, p2) => new GranularSessionViewModel(p1.CurrentDirectory, p2.CurrentDirectory, logger));
+            (p1, p2) => new SyncSessionViewModel(p1.CurrentDirectory, p2.CurrentDirectory));
         return wizard;
     }
 
-    private async Task<Maybe<GranularSessionViewModel>> ShowWizard(Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel> wizard)
+    private async Task<Maybe<ISyncSessionViewModel>> ShowWizard(Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, ISyncSessionViewModel> wizard)
     {
-        var showDialog = await dialogService.ShowDialog<Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, GranularSessionViewModel>, GranularSessionViewModel>(wizard, "Synchronize folder", w => Observable.FromAsync(() => w.Result));
+        var showDialog = await dialogService.ShowDialog<Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, ISyncSessionViewModel>, ISyncSessionViewModel>(wizard, "Synchronize folder", w => Observable.FromAsync(() => w.Result));
         return showDialog;
     }
 }
