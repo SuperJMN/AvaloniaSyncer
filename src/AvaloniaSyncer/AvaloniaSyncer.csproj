@@ -34,4 +34,9 @@
     <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.5" />
     <PackageReference Include="Zafiro.UI" Version="4.0.21" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Sections\Synchronization\SyncSessionView.axaml.cs">
+      <DependentUpon>SyncSessionView.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

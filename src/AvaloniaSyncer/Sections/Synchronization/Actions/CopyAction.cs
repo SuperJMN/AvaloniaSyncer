@@ -23,7 +23,7 @@ public class CopyAction : ReactiveObject, IFileActionViewModel
     {
         this.copyAction = copyAction;
         Progress = copyAction.Progress;
-        Description = $"Copy {copyAction.Source} to {copyAction.Destination}";
+        Description = "Copy";
         Comment = comment.GetValueOrDefault("");
         LeftFile = Maybe<IZafiroFile>.From(this.copyAction.Source);
         RightFile = Maybe<IZafiroFile>.From(this.copyAction.Destination);
