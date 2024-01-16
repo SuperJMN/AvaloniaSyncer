@@ -22,7 +22,13 @@
 			IsVisible="{Binding IsSyncing^}"
             VerticalAlignment="Stretch" Height="20" DockPanel.Dock="Bottom" Margin="4" Maximum="{Binding Progress^.Total}"
                      Value="{Binding Progress^.Current}" />
+        <ProgressBar IsIndeterminate="True"
+                     IsVisible="{Binding IsAnalyzing^}"
+                     HorizontalAlignment="Stretch" Height="4" DockPanel.Dock="Top" Margin="4 4" Maximum="{Binding Progress^.Total}" />
         <DataGrid ItemsSource="{Binding SyncActions}" CanUserResizeColumns="True" CanUserSortColumns="True">
+            <Empty.Content>
+                <Panel />
+            </Empty.Content>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Action">
                     <DataGridTemplateColumn.CellTemplate>

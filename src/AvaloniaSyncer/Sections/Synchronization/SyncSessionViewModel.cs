@@ -33,9 +33,10 @@ public class SyncSessionViewModel : ReactiveObject, ISyncSessionViewModel
         syncActions = Analyze.Start.Successes().ToProperty(this, x => x.SyncActions);
         var canSync = this.WhenAnyValue(x => x.SyncActions, x => x != null && x.Any()).CombineLatest(canAnalyze, (hasSyncActions, isAnalyzing) => hasSyncActions || !isAnalyzing);
         Sync = DoSync(canSync);
-        IsSyncing = Sync.IsExecuting;
         Sync.IsExecuting.Not().Subscribe(canAnalyze);
         pendingSyncActions = this.WhenAnyValue(model => model.SyncActions, x => x == null ? [] : x.Where(i => i.ShouldSync())).ToProperty(this, x => x.PendingSyncActions);
+        IsAnalyzing = Analyze.IsExecuting;
+        IsSyncing = Sync.IsExecuting;
     }
 
     public IZafiroDirectory Source { get; }
@@ -43,6 +44,8 @@ public class SyncSessionViewModel : ReactiveObject, ISyncSessionViewModel
 
     public IEnumerable<IFileActionViewModel> PendingSyncActions => pendingSyncActions.Value;
     public IObservable<LongProgress> Progress => progress.AsObservable();
+
+    public IObservable<bool> IsAnalyzing { get; }
 
     public string Description => $"{Source} => {Destination}";
 

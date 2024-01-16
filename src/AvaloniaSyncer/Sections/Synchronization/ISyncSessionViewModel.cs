@@ -15,5 +15,6 @@ public interface ISyncSessionViewModel
     IEnumerable<IFileActionViewModel> SyncActions { get; }
     IStoppableCommand<Unit, Result<IEnumerable<IFileActionViewModel>>> Analyze { get; }
     IObservable<bool> IsSyncing { get; }
+    IObservable<bool> IsAnalyzing { get; }
     string Description { get; }
 }

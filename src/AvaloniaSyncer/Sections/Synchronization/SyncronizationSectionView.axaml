@@ -23,6 +23,12 @@
     <DockPanel>
 		<Button DockPanel.Dock="Top" Margin="8" Content="➕ Add session" Command="{Binding AddSession}" />
         <TabControl ItemsSource="{Binding Sessions}" SelectedItem="{Binding SelectedSession}">
+            <Empty.Content>
+                <TextBlock 
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Center" 
+                    Text="There are no sync sessions yet" />
+            </Empty.Content>
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <TextBlock ToolTip.Tip="{Binding Description}" Text="{Binding Description}" />
