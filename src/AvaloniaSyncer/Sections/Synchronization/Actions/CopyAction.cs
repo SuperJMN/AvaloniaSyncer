@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
@@ -52,6 +53,12 @@ public class CopyAction : ReactiveObject, IFileActionViewModel
 
     public static Task<Result<CopyAction>> Create(IZafiroFile source, IZafiroFile destination, Maybe<string> comment)
     {
-        return CopyFileAction.Create(source, destination).Map(action => new CopyAction(action, comment));
+        return CopyFileAction.Create(
+                source: source,
+                destination: destination,
+                timeoutScheduler: Scheduler.Default,
+                progressScheduler: Scheduler.Default,
+                readTimeout: TimeSpan.FromSeconds(30))
+            .Map(action => new CopyAction(action, comment));
     }
 }

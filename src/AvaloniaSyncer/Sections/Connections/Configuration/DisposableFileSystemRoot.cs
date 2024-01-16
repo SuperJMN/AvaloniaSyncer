@@ -27,7 +27,7 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
 
     public IObservable<byte> GetFileContents(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileContents(path);
 
-    public Task<Result> SetFileContents(ZafiroPath path, IObservable<byte> bytes) => disposableFilesystemRootImplementation.SetFileContents(path, bytes);
+    public Task<Result> SetFileContents(ZafiroPath path, IObservable<byte> bytes, CancellationToken cancellationToken = default) => disposableFilesystemRootImplementation.SetFileContents(path, bytes, cancellationToken);
 
     public Task<Result> CreateDirectory(ZafiroPath path) => disposableFilesystemRootImplementation.CreateDirectory(path);
 
