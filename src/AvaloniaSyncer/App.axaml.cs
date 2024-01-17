@@ -17,9 +17,12 @@ public class App : Application
     {
         AvaloniaXamlLoader.Load(this);
         AppDomain.CurrentDomain.UnhandledException += (sender, args) => Log.Fatal(args.ExceptionObject.ToString());
+
+#if DEBUG
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
             .CreateLogger();
+#endif
     }
 
     public override void OnFrameworkInitializationCompleted()

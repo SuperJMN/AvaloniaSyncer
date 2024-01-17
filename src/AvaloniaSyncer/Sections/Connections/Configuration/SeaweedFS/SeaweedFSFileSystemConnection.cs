@@ -3,7 +3,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AvaloniaSyncer.Sections.Explorer.FileSystemConnections.Serialization;
 using CSharpFunctionalExtensions;
+#if DEBUG
 using HttpClient.Extensions.LoggingHttpMessageHandler;
+#endif
 using Serilog;
 using Zafiro.FileSystem;
 using Zafiro.FileSystem.SeaweedFS;
@@ -44,11 +46,16 @@ internal class SeaweedFSFileSystemConnection : IZafiroFileSystemConnection
 
     private HttpMessageHandler GetHandler()
     {
-        return logger.Match<HttpMessageHandler, ILogger>(f =>
+        return logger.Match<HttpMessageHandler, ILogger>(l =>
         {
-            var loggingHttpMessageHandler = new LoggingHttpMessageHandler(new LoggerAdapter(f));
-            loggingHttpMessageHandler.InnerHandler = new HttpClientHandler();
-            return loggingHttpMessageHandler;
+#if DEBUG
+            var handler = new LoggingHttpMessageHandler(new LoggerAdapter(l));   
+            handler.InnerHandler = new HttpClientHandler();
+#else
+            var handler = new HttpClientHandler();
+#endif
+
+            return handler;
         }, () => new HttpClientHandler());
     }
 

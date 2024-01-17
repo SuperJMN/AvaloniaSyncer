@@ -56,7 +56,7 @@
 	<TabControl Padding="0" ItemsSource="{Binding Connections}"
                 TabStripPlacement="Top">
 		<Empty.Content>
-			<StackPanel VerticalAlignment="Center" Spacing="10">
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="10">
 				<TextBlock>There are no connection yet 😅</TextBlock>
 				<TextBlock>Please, create a connection by going to Settings/Add</TextBlock>
 			</StackPanel>
