@@ -8,7 +8,7 @@
 	<!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
-        <!--<Style Selector=":is(ItemsControl):empty">
+        <Style Selector=":is(ItemsControl):not(MenuItem):empty">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -16,7 +16,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>-->
+        </Style>
         <Style Selector=":is(DataGrid):empty-rows">
             <Setter Property="Template">
                 <Setter.Value>
