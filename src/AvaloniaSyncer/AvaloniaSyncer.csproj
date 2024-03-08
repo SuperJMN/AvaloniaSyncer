@@ -25,14 +25,12 @@
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.31" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj" />
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj" />
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj" />
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj" />
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj" />
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj" />
-    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj" />
+    <PackageReference Include="Zafiro.Avalonia" Version="3.0.75" />
+    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.75" />
+    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.36" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.0.8" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.0.8" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.8" />
+    <PackageReference Include="Zafiro.UI" Version="4.0.24" />
   </ItemGroup>
 </Project>
