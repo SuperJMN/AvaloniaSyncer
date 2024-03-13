@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
@@ -58,4 +59,8 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
     public Task<Result<IEnumerable<IZafiroFile>>> GetFiles(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetFiles(path, ct);
 
     public Task<Result<IEnumerable<IZafiroDirectory>>> GetDirectories(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetDirectories(path, ct);
+
+    public Task<Result<Stream>> GetFileData(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileData(path);
+
+    public Task<Result> SetFileData(ZafiroPath path, Stream stream, CancellationToken ct = default) => disposableFilesystemRootImplementation.SetFileData(path, stream, ct);
 }
