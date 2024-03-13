@@ -49,9 +49,6 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
     public Task<Result> DeleteFile(ZafiroPath path) => disposableFilesystemRootImplementation.DeleteFile(path);
 
     public Task<Result> DeleteDirectory(ZafiroPath path) => disposableFilesystemRootImplementation.DeleteDirectory(path);
-    public Task<Result<Stream>> GetFileData(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileData(path);
-
-    public Task<Result> SetFileData(ZafiroPath path, Stream stream, CancellationToken ct = default) => disposableFilesystemRootImplementation.SetFileData(path, stream, ct);
 
     public IObservable<FileSystemChange> Changed => disposableFilesystemRootImplementation.Changed;
 
@@ -62,4 +59,8 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
     public Task<Result<IEnumerable<IZafiroFile>>> GetFiles(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetFiles(path, ct);
 
     public Task<Result<IEnumerable<IZafiroDirectory>>> GetDirectories(ZafiroPath path, CancellationToken ct = new()) => disposableFilesystemRootImplementation.GetDirectories(path, ct);
+
+    public Task<Result<Stream>> GetFileData(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileData(path);
+
+    public Task<Result> SetFileData(ZafiroPath path, Stream stream, CancellationToken ct = default) => disposableFilesystemRootImplementation.SetFileData(path, stream, ct);
 }
