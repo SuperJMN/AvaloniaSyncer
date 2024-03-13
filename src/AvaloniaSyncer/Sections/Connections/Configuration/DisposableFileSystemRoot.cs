@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
@@ -48,6 +49,9 @@ public class DisposableFileSystemRoot : IDisposableFilesystemRoot
     public Task<Result> DeleteFile(ZafiroPath path) => disposableFilesystemRootImplementation.DeleteFile(path);
 
     public Task<Result> DeleteDirectory(ZafiroPath path) => disposableFilesystemRootImplementation.DeleteDirectory(path);
+    public Task<Result<Stream>> GetFileData(ZafiroPath path) => disposableFilesystemRootImplementation.GetFileData(path);
+
+    public Task<Result> SetFileData(ZafiroPath path, Stream stream, CancellationToken ct = default) => disposableFilesystemRootImplementation.SetFileData(path, stream, ct);
 
     public IObservable<FileSystemChange> Changed => disposableFilesystemRootImplementation.Changed;
 
