@@ -33,4 +33,7 @@
     <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.10" />
     <PackageReference Include="Zafiro.UI" Version="4.0.26" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj" />
+  </ItemGroup>
 </Project>
