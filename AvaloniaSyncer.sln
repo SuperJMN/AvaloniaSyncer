@@ -13,26 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\Avalo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Tests", "test\AvaloniaSyncer.Tests\AvaloniaSyncer.Tests.csproj", "{2C8FFFA6-189C-495E-BDE2-4F013544A169}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro", "..\..\SuperJMN-Zafiro\Zafiro\src\Zafiro\Zafiro.csproj", "{C05A34CD-D4F5-4C26-A971-F23C3BAB7B2B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem\Zafiro.FileSystem.csproj", "{9731ABB1-E2BB-4543-AD75-C1CD43D12006}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.Local", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Local\Zafiro.FileSystem.Local.csproj", "{68B60102-9F3D-4071-AF54-05BEB58392BB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.SeaweedFS", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.SeaweedFS\Zafiro.FileSystem.SeaweedFS.csproj", "{FC44C995-ED8E-4136-8089-819912C50618}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.SeaweedFS.Filer.Client", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FilesSystem.SeaweedFS.Filer.Client\Zafiro.FileSystem.SeaweedFS.Filer.Client.csproj", "{513F2232-B89A-4D50-BE04-8D87EDC49CE8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.FileSystem.Sftp", "..\..\SuperJMN-Zafiro\Zafiro.FileSystem\src\Zafiro.FileSystem.Sftp\Zafiro.FileSystem.Sftp.csproj", "{223A63AF-AB1F-404B-B15E-0C85ACDE13AE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.Avalonia.FileExplorer", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia.FileExplorer\src\Zafiro.Avalonia.FileExplorer\Zafiro.Avalonia.FileExplorer.csproj", "{6DFCD6AD-BA77-466D-886D-99A38E91E570}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.Avalonia", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia\Zafiro.Avalonia.csproj", "{62DDC52C-6E59-4446-9E7E-A7E9DEABCA1B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.Avalonia.Dialogs", "..\..\SuperJMN-Zafiro\Zafiro.Avalonia\src\Zafiro.Avalonia.Dialogs\Zafiro.Avalonia.Dialogs.csproj", "{54F8E6F2-6039-4A78-AA76-5A5AB2E574CF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zafiro.UI", "..\..\SuperJMN-Zafiro\Zafiro.UI\src\Zafiro.UI\Zafiro.UI.csproj", "{819B8C44-2C39-44DF-815A-48AB399DBB45}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,46 +41,6 @@ Global
 		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C05A34CD-D4F5-4C26-A971-F23C3BAB7B2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C05A34CD-D4F5-4C26-A971-F23C3BAB7B2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C05A34CD-D4F5-4C26-A971-F23C3BAB7B2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C05A34CD-D4F5-4C26-A971-F23C3BAB7B2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9731ABB1-E2BB-4543-AD75-C1CD43D12006}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9731ABB1-E2BB-4543-AD75-C1CD43D12006}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9731ABB1-E2BB-4543-AD75-C1CD43D12006}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9731ABB1-E2BB-4543-AD75-C1CD43D12006}.Release|Any CPU.Build.0 = Release|Any CPU
-		{68B60102-9F3D-4071-AF54-05BEB58392BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68B60102-9F3D-4071-AF54-05BEB58392BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68B60102-9F3D-4071-AF54-05BEB58392BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68B60102-9F3D-4071-AF54-05BEB58392BB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC44C995-ED8E-4136-8089-819912C50618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC44C995-ED8E-4136-8089-819912C50618}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC44C995-ED8E-4136-8089-819912C50618}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC44C995-ED8E-4136-8089-819912C50618}.Release|Any CPU.Build.0 = Release|Any CPU
-		{513F2232-B89A-4D50-BE04-8D87EDC49CE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{513F2232-B89A-4D50-BE04-8D87EDC49CE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{513F2232-B89A-4D50-BE04-8D87EDC49CE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{513F2232-B89A-4D50-BE04-8D87EDC49CE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{223A63AF-AB1F-404B-B15E-0C85ACDE13AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{223A63AF-AB1F-404B-B15E-0C85ACDE13AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{223A63AF-AB1F-404B-B15E-0C85ACDE13AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{223A63AF-AB1F-404B-B15E-0C85ACDE13AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6DFCD6AD-BA77-466D-886D-99A38E91E570}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6DFCD6AD-BA77-466D-886D-99A38E91E570}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6DFCD6AD-BA77-466D-886D-99A38E91E570}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6DFCD6AD-BA77-466D-886D-99A38E91E570}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62DDC52C-6E59-4446-9E7E-A7E9DEABCA1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62DDC52C-6E59-4446-9E7E-A7E9DEABCA1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62DDC52C-6E59-4446-9E7E-A7E9DEABCA1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62DDC52C-6E59-4446-9E7E-A7E9DEABCA1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54F8E6F2-6039-4A78-AA76-5A5AB2E574CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54F8E6F2-6039-4A78-AA76-5A5AB2E574CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54F8E6F2-6039-4A78-AA76-5A5AB2E574CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54F8E6F2-6039-4A78-AA76-5A5AB2E574CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{819B8C44-2C39-44DF-815A-48AB399DBB45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{819B8C44-2C39-44DF-815A-48AB399DBB45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{819B8C44-2C39-44DF-815A-48AB399DBB45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{819B8C44-2C39-44DF-815A-48AB399DBB45}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
