@@ -49,13 +49,19 @@ internal class SeaweedFSFileSystemConnection : IZafiroFileSystemConnection
         return logger.Match<HttpMessageHandler, ILogger>(l =>
         {
 #if DEBUG
-            var handler = new LoggingHttpMessageHandler(new LoggerAdapter(l));   
-            handler.InnerHandler = new HttpClientHandler();
+            if (OperatingSystem.IsWindows())
+            {
+                LoggingHttpMessageHandler handler = new LoggingHttpMessageHandler(new LoggerAdapter(l));   
+                handler.InnerHandler = new HttpClientHandler();
+                return handler;
+            }
+            else
+            {
+                return new HttpClientHandler();
+            }
 #else
-            var handler = new HttpClientHandler();
+            return new HttpClientHandler();
 #endif
-
-            return handler;
         }, () => new HttpClientHandler());
     }
 
