@@ -21,16 +21,16 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
     <PackageReference Include="ByteSize" Version="2.1.1" />
-    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.4" />
-    <PackageReference Include="ReactiveUI.Fody" Version="19.5.31" />
+    <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.6" />
+    <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
-    <PackageReference Include="Zafiro.Avalonia" Version="3.0.76" />
-    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.76" />
-    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.38" />
+    <PackageReference Include="Zafiro.Avalonia" Version="3.0.79" />
+    <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.79" />
+    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.40" />
     <PackageReference Include="Zafiro.FileSystem.Local" Version="5.0.11" />
     <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.0.11" />
     <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.11" />
-    <PackageReference Include="Zafiro.UI" Version="4.0.26" />
+    <PackageReference Include="Zafiro.UI" Version="4.0.28" />
   </ItemGroup>
 </Project>

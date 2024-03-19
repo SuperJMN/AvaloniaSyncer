@@ -6,6 +6,7 @@
              xmlns:viewModels="clr-namespace:AvaloniaSyncer.ViewModels"
              xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
              xmlns:pr="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
+             xmlns:ui="clr-namespace:Zafiro.UI;assembly=Zafiro.UI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.DesktopShell"
              x:DataType="viewModels:MainViewModel">
@@ -16,13 +17,13 @@
 			<controls:MasterDetailsView ItemsSource="{Binding Sections}" SelectedItem="{Binding SelectedSection}"
                                         MasterPaneWidth="120">
 				<controls:MasterDetailsView.ItemTemplate>
-					<DataTemplate x:DataType="viewModels:Section">
-						<TextBlock Text="{Binding Name}" />
+					<DataTemplate x:DataType="ui:Section">
+						<TextBlock Text="{Binding Title}" />
 					</DataTemplate>
 				</controls:MasterDetailsView.ItemTemplate>
 				<controls:MasterDetailsView.DetailsTemplate>
-					<DataTemplate DataType="viewModels:Section">
-						<ContentControl Content="{Binding ViewModel}" />
+					<DataTemplate DataType="ui:Section">
+						<ContentControl Content="{Binding Content}" />
 					</DataTemplate>
 				</controls:MasterDetailsView.DetailsTemplate>
 			</controls:MasterDetailsView>
