@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
+using Zafiro.UI;
 
 namespace AvaloniaSyncer.ViewModels;
 

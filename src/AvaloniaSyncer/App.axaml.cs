@@ -35,9 +35,9 @@ public class App : Application
             {
                 var sections = new List<Section>
                 {
-                    new("Explore", await vm.GetExploreSection()),
-                    new("Synchronize", await vm.GetSynchronizationSection()),
-                    new("Settings", await vm.GetConnectionsViewModel())
+                    new("Explore", await vm.GetExploreSection(), Maybe<object>.None),
+                    new("Synchronize", await vm.GetSynchronizationSection(), Maybe<object>.None),
+                    new("Settings", await vm.GetConnectionsViewModel(), Maybe<object>.None)
                 };
 
                 return sections;

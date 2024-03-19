@@ -8,6 +8,7 @@
              xmlns:transferManager="clr-namespace:Zafiro.Avalonia.FileExplorer.TransferManager;assembly=Zafiro.Avalonia.FileExplorer"
              xmlns:avaloniaProgressRing="clr-namespace:AvaloniaProgressRing;assembly=AvaloniaProgressRing"
              xmlns:avaloniaSyncer="clr-namespace:AvaloniaSyncer"
+             xmlns:ui="clr-namespace:Zafiro.UI;assembly=Zafiro.UI"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="AvaloniaSyncer.Views.MobileShell"
              x:DataType="viewModels:MainViewModel">
@@ -40,7 +41,7 @@
                     </Flyout>
 				</Button.Flyout>
 			</Button>
-			<TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding SelectedSection.Name}" FontSize="20" FontWeight="Bold" />
+			<TextBlock Margin="10 0 0 0" VerticalAlignment="Center" Text="{Binding SelectedSection.Title}" FontSize="20" FontWeight="Bold" />
 		</DockPanel>
 		<TabControl ItemsSource="{Binding Sections}" SelectedItem="{Binding SelectedSection, Mode=TwoWay}"
                     TabStripPlacement="Bottom">
@@ -51,16 +52,16 @@
 				</Style>
 			</TabControl.Styles>
 			<TabControl.ContentTemplate>
-				<DataTemplate DataType="viewModels:Section">
-					<ContentControl Content="{Binding ViewModel}" />
+				<DataTemplate DataType="ui:Section">
+					<ContentControl Content="{Binding Content}" />
 				</DataTemplate>
 			</TabControl.ContentTemplate>
 			<TabControl.ItemTemplate>
 				<DataTemplate>
 					<StackPanel Margin="4">
-						<PathIcon Height="28" Data="{Binding Name, Converter={StaticResource ResourceKeyConverter}}" />
+						<PathIcon Height="28" Data="{Binding Title, Converter={StaticResource ResourceKeyConverter}}" />
 						<TextBlock Margin="4" FontSize="15" TextAlignment="Center" VerticalAlignment="Center"
-                                   Text="{Binding Name}" />
+                                   Text="{Binding Title}" />
 					</StackPanel>
 				</DataTemplate>
 			</TabControl.ItemTemplate>
