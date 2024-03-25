@@ -58,7 +58,9 @@ public class ViewModelFactory
             DialogService,
             NotificationService,
             Clipboard,
-            TransferManager, Logger);
+            TransferManager, 
+            ContentOpener,
+            Logger);
     }
 
     public async Task<ExplorerSectionViewModel> GetExploreSection()
