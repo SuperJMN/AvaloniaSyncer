@@ -12,6 +12,7 @@ using ReactiveUI.Fody.Helpers;
 using Serilog;
 using Zafiro.Avalonia.Dialogs;
 using Zafiro.Avalonia.FileExplorer.Clipboard;
+using Zafiro.Avalonia.FileExplorer.Explorer;
 using Zafiro.Avalonia.FileExplorer.TransferManager;
 using Zafiro.Avalonia.Wizard;
 using Zafiro.CSharpFunctionalExtensions;
@@ -26,10 +27,11 @@ public class SyncronizationSectionViewModel : ReactiveObject
     private readonly IDialogService dialogService;
     private readonly INotificationService notificationService;
     private readonly ITransferManager transferManager;
+    private readonly IContentOpener contentOpener;
     private readonly Maybe<ILogger> logger;
     private readonly ReadOnlyObservableCollection<ISyncSessionViewModel> sessionsCollection;
 
-    public SyncronizationSectionViewModel(IConnectionsRepository connectionsRepository, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, Maybe<ILogger> logger)
+    public SyncronizationSectionViewModel(IConnectionsRepository connectionsRepository, IDialogService dialogService, INotificationService notificationService, IClipboard clipboard, ITransferManager transferManager, IContentOpener contentOpener, Maybe<ILogger> logger)
     {
         var sessions = new SourceList<ISyncSessionViewModel>();
         connections = connectionsRepository.Connections;
@@ -37,6 +39,7 @@ public class SyncronizationSectionViewModel : ReactiveObject
         this.notificationService = notificationService;
         this.clipboard = clipboard;
         this.transferManager = transferManager;
+        this.contentOpener = contentOpener;
         this.logger = logger;
         AddSession = ReactiveCommand.CreateFromTask(OnAddSession);
         AddSession.Values().Subscribe(session =>
@@ -62,9 +65,11 @@ public class SyncronizationSectionViewModel : ReactiveObject
 
     private Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, ISyncSessionViewModel> CreateWizard()
     {
+        var explorerContext = new ExplorerContext(notificationService, clipboard, transferManager, contentOpener);
+        
         var wizard = new Wizard<DirectorySelectionViewModel, DirectorySelectionViewModel, ISyncSessionViewModel>(
-            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Next", "Choose the source directory"),
-            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, notificationService, clipboard, transferManager), "Finish", "Choose the destination directory"), 
+            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, explorerContext), "Next", "Choose the source directory"),
+            new Page<DirectorySelectionViewModel>(new DirectorySelectionViewModel(connections, explorerContext), "Finish", "Choose the destination directory"), 
             (p1, p2) => new SyncSessionViewModel(p1.CurrentDirectory, p2.CurrentDirectory));
         return wizard;
     }

@@ -38,7 +38,7 @@ public class FileSystemConnectionViewModel : ReactiveObject, IZafiroFileSystemCo
         new SerialDisposer<IDisposableFilesystemRoot>(fileSystems).DisposeWith(disposable);
 
         explorer = fileSystems
-            .Select(system => new FileSystemExplorer(system, notificationService, clipboardViewModel, transferManager, contentOpener))
+            .Select(system => new FileSystemExplorer(new ExplorerContext( notificationService, clipboardViewModel, transferManager, contentOpener), system))
             .ToProperty(this, x => x.FileSystemExplorer)
             .DisposeWith(disposable);
 
