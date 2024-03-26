@@ -10,7 +10,7 @@ using Zafiro.FileSystem.Local.Android;
 namespace AvaloniaSyncer.Android;
 
 [Activity(
-    Label = "AvaloniaApplication2.Android",
+    Label = "AvaloniaSyncer",
     Theme = "@style/MyTheme.NoActionBar",
     Icon = "@drawable/icon",
     MainLauncher = true,
