@@ -62,11 +62,13 @@ class Build : NukeBuild
     Target PackDebian => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion?.MajorMinorPatch ?? "1.0.0"));
+        .Produces(PackagesDirectory / "Debian")
+        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch ?? "1.0.0"));
 
     Target PackWindows => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
+        .Produces(PackagesDirectory / "Windows")
         .Executes(() =>
         {
             var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
@@ -83,7 +85,7 @@ class Build : NukeBuild
             {
                 var src = PublishDirectory / rt;
                 var zipName = $"{Solution.Name}-{rt.Replace("win", "Windows")}.zip";
-                var dest = PackagesDirectory / zipName;
+                var dest = PackagesDirectory / "Windows" / zipName;
                 Log.Information("Zipping {Input} to {Output}", src, dest);
                 src.ZipTo(dest);
             });
@@ -92,6 +94,7 @@ class Build : NukeBuild
     Target PackAndroid => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
+        .Produces(PackagesDirectory / "Android")
         .Executes(() =>
         {
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
@@ -101,7 +104,7 @@ class Build : NukeBuild
                 .SetProperty("ApplicationDisplayVersion", GitVersion?.MajorMinorPatch ?? "1.0.0")
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
-                .SetOutput(PackagesDirectory));
+                .SetOutput(PackagesDirectory / "Android"));
         });
 
 
