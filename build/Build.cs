@@ -1,22 +1,33 @@
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
-
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 
+[AzurePipelines(
+    AzurePipelinesImage.WindowsLatest, 
+    InvokedTargets = new []{ nameof(PublishGitHubRelease) },
+    ImportSecrets = new[]
+    {
+        nameof(GitHubAuthenticationToken),
+        nameof(AndroidSigningKeyAlias),
+        nameof(AndroidSigningKeyPass),
+        nameof(AndroidSigningStorePass),
+        nameof(Base64Keystore),
+    })]
 class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.PackDebian);
+    public static int Main() => Execute<Build>(x => x.PublishGitHubRelease);
 
     public AbsolutePath OutputDirectory = RootDirectory / "output";
     public AbsolutePath PublishDirectory => OutputDirectory / "publish";
@@ -26,7 +37,12 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")] readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository Repository;
-    [Parameter("authtoken")] [Secret] readonly string GitHubAuthenticationToken;
+    [Parameter("GitHubAuthenticationToken")] [Secret] readonly string GitHubAuthenticationToken;
+    
+    [Parameter("Contents of the keystore encoded as Base64.")] [Secret] readonly string Base64Keystore;
+    [Parameter("The alias for the key in the keystore.")] [Secret] readonly string AndroidSigningKeyAlias;
+    [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
+    [Parameter("The password of the key within the keystore file.")] [Secret] readonly string AndroidSigningKeyPass;
 
     Target Clean => td => td
         .Executes(() =>
