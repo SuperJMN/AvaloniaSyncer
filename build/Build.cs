@@ -62,7 +62,7 @@ class Build : NukeBuild
     Target PackDebian => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
+        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion?.MajorMinorPatch ?? "1.0.0"));
 
     Target PackWindows => td => td
         .DependsOn(Clean)
@@ -97,8 +97,8 @@ class Build : NukeBuild
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
         
             DotNetPublish(settings => settings
-                .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
-                .SetProperty("ApplicationDisplayVersion", GitVersion.MajorMinorPatch)
+                .SetProperty("ApplicationVersion", GitVersion?.CommitsSinceVersionSource ?? "1")
+                .SetProperty("ApplicationDisplayVersion", GitVersion?.MajorMinorPatch ?? "1.0.0")
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
                 .SetOutput(PackagesDirectory));
