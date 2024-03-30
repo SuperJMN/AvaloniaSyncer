@@ -99,6 +99,11 @@ stages:
               AndroidSigningKeyPass: $(AndroidSigningKeyPass)
               AndroidSigningStorePass: $(AndroidSigningStorePass)
               Base64Keystore: $(Base64Keystore)
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish: Android'
+            inputs:
+              artifactName: Android
+              pathToPublish: 'output/packages/Android'
       - job: PackWindows
         displayName: 'PackWindows'
         dependsOn: [ Clean, RestoreWorkloads ]
@@ -125,6 +130,11 @@ stages:
               AndroidSigningKeyPass: $(AndroidSigningKeyPass)
               AndroidSigningStorePass: $(AndroidSigningStorePass)
               Base64Keystore: $(Base64Keystore)
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish: .zip'
+            inputs:
+              artifactName: .zip
+              pathToPublish: 'output/packages/Windows/.zip'
       - job: PackDebian
         displayName: 'PackDebian'
         dependsOn: [ Clean, RestoreWorkloads ]
@@ -151,6 +161,11 @@ stages:
               AndroidSigningKeyPass: $(AndroidSigningKeyPass)
               AndroidSigningStorePass: $(AndroidSigningStorePass)
               Base64Keystore: $(Base64Keystore)
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish: Debian'
+            inputs:
+              artifactName: Debian
+              pathToPublish: 'output/packages/Debian'
       - job: Publish
         displayName: 'Publish'
         dependsOn: [ PackDebian, PackWindows, PackAndroid ]
