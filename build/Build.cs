@@ -62,13 +62,13 @@ class Build : NukeBuild
     Target PackDebian => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Produces(PackagesDirectory / "Debian")
+        .Produces(PackagesDirectory / "Debian" / "*.deb")
         .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch ?? "1.0.0"));
 
     Target PackWindows => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Produces(PackagesDirectory / "Windows")
+        .Produces(PackagesDirectory / "Windows" / ".zip")
         .Executes(() =>
         {
             var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
@@ -94,7 +94,7 @@ class Build : NukeBuild
     Target PackAndroid => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Produces(PackagesDirectory / "Android")
+        .Produces(PackagesDirectory / "Android" / "*.apk")
         .Executes(() =>
         {
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
