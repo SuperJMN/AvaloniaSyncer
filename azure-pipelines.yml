@@ -25,6 +25,8 @@ stages:
         displayName: 'RestoreWorkloads'
         dependsOn: [  ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -51,6 +53,8 @@ stages:
         displayName: 'Clean'
         dependsOn: [  ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -77,6 +81,8 @@ stages:
         displayName: 'PackAndroid'
         dependsOn: [ Clean, RestoreWorkloads ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -108,6 +114,8 @@ stages:
         displayName: 'PackWindows'
         dependsOn: [ Clean, RestoreWorkloads ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -131,14 +139,16 @@ stages:
               AndroidSigningStorePass: $(AndroidSigningStorePass)
               Base64Keystore: $(Base64Keystore)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish: .zip'
+            displayName: 'Publish: Windows'
             inputs:
-              artifactName: .zip
-              pathToPublish: 'output/packages/Windows/.zip'
+              artifactName: Windows
+              pathToPublish: 'output/packages/Windows'
       - job: PackDebian
         displayName: 'PackDebian'
         dependsOn: [ Clean, RestoreWorkloads ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -170,6 +180,8 @@ stages:
         displayName: 'Publish'
         dependsOn: [ PackDebian, PackWindows, PackAndroid ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -196,6 +208,8 @@ stages:
         displayName: 'PublishGitHubRelease'
         dependsOn: [ Publish ]
         steps:
+          - checkout: self
+            fetchDepth: 0
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
