@@ -66,7 +66,11 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
         .Produces(PackagesDirectory / "Debian" / "*.deb")
-        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch));
+        .Executes(async () =>
+        {
+            await DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch);
+            Assert.DirectoryExists(PackagesDirectory / "Android");
+        });
 
     Target PackWindows => td => td
         .DependsOn(Clean)
@@ -92,6 +96,8 @@ class Build : NukeBuild
                 Log.Information("Zipping {Input} to {Output}", src, dest);
                 src.ZipTo(dest);
             });
+            
+            Assert.DirectoryExists(PackagesDirectory / "Windows");
         });
 
     Target PackAndroid => td => td
@@ -108,8 +114,9 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
                 .SetOutput(PackagesDirectory / "Android"));
+            
+            Assert.DirectoryExists(PackagesDirectory / "Android");
         });
-
 
     Target Publish => td => td
         .DependsOn(PackDebian)
