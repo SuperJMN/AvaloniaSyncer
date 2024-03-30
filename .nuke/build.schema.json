@@ -8,8 +8,7 @@
       "properties": {
         "AndroidSigningKeyAlias": {
           "type": "string",
-          "description": "The alias for the key in the keystore",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+          "description": "The alias for the key in the keystore"
         },
         "AndroidSigningKeyPass": {
           "type": "string",
@@ -23,8 +22,7 @@
         },
         "Base64Keystore": {
           "type": "string",
-          "description": "Contents of the keystore encoded as Base64",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+          "description": "Contents of the keystore encoded as Base64"
         },
         "Configuration": {
           "type": "string",

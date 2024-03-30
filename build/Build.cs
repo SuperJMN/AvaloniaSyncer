@@ -42,8 +42,8 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository Repository;
     [Parameter("GitHubAuthenticationToken")] [Secret] readonly string GitHubAuthenticationToken;
     
-    [Parameter("Contents of the keystore encoded as Base64.")] [Secret] readonly string Base64Keystore;
-    [Parameter("The alias for the key in the keystore.")] [Secret] readonly string AndroidSigningKeyAlias;
+    [Parameter("Contents of the keystore encoded as Base64.")] readonly string Base64Keystore;
+    [Parameter("The alias for the key in the keystore.")] readonly string AndroidSigningKeyAlias;
     [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
     [Parameter("The password of the key within the keystore file.")] [Secret] readonly string AndroidSigningKeyPass;
 
@@ -103,7 +103,7 @@ class Build : NukeBuild
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
         
             DotNetPublish(settings => settings
-                .SetProperty("ApplicationVersion", GitVersion?.CommitsSinceVersionSource)
+                .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
                 .SetProperty("ApplicationDisplayVersion", GitVersion?.MajorMinorPatch)
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
