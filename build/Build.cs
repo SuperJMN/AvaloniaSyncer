@@ -69,7 +69,7 @@ class Build : NukeBuild
         .Executes(async () =>
         {
             await DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch);
-            Assert.DirectoryExists(PackagesDirectory / "Android");
+            Assert.DirectoryExists(PackagesDirectory / "Debian");
         });
 
     Target PackWindows => td => td
@@ -136,7 +136,7 @@ class Build : NukeBuild
             Log.Information("Commit for the release: {GitVersionSha}", GitVersion.Sha);
 
             Log.Information("Getting list of files in {Path}", PackagesDirectory);
-            var artifacts = PackagesDirectory.GetFiles(depth: 2).ToList();
+            var artifacts = PackagesDirectory.GlobFiles("**/*").ToList();
             Log.Information("List of files obtained successfully");
 
             Assert.NotEmpty(artifacts,
