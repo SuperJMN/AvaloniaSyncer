@@ -124,7 +124,7 @@ class Build : NukeBuild
         .DependsOn(PackAndroid);
 
     Target PublishGitHubRelease => td => td
-        .OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
+        //.OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
         .DependsOn(Publish)
         .Requires(() => GitHubAuthenticationToken)
         .Executes(async () =>
