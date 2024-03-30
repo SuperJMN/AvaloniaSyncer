@@ -68,7 +68,7 @@ class Build : NukeBuild
     Target PackWindows => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Produces(PackagesDirectory / "Windows" / ".zip")
+        .Produces(PackagesDirectory / "Windows" / "*.zip")
         .Executes(() =>
         {
             var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
