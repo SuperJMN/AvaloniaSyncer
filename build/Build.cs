@@ -1,22 +1,36 @@
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Git;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
-
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 
+[AzurePipelines(
+    AzurePipelinesImage.WindowsLatest, 
+    InvokedTargets =
+    [
+        nameof(PublishGitHubRelease)
+    ],
+    ImportSecrets =
+    [
+        nameof(GitHubAuthenticationToken),
+        nameof(AndroidSigningKeyAlias),
+        nameof(AndroidSigningKeyPass),
+        nameof(AndroidSigningStorePass),
+        nameof(Base64Keystore),
+    ], FetchDepth = 0)]
 class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.PackDebian);
+    public static int Main() => Execute<Build>(x => x.PublishGitHubRelease);
 
     public AbsolutePath OutputDirectory = RootDirectory / "output";
     public AbsolutePath PublishDirectory => OutputDirectory / "publish";
@@ -26,7 +40,12 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")] readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository Repository;
-    [Parameter("authtoken")] [Secret] readonly string GitHubAuthenticationToken;
+    [Parameter("GitHubAuthenticationToken")] [Secret] readonly string GitHubAuthenticationToken;
+    
+    [Parameter("Contents of the keystore encoded as Base64.")] [Secret] readonly string Base64Keystore;
+    [Parameter("The alias for the key in the keystore.")] [Secret] readonly string AndroidSigningKeyAlias;
+    [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
+    [Parameter("The password of the key within the keystore file.")] [Secret] readonly string AndroidSigningKeyPass;
 
     Target Clean => td => td
         .Executes(() =>
@@ -46,11 +65,13 @@ class Build : NukeBuild
     Target PackDebian => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
-        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
+        .Produces(PackagesDirectory / "Debian" / "*.deb")
+        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch));
 
     Target PackWindows => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
+        .Produces(PackagesDirectory / "Windows" / "*.zip")
         .Executes(() =>
         {
             var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
@@ -67,7 +88,7 @@ class Build : NukeBuild
             {
                 var src = PublishDirectory / rt;
                 var zipName = $"{Solution.Name}-{rt.Replace("win", "Windows")}.zip";
-                var dest = PackagesDirectory / zipName;
+                var dest = PackagesDirectory / "Windows" / zipName;
                 Log.Information("Zipping {Input} to {Output}", src, dest);
                 src.ZipTo(dest);
             });
@@ -76,16 +97,17 @@ class Build : NukeBuild
     Target PackAndroid => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
+        .Produces(PackagesDirectory / "Android" / "*.apk")
         .Executes(() =>
         {
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
         
             DotNetPublish(settings => settings
-                .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
-                .SetProperty("ApplicationDisplayVersion", GitVersion.MajorMinorPatch)
+                .SetProperty("ApplicationVersion", GitVersion?.CommitsSinceVersionSource)
+                .SetProperty("ApplicationDisplayVersion", GitVersion?.MajorMinorPatch)
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
-                .SetOutput(PackagesDirectory));
+                .SetOutput(PackagesDirectory / "Android"));
         });
 
 
@@ -107,7 +129,7 @@ class Build : NukeBuild
             Log.Information("Commit for the release: {GitVersionSha}", GitVersion.Sha);
 
             Log.Information("Getting list of files in {Path}", PackagesDirectory);
-            var artifacts = PackagesDirectory.GetFiles().ToList();
+            var artifacts = PackagesDirectory.GetFiles(depth: 2).ToList();
             Log.Information("List of files obtained successfully");
 
             Assert.NotEmpty(artifacts,
