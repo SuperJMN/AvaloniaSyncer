@@ -16,15 +16,18 @@ using static Nuke.Common.Tooling.ProcessTasks;
 
 [AzurePipelines(
     AzurePipelinesImage.WindowsLatest, 
-    InvokedTargets = new []{ nameof(PublishGitHubRelease) },
-    ImportSecrets = new[]
-    {
+    InvokedTargets =
+    [
+        nameof(PublishGitHubRelease)
+    ],
+    ImportSecrets =
+    [
         nameof(GitHubAuthenticationToken),
         nameof(AndroidSigningKeyAlias),
         nameof(AndroidSigningKeyPass),
         nameof(AndroidSigningStorePass),
         nameof(Base64Keystore),
-    })]
+    ], FetchDepth = 0)]
 class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.PublishGitHubRelease);
@@ -63,7 +66,7 @@ class Build : NukeBuild
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
         .Produces(PackagesDirectory / "Debian" / "*.deb")
-        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch ?? "1.0.0"));
+        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory / "Debian", GitVersion?.MajorMinorPatch));
 
     Target PackWindows => td => td
         .DependsOn(Clean)
@@ -100,8 +103,8 @@ class Build : NukeBuild
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
         
             DotNetPublish(settings => settings
-                .SetProperty("ApplicationVersion", GitVersion?.CommitsSinceVersionSource ?? "1")
-                .SetProperty("ApplicationDisplayVersion", GitVersion?.MajorMinorPatch ?? "1.0.0")
+                .SetProperty("ApplicationVersion", GitVersion?.CommitsSinceVersionSource)
+                .SetProperty("ApplicationDisplayVersion", GitVersion?.MajorMinorPatch)
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
                 .SetOutput(PackagesDirectory / "Android"));
