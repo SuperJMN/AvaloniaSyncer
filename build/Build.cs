@@ -119,6 +119,7 @@ class Build : NukeBuild
         });
 
     Target Publish => td => td
+        
         .DependsOn(PackDebian)
         .DependsOn(PackWindows)
         .DependsOn(PackAndroid);
@@ -126,6 +127,9 @@ class Build : NukeBuild
     Target PublishGitHubRelease => td => td
         //.OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
         .DependsOn(Publish)
+        .Consumes(PackDebian)
+        .Consumes(PackWindows)
+        .Consumes(PackAndroid)
         .Requires(() => GitHubAuthenticationToken)
         .Executes(async () =>
         {
