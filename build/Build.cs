@@ -136,8 +136,10 @@ class Build : NukeBuild
             Log.Information("Commit for the release: {GitVersionSha}", GitVersion.Sha);
 
             Log.Information("Getting list of files in {Path}", PackagesDirectory);
+            Log.Information("Packages directory exists? {PackagesDirectory}", PackagesDirectory.Exists());
+            Assert.DirectoryExists(PackagesDirectory);
             var artifacts = PackagesDirectory.GlobFiles("**/*").ToList();
-            Log.Information("List of files obtained successfully");
+            Log.Information("List of files obtained successfully: {List}", string.Join(",", artifacts));
 
             Assert.NotEmpty(artifacts,
                 "Could not find any package to upload to the release");
