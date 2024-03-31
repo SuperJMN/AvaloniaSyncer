@@ -6,26 +6,6 @@
     "build": {
       "type": "object",
       "properties": {
-        "AndroidSigningKeyAlias": {
-          "type": "string",
-          "description": "The alias for the key in the keystore",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
-        "AndroidSigningKeyPass": {
-          "type": "string",
-          "description": "The password of the key within the keystore file",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
-        "AndroidSigningStorePass": {
-          "type": "string",
-          "description": "The password for the keystore file",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
-        "Base64Keystore": {
-          "type": "string",
-          "description": "Contents of the keystore encoded as Base64",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
         "Configuration": {
           "type": "string",
           "description": "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
@@ -40,7 +20,7 @@
         },
         "GitHubAuthenticationToken": {
           "type": "string",
-          "description": "GitHubAuthenticationToken",
+          "description": "authtoken",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
         "Help": {
