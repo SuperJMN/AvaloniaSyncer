@@ -10,3 +10,7 @@ steps:
 - powershell: .\build.ps1 publishgithubrelease
   env:
     GitHubAuthenticationToken: $(GitHubAuthenticationToken)
+    AndroidSigningKeyAlias: $(AndroidSigningKeyAlias)
+    AndroidSigningKeyPass: $(AndroidSigningKeyPass)
+    Base64Keystore: $(Base64Keystore)
+    AndroidSigningStorePass: $(AndroidSigningStorePass)
