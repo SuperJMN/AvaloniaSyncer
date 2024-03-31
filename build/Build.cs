@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.IO;
@@ -16,7 +17,7 @@ using static Nuke.Common.Tooling.ProcessTasks;
 
 class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.PackDebian);
+    public static int Main() => Execute<Build>(x => x.PublishGitHubRelease);
 
     public AbsolutePath OutputDirectory = RootDirectory / "output";
     public AbsolutePath PublishDirectory => OutputDirectory / "publish";
@@ -26,7 +27,12 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")] readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository Repository;
-    [Parameter("authtoken")] [Secret] readonly string GitHubAuthenticationToken;
+    
+    [Parameter("GitHub Authentication Token")] [Secret] readonly string GitHubAuthenticationToken;
+    [Parameter("Contents of the keystore encoded as Base64.")] readonly string Base64Keystore;
+    [Parameter("The alias for the key in the keystore.")] readonly string AndroidSigningKeyAlias;
+    [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
+    [Parameter("The password of the key within the keystore file.")] [Secret] readonly string AndroidSigningKeyPass;
 
     Target Clean => td => td
         .Executes(() =>
@@ -79,13 +85,22 @@ class Build : NukeBuild
         .Executes(() =>
         {
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
+            var keystore = OutputDirectory / "temp.keystore";
+            keystore.WriteAllBytes(Convert.FromBase64String(Base64Keystore));
         
             DotNetPublish(settings => settings
                 .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
                 .SetProperty("ApplicationDisplayVersion", GitVersion.MajorMinorPatch)
+                .SetProperty("AndroidKeyStore", "true")
+                .SetProperty("AndroidSigningKeyStore", keystore)
+                .SetProperty("AndroidSigningKeyAlias", AndroidSigningKeyAlias)
+                .SetProperty("AndroidSigningStorePass", AndroidSigningStorePass)
+                .SetProperty("AndroidSigningKeyPass", AndroidSigningKeyPass)
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
                 .SetOutput(PackagesDirectory));
+            
+            keystore.DeleteFile();
         });
 
 
