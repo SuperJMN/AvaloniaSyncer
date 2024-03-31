@@ -1,4 +1,5 @@
 using System.Linq;
+using GlobExpressions;
 using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.Git;
@@ -118,17 +119,10 @@ class Build : NukeBuild
             Assert.DirectoryExists(PackagesDirectory / "Android");
         });
 
-    Target Publish => td => td
-        .Consumes(PackDebian, PackWindows, PackAndroid)
-        .DependsOn(PackDebian)
-        .DependsOn(PackWindows)
-        .DependsOn(PackAndroid);
-
     Target PublishGitHubRelease => td => td
         //.OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
-        .DependsOn(Publish)
+        .DependsOn(PackWindows, PackAndroid, PackDebian)
         .Consumes(PackDebian, PackWindows, PackAndroid)
-        .Consumes(PackAndroid)
         .Requires(() => GitHubAuthenticationToken)
         .Executes(async () =>
         {
@@ -136,6 +130,8 @@ class Build : NukeBuild
 
             var repositoryInfo = GetGitHubRepositoryInfo(Repository);
 
+            Log.Information("Output has the follow files: {List}", string.Join(",", OutputDirectory.GetFiles("**/*")));
+            
             Log.Information("Commit for the release: {GitVersionSha}", GitVersion.Sha);
 
             Log.Information("Getting list of files in {Path}", PackagesDirectory);
