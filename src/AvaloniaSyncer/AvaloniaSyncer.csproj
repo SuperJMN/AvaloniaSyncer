@@ -10,7 +10,7 @@
     <AvaloniaResource Include="**\*.png" />
   </ItemGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug'">
-    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1" />
     <PackageReference Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
     <PackageReference Include="HttpClient.Extensions.LoggingHttpMessageHandler" Version="1.0.3" />
   </ItemGroup>
@@ -20,7 +20,7 @@
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="ByteSize" Version="2.1.1" />
+    <PackageReference Include="ByteSize" Version="2.1.2" />
     <PackageReference Include="Deadpikle.AvaloniaProgressRing" Version="0.10.6" />
     <PackageReference Include="ReactiveUI.Fody" Version="19.5.41" />
     <PackageReference Include="ReactiveUI.Validation" Version="3.1.7" />
@@ -28,9 +28,9 @@
     <PackageReference Include="Zafiro.Avalonia" Version="3.0.81" />
     <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.81" />
     <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.44" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.0.11" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.0.11" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.0.11" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.1.0" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.1.0" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.1.0" />
     <PackageReference Include="Zafiro.UI" Version="4.0.29" />
   </ItemGroup>
 </Project>

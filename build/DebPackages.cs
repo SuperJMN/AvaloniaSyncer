@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
-using DotnetPackaging.Common;
+using DotnetPackaging.Deb.Archives;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -49,7 +49,7 @@ class DebPackages
             };
                 
             Log.Information("Creating {Package}", packageName);
-            var result = await DotnetPackaging.Create.Deb(packageDefinition, publishDirectory / runtime, outputDirectory / packageName);
+            var result = await DotnetPackaging.Deb.Create.Deb(packageDefinition, publishDirectory / runtime, outputDirectory / packageName);
             result
                 .Finally(r =>
                 {
