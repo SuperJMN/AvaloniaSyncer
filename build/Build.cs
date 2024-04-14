@@ -91,7 +91,30 @@ class Build : NukeBuild
                 var packagePath = PackagesDirectory / Solution.Name + "_" + GitVersion.MajorMinorPatch + "_" + linuxDir.Name + ".appimage";
                 packagePath.Parent.CreateDirectory();
                 await using var output = fs.File.Open(packagePath, FileMode.Create);
-                await AppImage.WriteFromBuildDirectory(output, inputDir, Maybe<SingleDirMetadata>.None);
+                var metadata = new SingleDirMetadata()
+                {
+                    Icon = Maybe<IIcon>.None,
+                    Categories = new List<string>()
+                    {
+                        "Utility",
+                    },
+                    AppName = Solution.Name,
+                    Comment = "Cross-Platform File Synchronization Powered by AvaloniaUI",
+                    Keywords = new List<string>
+                    {
+                        "File Synchronization",
+                        "Cross-Platform",
+                        "AvaloniaUI",
+                        "File Management",
+                        "Folder Sync",
+                        "UI Design",
+                        "Open Source",
+                        "Reactive Programming"
+                    },
+                    StartupWmClass = Solution.Name,
+                };
+                
+                await AppImage.WriteFromBuildDirectory(output, inputDir, metadata);
             });
             
             return Task.WhenAll(packagingTasks);
@@ -115,7 +138,7 @@ class Build : NukeBuild
             runtimes.ForEach(rt =>
             {
                 var src = PublishDirectory / rt;
-                var zipName = $"{Solution.Name}-{rt.Replace("win", "Windows")}.zip";
+                var zipName = $"{Solution.Name}_{GitVersion.MajorMinorPatch}_{rt}.zip";
                 var dest = PackagesDirectory / zipName;
                 Log.Information("Zipping {Input} to {Output}", src, dest);
                 src.ZipTo(dest);
