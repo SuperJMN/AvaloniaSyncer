@@ -36,7 +36,7 @@ class DebPackages
             string projectName = solution.Name;
             string architecture = runtime.Split("-")[1];
 
-            string packageName = $"{projectName!.Replace(" ", "").ToLower()}_{version}_{architecture}.deb";
+            string packageName = $"{projectName!.Replace(" ", "").ToLower()}_{version}_{runtime}.deb";
 
             var fromFile = await new FileInfo(solution.Directory / "metadata.deb.json").ToPackageDefinition();
             var packageDefinition = fromFile with

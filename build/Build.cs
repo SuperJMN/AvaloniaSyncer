@@ -1,5 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Abstractions;
 using System.Linq;
+using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
+using DotnetPackaging.AppImage;
+using DotnetPackaging.AppImage.Core;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -10,7 +18,7 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
-
+using Zafiro.FileSystem.Lightweight;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
@@ -27,12 +35,12 @@ class Build : NukeBuild
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")] readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
     [GitVersion] readonly GitVersion GitVersion;
     [GitRepository] readonly GitRepository Repository;
-    
-    [Parameter("GitHub Authentication Token")] [Secret] readonly string GitHubAuthenticationToken;
+
+    [Parameter("GitHub Authentication Token")][Secret] readonly string GitHubAuthenticationToken;
     [Parameter("Contents of the keystore encoded as Base64.")] readonly string Base64Keystore;
     [Parameter("The alias for the key in the keystore.")] readonly string AndroidSigningKeyAlias;
     [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
-    [Parameter("The password of the key within the keystore file.")] [Secret] readonly string AndroidSigningKeyPass;
+    [Parameter("The password of the key within the keystore file.")][Secret] readonly string AndroidSigningKeyPass;
 
     Target Clean => td => td
         .Executes(() =>
@@ -49,10 +57,45 @@ class Build : NukeBuild
             StartShell(@$"dotnet workload restore {Solution.Path}").AssertZeroExitCode();
         });
 
-    Target PackDebian => td => td
+    Target PackDeb => td => td
         .DependsOn(Clean)
         .DependsOn(RestoreWorkloads)
         .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
+    
+    Target PublishLinux => td => td
+        .DependsOn(Clean)
+        .DependsOn(RestoreWorkloads)
+        .Executes(() =>
+        {
+            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
+            List<string> runtimes = ["linux-x64", "linux-arm64"];
+            DotNetPublish(settings => settings
+                .SetProject(desktopProject)
+                .SetConfiguration(Configuration)
+                .SetSelfContained(true)
+                .CombineWith(runtimes, (c, runtime) =>
+                    c.SetRuntime(runtime)
+                        .SetOutput(PublishDirectory / runtime)));
+        });
+
+    Target PackAppImages => td => td
+        .DependsOn(PublishLinux)
+        .Executes(() =>
+        {
+            var fs = new FileSystem();
+            var linuxDirs = PublishDirectory.GlobDirectories("linux-*");
+            var packagingTasks = linuxDirs.Select(async linuxDir =>
+            {
+                Debugger.Launch();
+                var inputDir = new DirectorioIODirectory(Maybe<string>.None, fs.DirectoryInfo.New(linuxDir));
+                var packagePath = PackagesDirectory / Solution.Name + "_" + GitVersion.MajorMinorPatch + "_" + linuxDir.Name + ".appimage";
+                packagePath.Parent.CreateDirectory();
+                await using var output = fs.File.Open(packagePath, FileMode.Create);
+                await AppImage.WriteFromBuildDirectory(output, inputDir, Maybe<SingleDirMetadata>.None);
+            });
+            
+            return Task.WhenAll(packagingTasks);
+        });
 
     Target PackWindows => td => td
         .DependsOn(Clean)
@@ -87,7 +130,7 @@ class Build : NukeBuild
             var androidProject = Solution.AllProjects.First(project => project.Name.EndsWith("Android"));
             var keystore = OutputDirectory / "temp.keystore";
             keystore.WriteAllBytes(Convert.FromBase64String(Base64Keystore));
-        
+
             DotNetPublish(settings => settings
                 .SetProperty("ApplicationVersion", GitVersion.CommitsSinceVersionSource)
                 .SetProperty("ApplicationDisplayVersion", GitVersion.MajorMinorPatch)
@@ -99,15 +142,12 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetProject(androidProject)
                 .SetOutput(PackagesDirectory));
-            
+
             keystore.DeleteFile();
         });
 
 
-    Target Publish => td => td
-        .DependsOn(PackDebian)
-        .DependsOn(PackWindows)
-        .DependsOn(PackAndroid);
+    Target Publish => td => td.DependsOn(PackDeb, PackWindows, PackAndroid, PackAppImages);
 
     Target PublishGitHubRelease => td => td
         .OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
