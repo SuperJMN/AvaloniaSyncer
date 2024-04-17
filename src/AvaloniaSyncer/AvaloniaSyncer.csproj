@@ -15,6 +15,9 @@
     <PackageReference Include="HttpClient.Extensions.LoggingHttpMessageHandler" Version="1.0.3" />
   </ItemGroup>
   <ItemGroup>
+    <AvaloniaResource Remove="AppImage.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
@@ -32,5 +35,10 @@
     <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.1.0" />
     <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.1.0" />
     <PackageReference Include="Zafiro.UI" Version="4.0.29" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="AppImage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

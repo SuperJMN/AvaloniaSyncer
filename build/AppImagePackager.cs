@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
 using System.Runtime.InteropServices;
@@ -39,7 +38,6 @@ public static class AppImagePackager
 
     static async Task Pack(Project project, AbsolutePath publishDirectory, string version, Architecture architecture, AbsolutePath outputDir)
     {
-        Debugger.Launch();
         var fs = new FileSystem();
         var inputDir = new DirectorioIODirectory(Maybe<string>.None, fs.DirectoryInfo.New(publishDirectory));
         var appName = project.Name.Replace(".Desktop", "");
