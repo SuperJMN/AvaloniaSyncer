@@ -98,11 +98,9 @@
               "Clean",
               "PackAndroid",
               "PackAppImages",
-              "PackDeb",
               "PackWindows",
               "Publish",
               "PublishGitHubRelease",
-              "PublishLinux",
               "RestoreWorkloads"
             ]
           }
@@ -120,11 +118,9 @@
               "Clean",
               "PackAndroid",
               "PackAppImages",
-              "PackDeb",
               "PackWindows",
               "Publish",
               "PublishGitHubRelease",
-              "PublishLinux",
               "RestoreWorkloads"
             ]
           }
