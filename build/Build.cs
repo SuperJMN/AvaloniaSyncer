@@ -6,6 +6,7 @@ using System.IO.Abstractions;
 using System.Linq;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
+using DotnetPackaging;
 using DotnetPackaging.AppImage;
 using DotnetPackaging.AppImage.Core;
 using Nuke.Common;
@@ -22,6 +23,7 @@ using Zafiro.FileSystem.Lightweight;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
+using Maybe = CSharpFunctionalExtensions.Maybe;
 
 class Build : NukeBuild
 {
@@ -88,16 +90,15 @@ class Build : NukeBuild
             {
                 Debugger.Launch();
                 var inputDir = new DirectorioIODirectory(Maybe<string>.None, fs.DirectoryInfo.New(linuxDir));
-                var packagePath = PackagesDirectory / Solution.Name + "_" + GitVersion.MajorMinorPatch + "_" + linuxDir.Name + ".appimage";
+                var packagePath = PackagesDirectory / Solution.Name + "_" + GitVersion.MajorMinorPatch + "_" + linuxDir.Name + ".AppImage";
                 packagePath.Parent.CreateDirectory();
                 await using var output = fs.File.Open(packagePath, FileMode.Create);
-                var metadata = new SingleDirMetadata()
+                IEnumerable<AdditionalCategory> categories = [AdditionalCategory.FileManager, AdditionalCategory.FileTools, AdditionalCategory.FileTransfer, AdditionalCategory.Filesystem];
+                var metadata = new Options()
                 {
                     Icon = Maybe<IIcon>.None,
-                    Categories = new List<string>()
-                    {
-                        "Utility",
-                    },
+                    MainCategory = Maybe<MainCategory>.From(MainCategory.Utility),
+                    AdditionalCategories = Maybe.From(categories),
                     AppName = Solution.Name,
                     Comment = "Cross-Platform File Synchronization Powered by AvaloniaUI",
                     Keywords = new List<string>
@@ -105,6 +106,7 @@ class Build : NukeBuild
                         "File Synchronization",
                         "Cross-Platform",
                         "AvaloniaUI",
+                        "Avalonia",
                         "File Management",
                         "Folder Sync",
                         "UI Design",
@@ -112,6 +114,7 @@ class Build : NukeBuild
                         "Reactive Programming"
                     },
                     StartupWmClass = Solution.Name,
+                    Version = GitVersion.MajorMinorPatch,
                 };
                 
                 await AppImage.WriteFromBuildDirectory(output, inputDir, metadata);
