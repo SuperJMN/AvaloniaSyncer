@@ -9,8 +9,8 @@
 		<NukeTelemetryVersion>1</NukeTelemetryVersion>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="DotnetPackaging.AppImage" Version="1.0.25" />
-		<PackageReference Include="DotnetPackaging.Deb" Version="1.0.25" />
+		<PackageReference Include="DotnetPackaging.AppImage" Version="1.0.26" />
+		<PackageReference Include="DotnetPackaging.Deb" Version="1.0.26" />
 		<PackageReference Include="NuGet.Packaging" Version="6.9.1" />
 		<PackageReference Include="Nuke.Common" Version="8.0.0" />
 		<PackageReference Include="Nuke.GitHub" Version="5.0.1" />

@@ -1,21 +1,24 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Abstractions;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DotnetPackaging;
 using DotnetPackaging.AppImage;
 using DotnetPackaging.AppImage.Core;
+using NuGet.Common;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Git;
-using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.DotNet;using Nuke.Common.Tools.NSwag;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
@@ -24,6 +27,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 using Maybe = CSharpFunctionalExtensions.Maybe;
+using static Nuke.Common.Tools.NSwag.NSwagTasks;
 
 class Build : NukeBuild
 {
@@ -43,7 +47,7 @@ class Build : NukeBuild
     [Parameter("The alias for the key in the keystore.")] readonly string AndroidSigningKeyAlias;
     [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
     [Parameter("The password of the key within the keystore file.")][Secret] readonly string AndroidSigningKeyPass;
-
+    
     Target Clean => td => td
         .Executes(() =>
         {
@@ -59,68 +63,22 @@ class Build : NukeBuild
             StartShell(@$"dotnet workload restore {Solution.Path}").AssertZeroExitCode();
         });
 
-    Target PackDeb => td => td
-        .DependsOn(Clean)
-        .DependsOn(RestoreWorkloads)
-        .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
-    
-    Target PublishLinux => td => td
-        .DependsOn(Clean)
-        .DependsOn(RestoreWorkloads)
-        .Executes(() =>
-        {
-            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
-            List<string> runtimes = ["linux-x64", "linux-arm64"];
-            DotNetPublish(settings => settings
-                .SetProject(desktopProject)
-                .SetConfiguration(Configuration)
-                .SetSelfContained(true)
-                .CombineWith(runtimes, (c, runtime) =>
-                    c.SetRuntime(runtime)
-                        .SetOutput(PublishDirectory / runtime)));
-        });
+    //Target PackDeb => td => td
+    //    .DependsOn(Clean)
+    //    .DependsOn(RestoreWorkloads)
+    //    .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
 
     Target PackAppImages => td => td
-        .DependsOn(PublishLinux)
-        .Executes(() =>
+        .Executes(async () =>
         {
-            var fs = new FileSystem();
-            var linuxDirs = PublishDirectory.GlobDirectories("linux-*");
-            var packagingTasks = linuxDirs.Select(async linuxDir =>
-            {
-                Debugger.Launch();
-                var inputDir = new DirectorioIODirectory(Maybe<string>.None, fs.DirectoryInfo.New(linuxDir));
-                var packagePath = PackagesDirectory / Solution.Name + "_" + GitVersion.MajorMinorPatch + "_" + linuxDir.Name + ".AppImage";
-                packagePath.Parent.CreateDirectory();
-                await using var output = fs.File.Open(packagePath, FileMode.Create);
-                IEnumerable<AdditionalCategory> categories = [AdditionalCategory.FileManager, AdditionalCategory.FileTools, AdditionalCategory.FileTransfer, AdditionalCategory.Filesystem];
-                var metadata = new Options()
-                {
-                    Icon = Maybe<IIcon>.None,
-                    MainCategory = Maybe<MainCategory>.From(MainCategory.Utility),
-                    AdditionalCategories = Maybe.From(categories),
-                    AppName = Solution.Name,
-                    Comment = "Cross-Platform File Synchronization Powered by AvaloniaUI",
-                    Keywords = new List<string>
-                    {
-                        "File Synchronization",
-                        "Cross-Platform",
-                        "AvaloniaUI",
-                        "Avalonia",
-                        "File Management",
-                        "Folder Sync",
-                        "UI Design",
-                        "Open Source",
-                        "Reactive Programming"
-                    },
-                    StartupWmClass = Solution.Name,
-                    Version = GitVersion.MajorMinorPatch,
-                };
-                
-                await AppImage.WriteFromBuildDirectory(output, inputDir, metadata);
-            });
+            IEnumerable<Architecture> supportedArchitectures = [Architecture.Arm64, Architecture.X64];
+            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
             
-            return Task.WhenAll(packagingTasks);
+            foreach (var architecture in supportedArchitectures)
+            {
+                Log.Information("Publishing {Arch}", architecture);
+                await AppImagePackager.PackAppImage(desktopProject, architecture, Configuration, PackagesDirectory, GitVersion.MajorMinorPatch);
+            }
         });
 
     Target PackWindows => td => td
@@ -173,7 +131,7 @@ class Build : NukeBuild
         });
 
 
-    Target Publish => td => td.DependsOn(PackDeb, PackWindows, PackAndroid, PackAppImages);
+    Target Publish => td => td.DependsOn(PackWindows, PackAndroid, PackAppImages);
 
     Target PublishGitHubRelease => td => td
         .OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
