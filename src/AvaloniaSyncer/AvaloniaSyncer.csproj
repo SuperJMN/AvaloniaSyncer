@@ -30,10 +30,10 @@
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <PackageReference Include="Zafiro.Avalonia" Version="3.0.81" />
     <PackageReference Include="Zafiro.Avalonia.Dialogs" Version="3.0.81" />
-    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.44" />
-    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.1.0" />
-    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.1.0" />
-    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.1.0" />
+    <PackageReference Include="Zafiro.Avalonia.FileExplorer" Version="1.0.45" />
+    <PackageReference Include="Zafiro.FileSystem.Local" Version="5.1.1" />
+    <PackageReference Include="Zafiro.FileSystem.SeaweedFS" Version="5.1.1" />
+    <PackageReference Include="Zafiro.FileSystem.Sftp" Version="5.1.1" />
     <PackageReference Include="Zafiro.UI" Version="4.0.29" />
   </ItemGroup>
   <ItemGroup>
