@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer", "src\Avalo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaloniaSyncer.Tests", "test\AvaloniaSyncer.Tests\AvaloniaSyncer.Tests.csproj", "{2C8FFFA6-189C-495E-BDE2-4F013544A169}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Zafiro.Nuke", "..\..\SuperJMN-Zafiro\Zafiro.Nuke\src\Zafiro.Nuke\Zafiro.Nuke.csproj", "{5ECF1792-E6D8-4354-874E-03FB7B1A74F9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C8FFFA6-189C-495E-BDE2-4F013544A169}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5ECF1792-E6D8-4354-874E-03FB7B1A74F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5ECF1792-E6D8-4354-874E-03FB7B1A74F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5ECF1792-E6D8-4354-874E-03FB7B1A74F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5ECF1792-E6D8-4354-874E-03FB7B1A74F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
