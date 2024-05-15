@@ -7,7 +7,7 @@ steps:
 - script: /usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager --sdk_root=/usr/local/lib/android/sdk "platform-tools"
   displayName: Install Android SDK "Platform Tools"
 
-- powershell: .\build.ps1 publishgithubrelease
+- powershell: .\build.ps1
   env:
     GitHubAuthenticationToken: $(GitHubAuthenticationToken)
     AndroidSigningKeyAlias: $(AndroidSigningKeyAlias)
