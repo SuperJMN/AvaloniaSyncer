@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DotnetPackaging;
 using Nuke.Common;
@@ -33,10 +35,15 @@ class Build : NukeBuild
 
     public Build()
     {
+        Debugger.Launch();
+    }
+
+    protected override void OnBuildInitialized()
+    {
         Actions = new Actions(Solution, Repository, RootDirectory, GitVersion, Configuration);
     }
 
-    Actions Actions { get; }
+    Actions Actions { get; set; }
 
     Target Clean => td => td
         .Executes(() =>
@@ -52,6 +59,23 @@ class Build : NukeBuild
         {
             DotNetWorkloadRestore(x => x.SetProject(Solution));
         });
+    
+    Target PackAll => td => td
+        .DependsOn(RestoreWorkloads)
+        .OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
+        .Executes(async () =>
+        {
+            var windowsFiles = Task.FromResult(Actions.CreateWindowsPacks());
+            var options = Options();
+            Debugger.Launch();
+            var linuxAppImageFiles = Actions.CreateLinuxAppImages(options);
+            var androidFiles = Task.FromResult(Actions.CreateAndroidPacks(Base64Keystore, AndroidSigningKeyAlias, AndroidSigningKeyPass, AndroidSigningStorePass));
+            
+            var allFiles = new[] { windowsFiles, linuxAppImageFiles, androidFiles }.Combine();
+            await allFiles
+                .Tap(allFiles => Log.Information("Published @{AllFiles}", allFiles))
+                .TapError(e => throw new ApplicationException(e));
+        });
 
     Target PublishGitHubRelease => td => td
         .DependsOn(RestoreWorkloads)
@@ -59,13 +83,13 @@ class Build : NukeBuild
         .Requires(() => GitHubAuthenticationToken)
         .Executes(async () =>
         {
-            var windowsFiles = Actions.CreateWindowsPacks();
-            var linuxAppImageFiles = await Actions.CreateLinuxAppImages(Options());
-            var androidFiles = Actions.CreateAndroidPacks(Base64Keystore, AndroidSigningKeyAlias, AndroidSigningKeyPass, AndroidSigningStorePass);
-
-            var allFiles = new[] { windowsFiles, linuxAppImageFiles, androidFiles };
+            var windowsFiles = Task.FromResult(Actions.CreateWindowsPacks());
+            var options = Options();
+            var linuxAppImageFiles = Actions.CreateLinuxAppImages(options);
+            var androidFiles = Task.FromResult(Actions.CreateAndroidPacks(Base64Keystore, AndroidSigningKeyAlias, AndroidSigningKeyPass, AndroidSigningStorePass));
+            
+            var allFiles = new[] { windowsFiles, linuxAppImageFiles, androidFiles }.Combine();
             await allFiles
-                .Combine()
                 .Bind(paths => Actions.CreateGitHubRelease(GitHubAuthenticationToken, paths.Flatten().ToArray()))
                 .TapError(e => throw new ApplicationException(e));
         });
