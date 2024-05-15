@@ -1,33 +1,23 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Abstractions;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 using DotnetPackaging;
-using DotnetPackaging.AppImage;
-using DotnetPackaging.AppImage.Core;
-using NuGet.Common;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Git;
-using Nuke.Common.Tools.DotNet;using Nuke.Common.Tools.NSwag;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GitHub;
 using Serilog;
-using Zafiro.FileSystem.Lightweight;
+using Zafiro.Nuke;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.GitHub.GitHubTasks;
 using static Nuke.Common.Tooling.ProcessTasks;
 using Maybe = CSharpFunctionalExtensions.Maybe;
-using static Nuke.Common.Tools.NSwag.NSwagTasks;
 
 class Build : NukeBuild
 {
@@ -48,6 +38,13 @@ class Build : NukeBuild
     [Parameter("The password for the keystore file.")][Secret] readonly string AndroidSigningStorePass;
     [Parameter("The password of the key within the keystore file.")][Secret] readonly string AndroidSigningKeyPass;
     
+    private Actions Actions { get; }
+
+    public Build()
+    {
+        Actions = new Actions(Solution, RootDirectory, GitVersion, Configuration);
+    }
+
     Target Clean => td => td
         .Executes(() =>
         {
@@ -60,25 +57,46 @@ class Build : NukeBuild
     Target RestoreWorkloads => td => td
         .Executes(() =>
         {
-            StartShell(@$"dotnet workload restore {Solution.Path}").AssertZeroExitCode();
+            DotNetWorkloadRestore(x => x.SetProject(Solution));
         });
 
-    //Target PackDeb => td => td
-    //    .DependsOn(Clean)
-    //    .DependsOn(RestoreWorkloads)
-    //    .Executes(() => DebPackages.Create(Solution, Configuration, PublishDirectory, PackagesDirectory, GitVersion.MajorMinorPatch));
-
-    Target PackAppImages => td => td
+    Target PackLinuxAppImages => td => td
         .Executes(async () =>
         {
-            IEnumerable<Architecture> supportedArchitectures = [Architecture.Arm64, Architecture.X64];
-            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
-            
-            foreach (var architecture in supportedArchitectures)
-            {
-                Log.Information("Publishing {Arch}", architecture);
-                await AppImagePackager.PackAppImage(desktopProject, architecture, Configuration, PackagesDirectory, GitVersion.MajorMinorPatch);
-            }
+            IEnumerable<AdditionalCategory> additionalCategories = [AdditionalCategory.FileTransfer, AdditionalCategory.FileTools, AdditionalCategory.FileManager, AdditionalCategory.Filesystem];
+
+            IEnumerable<Uri> screenShots =
+            [
+                new Uri("https://private-user-images.githubusercontent.com/3109851/294203061-da1296d3-11b0-4c20-b394-7d3425728c0e.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MTU3NjEyMzQsIm5iZiI6MTcxNTc2MDkzNCwicGF0aCI6Ii8zMTA5ODUxLzI5NDIwMzA2MS1kYTEyOTZkMy0xMWIwLTRjMjAtYjM5NC03ZDM0MjU3MjhjMGUucG5nP1gtQW16LUFsZ29yaXRobT1BV1M0LUhNQUMtU0hBMjU2JlgtQW16LUNyZWRlbnRpYWw9QUtJQVZDT0RZTFNBNTNQUUs0WkElMkYyMDI0MDUxNSUyRnVzLWVhc3QtMSUyRnMzJTJGYXdzNF9yZXF1ZXN0JlgtQW16LURhdGU9MjAyNDA1MTVUMDgxNTM0WiZYLUFtei1FeHBpcmVzPTMwMCZYLUFtei1TaWduYXR1cmU9MjBhZDc5YzlhM2ZlMTBmZDc4ODcwZjBjMmJiYzU0Zjc2ZTMyMjAwYjgwZmE1NmZlYzBhYmM2MjIwOTBjMWVmZSZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmYWN0b3JfaWQ9MCZrZXlfaWQ9MCZyZXBvX2lkPTAifQ.3V2PtKWDyqZqw5AUZMxkt5Dh6k7xa8-eNre7hzjR-lI")
+            ];
+
+            await Actions.CreateLinuxAppImages(new Options()
+                {
+                    MainCategory = MainCategory.Utility,
+                    AdditionalCategories = Maybe.From(additionalCategories),
+                    AppName = "AvaloniaSyncer",
+                    Version = GitVersion.MajorMinorPatch,
+                    Comment = "Cross-Platform File Synchronization Powered by AvaloniaUI",
+                    AppId = "com.SuperJMN.AvaloniaSyncer",
+                    StartupWmClass = "AvaloniaSyncer",
+                    HomePage = new Uri("https://github.com/SuperJMN/avaloniasyncer"),
+                    Keywords = new List<string>
+                    {
+                        "File Synchronization",
+                        "Cross-Platform",
+                        "AvaloniaUI",
+                        "Avalonia",
+                        "File Management",
+                        "Folder Sync",
+                        "UI Design",
+                        "Open Source",
+                        "Reactive Programming"
+                    },
+                    License = "MIT",
+                    ScreenshotUrls = Maybe.From(screenShots),
+                    Summary = "This is an application to rule every filesystem",
+                })
+                .TapError(Log.Error);
         });
 
     Target PackWindows => td => td
@@ -86,24 +104,7 @@ class Build : NukeBuild
         .DependsOn(RestoreWorkloads)
         .Executes(() =>
         {
-            var desktopProject = Solution.AllProjects.First(project => project.Name.EndsWith("Desktop"));
-            var runtimes = new[] { "win-x64", };
-
-            DotNetPublish(settings => settings
-                .SetConfiguration(Configuration)
-                .SetProject(desktopProject)
-                .CombineWith(runtimes, (c, runtime) =>
-                    c.SetRuntime(runtime)
-                        .SetOutput(PublishDirectory / runtime)));
-
-            runtimes.ForEach(rt =>
-            {
-                var src = PublishDirectory / rt;
-                var zipName = $"{Solution.Name}_{GitVersion.MajorMinorPatch}_{rt}.zip";
-                var dest = PackagesDirectory / zipName;
-                Log.Information("Zipping {Input} to {Output}", src, dest);
-                src.ZipTo(dest);
-            });
+            Actions.CreateWindowsPack();
         });
 
     Target PackAndroid => td => td
@@ -131,7 +132,7 @@ class Build : NukeBuild
         });
 
 
-    Target Publish => td => td.DependsOn(PackWindows, PackAndroid, PackAppImages);
+    Target Publish => td => td.DependsOn(PackWindows, PackAndroid, PackLinuxAppImages);
 
     Target PublishGitHubRelease => td => td
         .OnlyWhenStatic(() => Repository.IsOnMainOrMasterBranch())
